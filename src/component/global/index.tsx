@@ -1,7 +1,7 @@
 "use client"
 
 import { HeroCard } from "./cards/hero"
-import { WorldMapVisualization } from "./cards/worldmap"
+import WorldMapVisualization from "./cards/worldmap"
 
 
 interface GlobalCampusSectionProps {
