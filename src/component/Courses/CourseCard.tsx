@@ -1,45 +1,43 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { Badge } from "@/components/ui/badge"
+import Image from "next/image";
+import { Badge } from "@/components/ui/badge";
 
-export function ProgramCard() {
-    return (
-        <article className="w-full overflow-hidden rounded-3xl bg-slate-900 shadow-2xl">
-            {/* Card Container */}
-            <div className="flex flex-col p-6 sm:p-8 lg:p-10">
-                {/* Badge */}
-                <div className="mb-6 flex justify-start">
-                    <Badge
-                        variant="secondary"
-                        className="rounded-full bg-white px-4 py-1.5 text-sm font-semibold text-purple-600 hover:bg-white"
-                    >
-                        Marketing
-                    </Badge>
-                </div>
+export function ProgramCard({ item }: { item: any }) {
+  return (
+    <article className="w-full overflow-hidden rounded-3xl bg-[#111827] shadow-2xl flex flex-col justify-between transition-transform duration-300 hover:-translate-y-2">
+      <div className="flex flex-col p-6 sm:p-8 lg:p-10">
+        {/* Badge */}
+        <div className="mb-6">
+          <Badge
+            variant="secondary"
+            className="rounded-full bg-white px-4 py-1.5 text-sm font-semibold text-purple-600"
+          >
+            {item.name}
+          </Badge>
+        </div>
 
-                {/* Heading */}
-                <h1 className="mb-6 text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight text-balance">
-                    Bachelor of Marketing – PPA Business School
-                </h1>
+        {/* Title */}
+        <h1 className="mb-4 text-xl sm:text-2xl font-semibold text-white leading-snug">
+          {item.title}
+        </h1>
 
-                {/* Description */}
-                <p className="mb-8 text-base sm:text-lg text-slate-200 leading-relaxed text-pretty">
-                    Designed to launch your career into the fast-paced marketing industry, this program equips you with
-                    cutting-edge knowledge and practical skills.
-                </p>
+        {/* Description */}
+        <p className="text-slate-300 text-sm leading-relaxed mb-6">
+          {item.detail}
+        </p>
+      </div>
 
-                {/* Image Container */}
-                <div className="relative w-full overflow-hidden rounded-2xl aspect-video sm:aspect-auto sm:h-64 lg:h-72">
-                    <Image
-                        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-3KCUeAXehjWFJLqEBvikG7IzMf48xj.png"
-                        alt="Marketing students collaborating on a project with design materials and charts on the table"
-                        fill
-                        className="object-cover"
-                    />
-                </div>
-
-            </div>
-        </article>
-    )
+      {/* Image */}
+      <div className="relative w-full overflow-hidden rounded-t-2xl">
+        <Image
+          src={item.image}
+          alt={item.title}
+          width={600}
+          height={400}
+          className="object-cover w-full h-56"
+        />
+      </div>
+    </article>
+  );
 }

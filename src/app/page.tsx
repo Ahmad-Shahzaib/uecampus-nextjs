@@ -42,14 +42,8 @@ export default function Home() {
       </div>
       <div>
       </div>
-      <div>
-        {
-          CoursesSection_ue.map((section, index) => (
-            <CouresSection key={index} heading={section.heading ?? ""} description={section.description ?? ""} variant={section.variant ?? ""} title={section.title} name={section.name} detail={section.detail} />
-
-          ))
-
-        }
+      <div>        
+            <CouresSection />
       </div>
       <div className="min-h-screen bg-gray-800">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6 lg:p-8 mx-auto">

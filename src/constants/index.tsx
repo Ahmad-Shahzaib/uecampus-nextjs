@@ -117,12 +117,6 @@ export const FOOTER_LINKS = {
 
 
 export const CoursesSection_ue = [
-    {
-        heading: "Want to know more about our courses?",
-        description:
-            "Discover programs tailored to your ambitions. From business to technology, our diverse course offerings empower you to excel in your chosen field.",
-        variant: "primary",
-    }
     , {
         name: "Artificial Intelligence",
         title: "MSc in AI and Machine Learning - Walsh College",
