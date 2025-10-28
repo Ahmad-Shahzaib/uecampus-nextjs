@@ -7,6 +7,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { FOOTER_LINKS, SOCIAL_LINKS } from "@/constants"
+import { ImageCard } from "@/components/ui/ImageCard"
 
 export function Footer() {
   const [email, setEmail] = useState("")
@@ -30,10 +31,7 @@ export function Footer() {
           {/* Brand Section */}
           <div className="lg:col-span-1">
             <div className="mb-6 flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-purple-600 to-purple-400">
-                <span className="text-lg font-bold text-white">ue</span>
-              </div>
-              <span className="text-xl font-bold text-white">CAMPUS</span>
+              <ImageCard src="https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/uecampus-logo.png" alt="Logo" />
             </div>
             <p className="mb-6 text-sm leading-relaxed text-slate-400">
               At UeCampus, we understand the importance of continuous learning in today's fast-paced professional world.
