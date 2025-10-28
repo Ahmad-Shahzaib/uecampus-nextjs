@@ -14,7 +14,7 @@ const NavigationSection = () => {
             <NavigationMenu>
                 <NavigationMenuList>
                     <NavigationMenuItem>
-                        <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+                        <NavigationMenuTrigger>About Us</NavigationMenuTrigger>
                         <NavigationMenuContent>
                             <div className="grid gap-3 p-4 w-[400px]">
                                 <NavigationMenuLink href="/product1">Product 1</NavigationMenuLink>
@@ -24,11 +24,14 @@ const NavigationSection = () => {
                     </NavigationMenuItem>
 
                     <NavigationMenuItem>
-                        <NavigationMenuLink href="/about">About</NavigationMenuLink>
+                        <NavigationMenuLink href="/about">Programmes & Diploma </NavigationMenuLink>
                     </NavigationMenuItem>
 
                     <NavigationMenuItem>
-                        <NavigationMenuLink href="/contact">Contact</NavigationMenuLink>
+                        <NavigationMenuLink href="/contact">Scholarship</NavigationMenuLink>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem>
+                        <NavigationMenuLink href="/contact">Contact Us</NavigationMenuLink>
                     </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>
