@@ -5,11 +5,12 @@ import { Button } from "@/components/ui/button"
 export function AboutSection() {
   return (
     <section
-      className="relative rounded-2xl p-8 lg:p-12 flex flex-col justify-between min-h-[500px] lg:min-h-[600px] bg-[#6A1B9A]/90 overflow-hidden"
+      className="relative rounded-2xl p-8 lg:p-12 flex flex-col justify-between min-h-[500px] lg:min-h-[600px] bg-purple-900/90 overflow-hidden"
       style={{
         backgroundImage: `
           url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-2.png'),
-           linear-gradient(135deg, #6A1B9A 0%, #8E24AA 50%, #AB47BC 100%))
+        linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #7B1FA2 100%);
+
         `,
         backgroundSize: 'cover, auto',
         backgroundPosition: 'center, center',
