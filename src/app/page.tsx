@@ -1,7 +1,8 @@
 import HeaderSection from "@/component/Header";
+import { LogoCarousel } from "@/component/partners";
 import { FeatureCard } from "@/component/testinomials/testinomials-card";
-import { FEATURE_CARDS } from "@/constants";
-import Image from "next/image";
+import { FEATURE_CARDS, PARTNER_LOGOS } from "@/constants";
+
 
 export default function Home() {
   return (
@@ -15,6 +16,9 @@ export default function Home() {
             <FeatureCard key={index} title={card.title} description={card.description} variant={card.variant} />
           ))}
         </div>
+      </div>
+       <div className="py-6 px-10">
+       <LogoCarousel  logos={PARTNER_LOGOS} />
       </div>
     </div>
   );

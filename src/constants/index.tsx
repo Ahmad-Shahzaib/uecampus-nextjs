@@ -20,3 +20,44 @@ export const FEATURE_CARDS: FeatureCardProps[] = [
     variant: "tertiary",
   },
 ]
+
+
+
+export const PARTNER_LOGOS = [
+  {
+    id: "walsh-college",
+    name: "Walsh College",
+    src: "https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/card-logo-1.png",
+    alt: "Walsh College",
+  },
+  {
+    id: "cacp",
+    name: "CACP",
+    src: "https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/card-logo-2.png",
+    alt: "CACP",
+  },
+  {
+    id: "wes",
+    name: "World Education Services",
+    src: "https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/card-logo-3.png",
+    alt: "World Education Services",
+  },
+  {
+    id: "cie",
+    name: "CIE European Business School",
+    src: "https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/card-logo-4.png",
+    alt: "CIE European Business School",
+  },
+  {
+    id: "qualifi",
+    name: "QUALIFI Approved Centre",
+    src: "https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/card-logo-5.png",
+    alt: "QUALIFI Approved Centre",
+  },
+  {
+    id: "ppa",
+    name: "PPA Business School",
+    src: "	https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/card-logo-6.png",
+    alt: "PPA Business School",
+  },
+]
