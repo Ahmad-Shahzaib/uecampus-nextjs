@@ -1,5 +1,7 @@
 import { FeatureCardProps } from "@/component/testinomials/testinomials-card";
 
+type HeroSection = FeatureCardProps;
+
 export const FEATURE_CARDS: FeatureCardProps[] = [
   {
     title: "Study Anytime, Anywhere",
@@ -60,4 +62,13 @@ export const PARTNER_LOGOS = [
     src: "	https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/card-logo-6.png",
     alt: "PPA Business School",
   },
+]
+export const HeroSection_ue: HeroSection[] = [
+  {
+    title: "Earn Your Degree Anytime, Anywhere with UECampus!",
+    description:
+      "Flexible, fully accredited programs designed to fit your lifestyle—study online, advance your career, and achieve your goals without boundaries",
+    variant: "primary",
+  },
+
 ]

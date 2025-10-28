@@ -29,7 +29,8 @@ export function FeatureCard({ title, description, variant }: FeatureCardProps) {
 
   return (
     <Card
-      className={`${styles.container} border-0 rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow duration-300`}>
+      className={`${styles.container} border-0 rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow duration-300`}
+    >
       <div className="space-y-4">
         <h2 className={`${styles.title} text-2xl md:text-3xl font-bold leading-tight text-balance`}>{title}</h2>
         <p className={`${styles.description} text-sm md:text-base leading-relaxed`}>{description}</p>
