@@ -31,11 +31,19 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReduxProvider>
-        <HeaderSection />
-          
-        {children}
-        <Footer />
-         </ReduxProvider>
+          {/* ✅ Fixed Header */}
+          <header className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
+            <HeaderSection />
+          </header>
+
+          {/* ✅ Main Content with top padding to prevent overlap */}
+          <main className="pt-[80px]">
+            {children}
+          </main>
+
+          {/* ✅ Normal Footer (not fixed) */}
+          <Footer />
+        </ReduxProvider>
       </body>
     </html>
   );
