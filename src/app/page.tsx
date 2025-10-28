@@ -1,5 +1,7 @@
 "use client";
 import CouresSection from "@/component/Courses";
+import { AboutSection } from "@/component/education/sections/about";
+import { EducationSection } from "@/component/education/sections/education";
 import HeaderSection from "@/component/Header";
 import HeroSection from "@/component/HeroSection";
 import { LogoCarousel } from "@/component/partners";
@@ -45,9 +47,14 @@ export default function Home() {
             <CouresSection key={index} title={section.title} description={section.description} variant={section.variant} />
 
           ))
-
         }
       </div>
+      <div className="min-h-screen bg-gray-800">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6 lg:p-8 mx-auto">
+        <AboutSection />
+        <EducationSection />
+      </div>
+    </div>
     </div>
   );
 }
