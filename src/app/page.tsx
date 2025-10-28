@@ -1,4 +1,5 @@
 "use client";
+import TestimonialCarousel from "@/component/carousal";
 import CouresSection from "@/component/Courses";
 import { AboutSection } from "@/component/education/sections/about";
 import { EducationSection } from "@/component/education/sections/education";
@@ -64,6 +65,9 @@ export default function Home() {
     <div>
       <Faqs />
     </div>
+    <div>
+      <TestimonialCarousel />
+      </div>
     <div>
       <JoinUs />
     </div>
