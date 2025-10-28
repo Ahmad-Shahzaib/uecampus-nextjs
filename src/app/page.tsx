@@ -1,11 +1,23 @@
+"use client";
 import HeaderSection from "@/component/Header";
 import HeroSection from "@/component/HeroSection";
 import { LogoCarousel } from "@/component/partners";
 import { FeatureCard } from "@/component/testinomials/testinomials-card";
 import { FEATURE_CARDS, HeroSection_ue, PARTNER_LOGOS } from "@/constants";
-
+import { useDispatch, useSelector } from "@/redux/store";
+import { fetchCoursesData } from "@/redux/thunk/courses";
+import { useEffect } from "react";
 
 export default function Home() {
+
+  const dispatch = useDispatch();
+  const { data, isLoading, error } = useSelector((state) => state.courses);
+  console.log("courses data", data)
+
+  useEffect(() => {
+    dispatch(fetchCoursesData({}));
+  }, [dispatch]);
+
   return (
     <div>
       <div className="py-6 px-10">
@@ -30,3 +42,4 @@ export default function Home() {
     </div>
   );
 }
+
