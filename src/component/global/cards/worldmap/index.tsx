@@ -1,4 +1,4 @@
-'use client';               // <-- required for client-side Image in App Router
+'use client';
 
 import Image from 'next/image';
 import React from 'react';
@@ -18,14 +18,12 @@ export default function WorldMapVisualization() {
       }}
     >
       <Image
-        src="https://assets.grok.com/users/47827616-6e07-44d6-8646-e75c789df214/generated/d21ae70b-0f51-4b74-9ca7-83a8452adeb2/image.jpg"
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution.svg/1200px-World_map_-_low_resolution.svg.png"
         alt="World Map"
         width={800}
-        height={600}
+        height={400}
         priority
         style={{ objectFit: 'contain', width: '100%', height: 'auto' }}
-        placeholder="blur"
-        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/5+5PQAI8wN9Kq7Z7gAAAABJRU5ErkJggg=="
       />
     </div>
   );
