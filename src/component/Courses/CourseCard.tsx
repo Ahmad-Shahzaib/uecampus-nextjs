@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 export function ProgramCard({ item }: { item: any }) {
   return (
     <article className="w-full overflow-hidden rounded-3xl bg-[#111827] shadow-2xl flex flex-col justify-between transition-transform duration-300 hover:-translate-y-2">
-      <div className="flex flex-col p-5 sm:p-6 md:p-8 lg:p-10">
+      <div className="flex flex-col p-3 sm:p-4 md:p-4 lg:p-6">
         {/* Badge */}
         <div className="mb-4 sm:mb-6">
           <Badge

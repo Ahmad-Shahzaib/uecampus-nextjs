@@ -26,7 +26,7 @@ const CourseSection: React.FC = () => {
       </div>
 
       {/* Courses Grid */}
-      <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {CoursesSection_ue.map((item: any, index: number) => (
           <ProgramCard key={index} item={item} />
         ))}

@@ -4,8 +4,6 @@ import { useState } from "react"
 import { Plus, Minus } from "lucide-react"
 import { faqItems } from "@/constants"
 
-
-
 export default function Faqs() {
     const [expandedId, setExpandedId] = useState<number | null>(1)
 
@@ -14,7 +12,22 @@ export default function Faqs() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-900 text-white overflow-hidden">
+        <div
+            className="min-h-screen   text-white overflow-hidden relative"
+            style={{
+                backgroundImage: `
+                    url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-2.png'),
+                    linear-gradient(to bottom, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9))
+                `,
+                backgroundBlendMode: 'overlay',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+            }}
+        >
+            {/* Optional: Add a dark scrim for extra contrast */}
+            <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+
             <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                     {/* Left Section */}
