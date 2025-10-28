@@ -73,3 +73,44 @@ export const HeroSection_ue: HeroSection[] = [
   },
 
 ]
+
+
+import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react"
+
+export const SOCIAL_LINKS = [
+  {
+    name: "Facebook",
+    href: "https://facebook.com",
+    icon: Facebook,
+  },
+  {
+    name: "Twitter",
+    href: "https://twitter.com",
+    icon: Twitter,
+  },
+  {
+    name: "LinkedIn",
+    href: "https://linkedin.com",
+    icon: Linkedin,
+  },
+  {
+    name: "Instagram",
+    href: "https://instagram.com",
+    icon: Instagram,
+  },
+]
+
+export const FOOTER_LINKS = {
+  quickLinks: [
+    { name: "About Us", href: "/about" },
+    { name: "Accreditation & Partners", href: "/accreditation" },
+    { name: "Frequently Asked Questions", href: "/faq" },
+    { name: "Scholarships", href: "/scholarships" },
+  ],
+  programs: [
+    { name: "Walsh Programmes", href: "/programs/walsh" },
+    { name: "PPA Programmes", href: "/programs/ppa" },
+    { name: "eie Business School", href: "/programs/eie" },
+    { name: "Qualifi Diplomas", href: "/programs/qualifi" },
+  ],
+}

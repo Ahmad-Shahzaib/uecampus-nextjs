@@ -20,9 +20,6 @@ export default function Home() {
 
   return (
     <div>
-      <div className="py-6 px-10">
-        <HeaderSection />
-      </div>
       <div className="py-6 px-10 bg-gray-800 flex flex-col gap-16">
         {HeroSection_ue.map((section, index) => (
           <HeroSection key={index} title={section.title} description={section.description} variant={section.variant} />
