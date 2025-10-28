@@ -2,6 +2,7 @@
 import CouresSection from "@/component/Courses";
 import { AboutSection } from "@/component/education/sections/about";
 import { EducationSection } from "@/component/education/sections/education";
+import Faqs from "@/component/faqs";
 import { GlobalCampusSection } from "@/component/global";
 import HeaderSection from "@/component/Header";
 import HeroSection from "@/component/HeroSection";
@@ -59,6 +60,9 @@ export default function Home() {
         description="UECampus is home to a vibrant community of international students who represent a wide range of countries and cultural backgrounds. Their presence strengthens our mission to provide globally relevant education and fosters an environment of academic exchange and cross-cultural learning. Our international students are shaping the future—locally and globally."
         locations={studentLocations}
       />
+    </div>
+    <div>
+      <Faqs />
     </div>
     <div>
       <JoinUs />

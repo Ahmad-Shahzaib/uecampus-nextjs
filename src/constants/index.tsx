@@ -154,3 +154,49 @@ export const studentLocations = [
     { id: "4", country: "Malaysia", lat: 4.2105, lng: 101.6964, color: "#EC4899" },
     { id: "5", country: "China", lat: 35.8617, lng: 104.1954, color: "#FBBF24" },
 ]
+
+
+
+export const faqItems = [
+  {
+    id: 1,
+    question: "What is UeCampus?",
+    answer:
+      "UeCampus is an online platform offering a wide range of courses and degrees to help you advance your career.",
+  },
+  {
+    id: 2,
+    question: "How do I enroll in a course?",
+    answer:
+      "You can enroll in a course by browsing our catalog, selecting your desired course, and completing the enrollment process through your account.",
+  },
+  {
+    id: 3,
+    question: "Are the degrees recognized globally?",
+    answer:
+      "Yes, our degrees are recognized by leading institutions and employers worldwide, ensuring your credentials are valued globally.",
+  },
+  {
+    id: 4,
+    question: "Can I study part-time?",
+    answer: "All our courses are designed to be flexible, allowing you to study at your own pace and schedule.",
+  },
+  {
+    id: 5,
+    question: "What support is available for students?",
+    answer:
+      "We provide comprehensive support including 24/7 customer service, academic advisors, technical support, and community forums.",
+  },
+  {
+    id: 6,
+    question: "How much does it cost?",
+    answer:
+      "Pricing varies depending on the course or degree program. We offer flexible payment plans and financial aid options.",
+  },
+  {
+    id: 7,
+    question: "Is there a mobile app for studying?",
+    answer:
+      "Yes, our mobile app is available on both iOS and Android, allowing you to learn on the go anytime, anywhere.",
+  },
+]
