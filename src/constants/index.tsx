@@ -114,3 +114,13 @@ export const FOOTER_LINKS = {
     { name: "Qualifi Diplomas", href: "/programs/qualifi" },
   ],
 }
+
+
+export const CoursesSection_ue = [
+  {
+    title: "Want to know more about our courses?",
+    description:
+      "Discover programs tailored to your ambitions. From business to technology, our diverse course offerings empower you to excel in your chosen field.",
+    variant: "primary",
+  }
+]

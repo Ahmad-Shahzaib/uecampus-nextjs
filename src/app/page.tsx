@@ -1,9 +1,10 @@
 "use client";
+import CouresSection from "@/component/Courses";
 import HeaderSection from "@/component/Header";
 import HeroSection from "@/component/HeroSection";
 import { LogoCarousel } from "@/component/partners";
 import { FeatureCard } from "@/component/testinomials/testinomials-card";
-import { FEATURE_CARDS, HeroSection_ue, PARTNER_LOGOS } from "@/constants";
+import { CoursesSection_ue, FEATURE_CARDS, HeroSection_ue, PARTNER_LOGOS } from "@/constants";
 import { useDispatch, useSelector } from "@/redux/store";
 import { fetchCoursesData } from "@/redux/thunk/courses";
 import { useEffect } from "react";
@@ -38,7 +39,19 @@ export default function Home() {
       </div>
       <div>
       </div>
+      <div>
+        {
+          CoursesSection_ue.map((section, index) => (
+            <CouresSection key={index} title={section.title} description={section.description} variant={section.variant} />
+
+          ))
+
+        }
+      </div>
     </div>
   );
 }
+
+
+
 
