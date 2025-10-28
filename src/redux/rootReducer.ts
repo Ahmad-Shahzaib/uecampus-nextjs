@@ -3,6 +3,11 @@ import { PersistConfig, persistReducer } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import { clearStore } from "@/redux/utils";
 import coursesReducer from "./slices/courses";
+import faqsReducer from "./slices/faqs";
+import aboutReducer from "./slices/aboutSlice";
+import testinomialsReducer from "./slices/testinomialsSlice";
+import heroReducer from "./slices/heroSlice";
+
 
 const createNoopStorage = () => ({
   getItem(): Promise<null> {
@@ -37,11 +42,39 @@ const coursesPersistConfig: PersistConfig<any> = {
   whitelist: [],
 };
 
+const aboutPersistConfig: PersistConfig<any> = {
+  key: "about",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: [],
+};
+const faqsPersistConfig: PersistConfig<any> = {
+  key: "faqs",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: [],
+};
+const heroPersistConfig: PersistConfig<any> = {
+  key: "hero",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: [],
+};
+const testinomialsPersistConfig: PersistConfig<any> = {
+  key: "testinomials",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: [],
+};
 
 
 
 const appReducer = combineReducers({
   courses: persistReducer(coursesPersistConfig, coursesReducer),
+  faqs: persistReducer(faqsPersistConfig, faqsReducer),
+  testinomials: persistReducer(testinomialsPersistConfig, testinomialsReducer),
+  hero: persistReducer(heroPersistConfig, heroReducer),
+  about: persistReducer(aboutPersistConfig, aboutReducer)
 });
 
 const rootReducer: Reducer = (
