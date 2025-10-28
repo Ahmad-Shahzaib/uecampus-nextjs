@@ -4,9 +4,21 @@ import { Button } from "@/components/ui/button"
 
 export function AboutSection() {
   return (
-    <section className="gradient-pattern rounded-2xl p-8 lg:p-12 flex flex-col justify-between min-h-[500px] lg:min-h-[600px]">
+    <section
+      className="relative rounded-2xl p-8 lg:p-12 flex flex-col justify-between min-h-[500px] lg:min-h-[600px] bg-[#6A1B9A]/90 overflow-hidden"
+      style={{
+        backgroundImage: `
+          url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-2.png'),
+           linear-gradient(135deg, #6A1B9A 0%, #8E24AA 50%, #AB47BC 100%))
+        `,
+        backgroundSize: 'cover, auto',
+        backgroundPosition: 'center, center',
+        backgroundRepeat: 'no-repeat, no-repeat',
+        backgroundBlendMode: 'overlay, normal',
+      }}
+    >
       {/* Content Container */}
-      <div className="space-y-6">
+      <div className="relative z-10 space-y-6">
         {/* Label */}
         <div className="inline-block">
           <span className="text-sm font-medium text-white/80 tracking-wide">About Us</span>
@@ -28,8 +40,11 @@ export function AboutSection() {
       </div>
 
       {/* Read More Button */}
-      <div className="pt-4">
-        <Button variant="outline" className="border-white text-white hover:bg-white/10 hover:text-white bg-transparent">
+      <div className="relative z-10 pt-4">
+        <Button
+          variant="outline"
+          className="border-white text-white hover:bg-white/10 hover:text-white bg-transparent transition-all duration-200"
+        >
           Read More
         </Button>
       </div>

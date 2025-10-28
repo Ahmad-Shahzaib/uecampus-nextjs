@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import React from 'react'
 
 const HeroSection = ({
@@ -7,10 +9,10 @@ const HeroSection = ({
 }: {
     title: string
     description: string
-    variant: "primary" | "secondary" | "tertiary"
+    variant: "primary" | "secondary" | "destructive"
 }) => {
     return (
-        <div className="relative w-full h-[500px] flex items-center content-center mx-auto justify-center overflow-hidden rounded-lg">
+        <div className="relative w-full h-[500px] flex items-center justify-center mx-auto overflow-hidden rounded-lg">
             {/* Background Video – CENTERED */}
             <video
                 className="absolute inset-0 w-full h-full object-cover"
@@ -21,28 +23,45 @@ const HeroSection = ({
                 playsInline
             />
 
-            {/* Overlay for better text visibility */}
-            <div className="absolute inset-0 bg-black/10"></div>
+            {/* Dark overlay for text readability */}
+            <div className="absolute inset-0 bg-black/40"></div>
 
-            {/* Content */}
-            <div
-                className={`relative z-10 text-center px-6 sm:px-8 ${variant === "primary"
-                    ? "text-white"
-                    : variant === "secondary"
-                        ? "text-white"
-                        : "text-gray-900"
-                    }`}
-            >
-                <div className='w-1/2 mx-auto'>
-                    <h1 className="text-2xl font-semibold sm:text-3xl lg:text-4xl whitespace-pre-line">
+            {/* Content Container */}
+            <div className="relative z-10 text-center px-6 sm:px-8 max-w-4xl mx-auto">
+                {/* Title */}
+                <div className="w-1/2 mx-auto">
+                    <h1
+                        className={`text-2xl font-semibold sm:text-3xl lg:text-4xl whitespace-pre-line ${variant === "primary" || variant === "secondary"
+                            ? "text-white"
+                            : "text-gray-900"
+                            }`}
+                    >
                         {title}
                     </h1>
                 </div>
-                <p className="mt-6 max-w-2xl mx-auto text-lg whitespace-pre-line">
+
+                {/* Description */}
+                <p
+                    className={`mt-6 text-lg whitespace-pre-line max-w-2xl mx-auto ${variant === "primary" || variant === "secondary"
+                        ? "text-white/90"
+                        : "text-gray-700"
+                        }`}
+                >
                     {description}
                 </p>
+
+                {/* Search Input + Button */}
+                <div className="mt-8 flex flex-col sm:flex-row gap-3 items-center justify-center w-full">
+                    <Input
+                        className="w-full py-6 sm:w-[400px] bg-white/90 backdrop-blur-sm border-white/20"
+                        placeholder="Search courses..."
+                    />
+                    <Button variant="destructive" className="px-8 py-6 w-full rounded-md sm:w-auto">
+                        Search
+                    </Button>
+                </div>
             </div>
-        </div>
+        </div >
     )
 }
 
