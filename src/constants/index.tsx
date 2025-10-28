@@ -62,6 +62,7 @@ export const PARTNER_LOGOS = [
     src: "	https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/card-logo-6.png",
     alt: "PPA Business School",
   },
+
 ]
 export const HeroSection_ue: HeroSection[] = [
   {

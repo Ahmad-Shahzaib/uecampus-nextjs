@@ -10,7 +10,7 @@ const HeroSection = ({
     variant: "primary" | "secondary" | "tertiary"
 }) => {
     return (
-        <div className="relative w-[90%] h-[500px] flex items-center content-center mx-auto justify-center overflow-hidden rounded-lg">
+        <div className="relative w-full h-[500px] flex items-center content-center mx-auto justify-center overflow-hidden rounded-lg">
             {/* Background Video – CENTERED */}
             <video
                 className="absolute inset-0 w-full h-full object-cover"

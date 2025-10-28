@@ -28,14 +28,14 @@ export default function Home() {
           <HeroSection key={index} title={section.title} description={section.description} variant={section.variant} />
         )
         )}
-        <div className="px-10">
+        <div className="">
           <div className="grid gap-4 md:gap-6 grid-cols-[repeat(auto-fit,minmax(350px,1fr))]">
             {FEATURE_CARDS.map((card, index) => (
               <FeatureCard key={index} title={card.title} description={card.description} variant={card.variant} />
             ))}
           </div>
         </div>
-        <div className="px-10">
+        <div className="">
           <LogoCarousel logos={PARTNER_LOGOS} />
         </div>
       </div>

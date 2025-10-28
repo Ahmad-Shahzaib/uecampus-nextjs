@@ -16,10 +16,10 @@ interface LogoCarouselProps {
 export function LogoCarousel({ logos }: LogoCarouselProps) {
     return (
         <section className="w-full bg-slate-800 py-12 md:py-16 lg:py-20">
-            <div className=" mx-auto px-4 md:px-8">
+            <div className=" mx-auto">
                 {/* Horizontal Scroll Container */}
                 <div
-                    className="flex gap-6 md:gap-8 lg:gap-10 overflow-x-auto scroll-smooth pb-2 snap-x snap-mandatory"
+                    className="flex gap-6 md:gap-4 lg:gap-2 overflow-x-auto scroll-smooth pb-2 snap-x snap-mandatory"
                     style={{
                         scrollBehavior: "smooth",
                         WebkitOverflowScrolling: "touch",

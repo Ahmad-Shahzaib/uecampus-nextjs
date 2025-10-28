@@ -56,7 +56,7 @@ export function ImageCard({
                 height={height}
                 loading={loading}
                 onError={() => setImgSrc(fallback)}
-                className={cn("object-cover w-36 transition-transform hover:scale-105")}
+                className={cn("object-cover w-28 transition-transform hover:scale-105")}
             />
         </div>
     );
