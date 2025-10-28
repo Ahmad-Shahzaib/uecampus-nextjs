@@ -5,12 +5,14 @@ import { EducationSection } from "@/component/education/sections/education";
 import { GlobalCampusSection } from "@/component/global";
 import HeaderSection from "@/component/Header";
 import HeroSection from "@/component/HeroSection";
+import JoinUs from "@/component/joinus";
 import { LogoCarousel } from "@/component/partners";
 import { FeatureCard } from "@/component/testinomials/testinomials-card";
 import { CoursesSection_ue, FEATURE_CARDS, HeroSection_ue, PARTNER_LOGOS, studentLocations } from "@/constants";
 import { useDispatch, useSelector } from "@/redux/store";
 import { fetchCoursesData } from "@/redux/thunk/courses";
 import { useEffect } from "react";
+
 
 export default function Home() {
 
@@ -57,6 +59,9 @@ export default function Home() {
         description="UECampus is home to a vibrant community of international students who represent a wide range of countries and cultural backgrounds. Their presence strengthens our mission to provide globally relevant education and fosters an environment of academic exchange and cross-cultural learning. Our international students are shaping the future—locally and globally."
         locations={studentLocations}
       />
+    </div>
+    <div>
+      <JoinUs />
     </div>
     </div>
   );
