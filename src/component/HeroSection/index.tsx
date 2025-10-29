@@ -24,8 +24,8 @@ const HeroSection = ({
         />
         <div className="absolute inset-0 bg-black/40"></div>
 
-        <div className="relative z-10 text-center px-6 sm:px-8 max-w-4xl mx-auto">
-          <div className="w-1/2 mx-auto">
+        <div className="relative z-10 text-center px-2 sm:px-8 sm:max-w-4xl w-full mx-auto">
+          <div className="sm:w-1/2 w-full mx-auto">
             <h1
               className={`text-2xl font-semibold sm:text-3xl lg:text-4xl whitespace-pre-line ${
                 variant === 'primary' || variant === 'secondary'
