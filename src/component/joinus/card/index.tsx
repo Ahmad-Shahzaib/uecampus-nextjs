@@ -20,7 +20,7 @@ export function CTACard() {
       {/* Buttons */}
       <div className="space-y-4">
         <Button
-          className="w-full bg-black hover:bg-gray-900 text-white font-semibold py-5 sm:py-6 text-base rounded-xl transition-colors"
+          className="w-full bg-black border-0 hover:bg-gray-900 text-white font-semibold py-5 sm:py-6 text-base rounded-xl transition-colors"
           onClick={() => console.log("Enquire Now clicked")}
         >
           Enquire Now
