@@ -30,11 +30,11 @@ const CourseSection: React.FC = () => {
 
       {/* Courses Grid */}
     <div
-  className="grid gap-4 sm:gap-6 grid-cols-[repeat(auto-fit,minmax(300px,1fr))]"
+  className="grid gap-4 sm:gap-6 grid-cols-[repeat(auto-fit,minmax(275px,1fr))] "
 >
   {CoursesSection_ue.map((item: any, index: number) => (
     <ProgramCard key={index} item={item} />
-  ))}
+  ))} 
 </div>
 
     </section>

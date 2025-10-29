@@ -123,25 +123,22 @@ export default function TestimonialCarousel() {
       </div>
 
       {/* Content Section */}
-      <div className="relative z-10 mx-auto p-4 flex flex-col lg:flex-row items-center gap-10 px-8">
+      <div className="relative z-10 mx-auto p-4 flex flex-col lg:flex-row items-center gap-10 px-4 sm:px-6 lg:px-8">
         {/* Left Section */}
-        <div className="w-[450px] flex-shrink-0">
-          <h2 className="text-5xl md:text-6xl font-bold text-[#6A1B9A] leading-tight">
-            What Our <br /> Students Say
+        <div className="w-full lg:w-[450px] flex-shrink-0 text-center lg:text-left">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#6A1B9A] leading-tight">
+            What Our <br className="hidden lg:block" /> Students Say
           </h2>
-          <p className="mt-6 text-gray-700 text-lg leading-relaxed">
+          <p className="mt-4 sm:mt-6 text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed">
             Hear directly from our students about their experiences, growth, and
             achievements at our university. Their stories reflect the quality of
             education and support we provide.
           </p>
         </div>
 
-       
-        {/* Right Section (Carousel) – full width */}
-        <div className="flex-1 ml-42  relative w-full">
-          {/* Carousel wrapper – limits the visible area */}
+        {/* Right Section (Carousel) */}
+        <div className="flex-1 relative w-full">
           <div className="relative mx-auto max-w-3xl w-full">
-            {/* Track container – clips overflow */}
             <div className="overflow-hidden rounded-2xl bg-white shadow-lg">
               <div
                 className="flex transition-transform duration-500 ease-in-out"
@@ -150,24 +147,24 @@ export default function TestimonialCarousel() {
                 {testimonials.map((t) => (
                   <div
                     key={t.id}
-                    className="w-full flex-shrink-0 px-6 py-10 md:px-12 md:py-12"
+                    className="w-full flex-shrink-0 px-3 sm:px-6 py-6 sm:py-8"
                   >
-                    <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-                      {/* Image */}
-                      <div className="relative h-48 w-40 md:h-56 md:w-48 flex-shrink-0 overflow-hidden rounded-md">
+                    <div className="flex flex-col md:flex-row items-center md:items-start gap-6 sm:gap-8">
+                      {/* ✅ Image size increased here */}
+                      <div className="relative h-56 w-44 sm:h-64 sm:w-52 md:h-72 md:w-60 lg:h-80 lg:w-64 flex-shrink-0 overflow-hidden rounded-xl shadow-md">
                         <img
                           src={t.image}
                           alt={t.name}
-                          className="h-full w-full object-cover rounded-md"
+                          className="h-full w-full object-cover rounded-xl"
                         />
                       </div>
 
                       {/* Text */}
                       <div className="text-center md:text-left flex-1">
-                        <h3 className="text-lg font-semibold text-gray-900">
+                        <h3 className="text-base sm:text-lg font-semibold text-gray-900">
                           {t.name} - {t.degree} - {t.country}
                         </h3>
-                        <p className="mt-3 text-gray-600 leading-relaxed text-base">
+                        <p className="mt-3 text-gray-600 leading-relaxed text-sm sm:text-base">
                           {t.text}
                         </p>
                       </div>
@@ -177,31 +174,31 @@ export default function TestimonialCarousel() {
               </div>
             </div>
 
-            {/* Arrows – placed **outside** the track */}
+            {/* Arrows */}
             <button
               onClick={handlePrevious}
-              className="absolute left-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-white text-gray-700 shadow-md hover:bg-gray-100 transition z-10"
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white text-gray-700 shadow-md hover:bg-gray-100 transition z-10"
               aria-label="Previous testimonial"
             >
-              <ChevronLeft className="h-6 w-6" />
+              <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
             </button>
 
             <button
               onClick={handleNext}
-              className="absolute right-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-white text-gray-700 shadow-md hover:bg-gray-100 transition z-10"
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white text-gray-700 shadow-md hover:bg-gray-100 transition z-10"
               aria-label="Next testimonial"
             >
-              <ChevronRight className="h-6 w-6" />
+              <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
             </button>
           </div>
 
-          {/* Dots – centered under the carousel */}
-          <div className="mt-6 flex justify-center gap-2">
+          {/* Dots */}
+          <div className="mt-5 sm:mt-6 flex justify-center gap-2">
             {testimonials.map((_, i) => (
               <button
                 key={i}
                 onClick={() => goToSlide(i)}
-                className={`h-3 w-3 rounded-full transition-colors duration-300 ${
+                className={`h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full transition-colors duration-300 ${
                   i === currentIndex ? "bg-gray-600" : "bg-gray-300"
                 }`}
                 aria-label={`Go to slide ${i + 1}`}
