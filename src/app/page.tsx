@@ -54,9 +54,9 @@ export default function Home() {
       <div>
         <CouresSection />
       </div>
-    <div className="min-h-screen bg-gray-800 py-8 px-6">
-  <div
-    className="
+      <div className="min-h-screen bg-gray-800 py-8 px-6">
+        <div
+          className="
       grid 
       gap-6 
       mx-auto 
@@ -64,13 +64,16 @@ export default function Home() {
       grid-cols-1 
       md:grid-cols-[minmax(300px,1fr)_minmax(300px,1fr)]
     "
-  >
-    <AboutSection />
-    <EducationSection />
-  </div>
-</div>
+        >
+          <AboutSection />
+          <EducationSection />
+        </div>
+      </div>
 
       <div>
+        <div>
+        <TestimonialCarousel />
+      </div>
         <GlobalCampusSection
           title="Bringing the World Into Our Classrooms"
           description="UECampus is home to a vibrant community of international students who represent a wide range of countries and cultural backgrounds. Their presence strengthens our mission to provide globally relevant education and fosters an environment of academic exchange and cross-cultural learning. Our international students are shaping the future—locally and globally."
@@ -80,9 +83,7 @@ export default function Home() {
       <div>
         <Faqs />
       </div>
-      <div>
-        <TestimonialCarousel />
-      </div>
+      
       <div>
         <JoinUs />
       </div>
