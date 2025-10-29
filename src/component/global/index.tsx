@@ -21,7 +21,7 @@ export function GlobalCampusSection({
   locations = [],
 }: GlobalCampusSectionProps) {
   return (
-    <section className="w-full py-12 md:py-20 px-4 md:px-6 lg:px-8 bg-white">
+    <section className="w-full py-12 md:py-20 px-2 md:px-4 lg:px-8 bg-white">
       <div
         className="
           grid gap-8 lg:gap-12 

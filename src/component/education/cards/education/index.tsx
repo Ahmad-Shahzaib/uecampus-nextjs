@@ -6,7 +6,7 @@ export function EducationCard() {
   return (
     <Card className="bg-white border-0 shadow-lg rounded-2xl overflow-hidden">
       <CardContent
-        className="px-8 py-4 lg:p-10 bg-fit bg-center"
+        className="lg:px-8 px-4 py-4 lg:p-10 bg-fit bg-center"
         style={{
           backgroundImage:
             "url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.png')",

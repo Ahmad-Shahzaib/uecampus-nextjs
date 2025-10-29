@@ -7,7 +7,7 @@ import Link from "next/link";
 export function AboutSection() {
   return (
     <section
-      className="relative rounded-2xl p-8 lg:p-8 flex flex-col justify-between min-h-[500px] lg:min-h-[600px] bg-purple-900/90 overflow-hidden"
+      className="relative rounded-2xl p-4 lg:p-8 flex flex-col justify-between min-h-[500px] lg:min-h-[600px] bg-purple-900/90 overflow-hidden"
       style={{
         backgroundImage: `
           url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-2.png'),
