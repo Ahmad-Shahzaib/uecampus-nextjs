@@ -26,7 +26,7 @@ export default function Page() {
       gap-6 
       mx-auto 
      
-      grid-cols-1 
+      grid-cols-1  
       md:grid-cols-[minmax(300px,1fr)_minmax(300px,1fr)]
     "
         >
