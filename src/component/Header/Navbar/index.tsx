@@ -27,8 +27,9 @@ const NavigationSection = ({ mobile = false }) => {
           <NavigationMenuTrigger>About Us</NavigationMenuTrigger>
           <NavigationMenuContent>
             <div className="grid gap-3 p-4 w-[300px]">
-              <NavigationMenuLink href="/about-us">Overview</NavigationMenuLink>
-              <NavigationMenuLink href="/team">Our Team</NavigationMenuLink>
+              <NavigationMenuLink href="/about-us">About UeCampus</NavigationMenuLink>
+              <NavigationMenuLink href="/team">Accreditation & Partners </NavigationMenuLink>
+              <NavigationMenuLink href="/faqs">Frequently Asked Questions</NavigationMenuLink>
             </div>
           </NavigationMenuContent>
         </NavigationMenuItem>
