@@ -1,42 +1,56 @@
-import React from 'react'
+import React from "react";
 import {
-    NavigationMenu,
-    NavigationMenuList,
-    NavigationMenuItem,
-    NavigationMenuLink,
-    NavigationMenuTrigger,
-    NavigationMenuContent
-} from '@/components/ui/navigation-menu'
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
+} from "@/components/ui/navigation-menu";
 
-const NavigationSection = () => {
+const NavigationSection = ({ mobile = false }) => {
+  if (mobile) {
     return (
-        <div>
-            <NavigationMenu>
-                <NavigationMenuList>
-                    <NavigationMenuItem>
-                        <NavigationMenuTrigger>About Us</NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                            <div className="grid gap-3 p-4 w-[400px]">
-                                <NavigationMenuLink href="/about-us">Product 1</NavigationMenuLink>
-                                <NavigationMenuLink href="/product2">Product 2</NavigationMenuLink>
-                            </div>
-                        </NavigationMenuContent>
-                    </NavigationMenuItem>
+      <ul className="flex flex-col gap-3 w-full text-gray-800 font-medium">
+        <li>About Us</li>
+        <li>Programmes & Diploma</li>
+        <li>Scholarship</li>
+        <li>Contact Us</li>
+      </ul>
+    );
+  }
 
-                    <NavigationMenuItem>
-                        <NavigationMenuLink href="/about">Programmes & Diploma </NavigationMenuLink>
-                    </NavigationMenuItem>
+  return (
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>About Us</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <div className="grid gap-3 p-4 w-[300px]">
+              <NavigationMenuLink href="/about-us">Overview</NavigationMenuLink>
+              <NavigationMenuLink href="/team">Our Team</NavigationMenuLink>
+            </div>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
 
-                    <NavigationMenuItem>
-                        <NavigationMenuLink href="/contact">Scholarship</NavigationMenuLink>
-                    </NavigationMenuItem>
-                    <NavigationMenuItem>
-                        <NavigationMenuLink href="/contact">Contact Us</NavigationMenuLink>
-                    </NavigationMenuItem>
-                </NavigationMenuList>
-            </NavigationMenu>
-        </div>
-    )
-}
+        <NavigationMenuItem>
+          <NavigationMenuLink href="/programmes">
+            Programmes & Diploma
+          </NavigationMenuLink>
+        </NavigationMenuItem>
 
-export default NavigationSection
+        <NavigationMenuItem>
+          <NavigationMenuLink href="/scholarship">
+            Scholarship
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+
+        <NavigationMenuItem>
+          <NavigationMenuLink href="/contact">Contact Us</NavigationMenuLink>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  );
+};
+
+export default NavigationSection;
