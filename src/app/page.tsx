@@ -27,18 +27,24 @@ export default function Home() {
 
   return (
     <div>
-      <div className="py-6 px-10 bg-gray-800 flex flex-col gap-16">
+      <div className="py-6 px-10 bg-gray-800 flex flex-col space-y-8">
         {HeroSection_ue.map((section, index) => (
           <HeroSection key={index} title={section.title} description={section.description} variant={section.variant} />
         )
         )}
-        <div className="">
-          <div className="grid gap-4 md:gap-6 grid-cols-[repeat(auto-fit,minmax(350px,1fr))]">
+        <div className="flex h-auto justify-center">
+          <div className="grid gap-4 md:gap-6 grid-cols-[repeat(auto-fit,minmax(350px,1fr))] w-full px-6">
             {FEATURE_CARDS.map((card, index) => (
-              <FeatureCard key={index} title={card.title} description={card.description} variant={card.variant} />
+              <FeatureCard
+                key={index}
+                title={card.title}
+                description={card.description}
+                variant={card.variant}
+              />
             ))}
           </div>
         </div>
+
         <div className="">
           <LogoCarousel logos={PARTNER_LOGOS} />
         </div>
@@ -48,12 +54,22 @@ export default function Home() {
       <div>
         <CouresSection />
       </div>
-      <div className="min-h-screen bg-gray-800">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6 lg:p-8 mx-auto">
-          <AboutSection />
-          <EducationSection />
-        </div>
-      </div>
+    <div className="min-h-screen bg-gray-800 py-8 px-6">
+  <div
+    className="
+      grid 
+      gap-6 
+      mx-auto 
+     
+      grid-cols-1 
+      md:grid-cols-[minmax(300px,1fr)_minmax(300px,1fr)]
+    "
+  >
+    <AboutSection />
+    <EducationSection />
+  </div>
+</div>
+
       <div>
         <GlobalCampusSection
           title="Bringing the World Into Our Classrooms"

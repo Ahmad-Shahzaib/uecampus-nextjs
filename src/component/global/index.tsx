@@ -1,7 +1,7 @@
 "use client"
 
 import { HeroCard } from "./cards/hero"
-import { WorldMapVisualization } from "./cards/worldmap"
+import InteractiveGlobe from "./cards/worldmap"
 
 
 interface GlobalCampusSectionProps {
@@ -33,11 +33,12 @@ export function GlobalCampusSection({
           {/* Right: World Map */}
           <div className="flex items-center justify-center w-full">
             <div className="w-full aspect-square lg:aspect-auto lg:h-96 xl:h-full">
-              <WorldMapVisualization locations={locations} />
+              <InteractiveGlobe />
             </div>
           </div>
         </div>
       </div>
     </section>
+    
   )
 }
