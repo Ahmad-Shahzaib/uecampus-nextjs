@@ -28,10 +28,13 @@ export default function Home() {
   return (
     <div>
       <div className="py-6  bg-gray-800 flex flex-col space-y-8">
-        {HeroSection_ue.map((section, index) => (
+        <div className="px-10">
+    {HeroSection_ue.map((section, index) => (
           <HeroSection key={index} title={section.title} description={section.description} variant={section.variant} />
         )
         )}
+        </div>
+    
         <div className="flex h-auto justify-center px-10">
          <div className="grid gap-4 md:gap-6 grid-cols-[repeat(auto-fit,minmax(230px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(280px,1fr))] w-full">
 
@@ -46,7 +49,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="">
+        <div className="px-10">
           <LogoCarousel logos={PARTNER_LOGOS} />
         </div>
       </div>
