@@ -119,7 +119,7 @@ export default function InteractiveGlobe() {
         className="relative w-full h-[500px] rounded-2xl overflow-hidden"
       />
       {/* Half-globe mask */}
-      <div className="globe-mask absolute inset-0 bg-gradient-to-r from-slate-900/90 to-transparent pointer-events-none" />
+      <div className="globe-mask absolute  bg-gradient-to-r from-slate-900/90 to-transparent pointer-events-none" />
     </div>
   );
 }
