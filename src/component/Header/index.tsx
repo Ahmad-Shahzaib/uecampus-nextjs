@@ -21,16 +21,23 @@ const HeaderSection = () => {
         ${isScrolled ? "left-4 right-4 top-2 rounded-2xl px-6" : "w-full px-8"}
       `}
     >
-      <div className="flex items-center justify-between py-4">
-        <LogoSection />
+      <div className="flex items-center justify-between py-4 relative">
+        {/* Left: Logo */}
+        <div className="flex-shrink-0">
+          <LogoSection />
+        </div>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
+        {/* Center: Navigation (only visible on desktop) */}
+        <div className="hidden md:flex absolute left-1/2 -translate-x-1/2">
           <NavigationSection />
+        </div>
+
+        {/* Right: Buttons (desktop) */}
+        <div className="hidden md:flex flex-shrink-0">
           <ButtonSection />
         </div>
 
-        {/* Mobile Hamburger */}
+        {/* Mobile: Hamburger */}
         <div className="md:hidden">
           <button
             onClick={() => setMenuOpen(!menuOpen)}

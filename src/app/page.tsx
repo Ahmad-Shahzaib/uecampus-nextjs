@@ -33,7 +33,8 @@ export default function Home() {
         )
         )}
         <div className="flex h-auto justify-center px-10">
-          <div className="grid gap-4 md:gap-6 grid-cols-[repeat(auto-fit,minmax(280px,1fr))] w-full">
+         <div className="grid gap-4 md:gap-6 grid-cols-[repeat(auto-fit,minmax(230px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(280px,1fr))] w-full">
+
             {FEATURE_CARDS.map((card, index) => (
               <FeatureCard
                 key={index}
