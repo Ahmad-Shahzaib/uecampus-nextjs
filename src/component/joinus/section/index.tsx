@@ -4,21 +4,22 @@ import { HeroContent } from "../content";
 export function HeroSection() {
   return (
     <section
-      className="hero-pattern  flex items-center justify-center px-4 py-12"
+      className="hero-pattern  flex items-center justify-center px-4 py-12 rounded-2xl"
       style={{
-        backgroundColor: 'rgb(106, 27, 154)', // solid purple base
+        backgroundColor: 'rgba(106, 27, 154, 0.85)',
         backgroundImage: `
        
           url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-2.png')
         `,
+        
         backgroundSize: 'cover, auto',
         backgroundPosition: 'center, center',
         backgroundRepeat: 'no-repeat, no-repeat',
         backgroundBlendMode: 'overlay, normal',
       }}
     >
-      <div className="w-full max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+      <div className="w-full  mx-auto ">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12   items-center">
           {/* Left Content */}
           <HeroContent />
 

@@ -13,7 +13,7 @@ export default function Faqs() {
 
   return (
     <section
-      className="relative min-h-screen text-white overflow-hidden"
+      className="relative min-h-screen text-white overflow-hidden my-3"
       style={{
         backgroundImage: `
           url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-2.png'),
@@ -28,7 +28,7 @@ export default function Faqs() {
       {/* Background overlay */}
       <div className="absolute pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <div className="relative z-10  mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           {/* Left Section */}
           <div className="flex flex-col justify-center text-center lg:text-left space-y-4">

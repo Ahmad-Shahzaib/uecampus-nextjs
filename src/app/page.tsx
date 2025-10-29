@@ -33,7 +33,7 @@ export default function Home() {
         )
         )}
         <div className="flex h-auto justify-center">
-          <div className="grid gap-4 md:gap-6 grid-cols-[repeat(auto-fit,minmax(350px,1fr))] w-full px-6">
+          <div className="grid gap-4 md:gap-6 grid-cols-[repeat(auto-fit,minmax(350px,1fr))] w-full ">
             {FEATURE_CARDS.map((card, index) => (
               <FeatureCard
                 key={index}
@@ -54,7 +54,7 @@ export default function Home() {
       <div>
         <CouresSection />
       </div>
-      <div className="min-h-screen bg-gray-800 py-8 px-6">
+      <div className="min-h-screen bg-gray-800 py-8 px-8">
         <div
           className="
       grid 

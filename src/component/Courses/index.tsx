@@ -8,7 +8,7 @@ import { CoursesSection_ue } from "@/constants";
 const CourseSection: React.FC = () => {
   return (
     <section
-      className="relative bg-cover bg-center bg-no-repeat py-16 sm:py-20 px-4 sm:px-8 lg:px-20"
+      className="relative bg-cover bg-center bg-no-repeat py-16 sm:py-20 px-4 sm:px-4 lg:px-10"
       style={{
         backgroundImage:
           "url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-box-line-background.png')",
@@ -16,7 +16,7 @@ const CourseSection: React.FC = () => {
     >
       {/* Header Section */}
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-12 sm:mb-16">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-purple-700 leading-tight max-w-3xl">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-purple-700 leading-tight">
           Want to know more <br className="hidden sm:block" /> about our courses?
         </h2>
 

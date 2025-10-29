@@ -123,7 +123,7 @@ export default function TestimonialCarousel() {
       </div>
 
       {/* Content Section */}
-      <div className="relative z-10 mx-auto p-4 flex flex-col lg:flex-row items-center gap-10 px-6">
+      <div className="relative z-10 mx-auto p-4 flex flex-col lg:flex-row items-center gap-10 px-8">
         {/* Left Section */}
         <div className="w-[450px] flex-shrink-0">
           <h2 className="text-5xl md:text-6xl font-bold text-[#6A1B9A] leading-tight">
@@ -138,7 +138,7 @@ export default function TestimonialCarousel() {
 
        
         {/* Right Section (Carousel) – full width */}
-        <div className="flex-1 ml-57  relative w-full">
+        <div className="flex-1 ml-42  relative w-full">
           {/* Carousel wrapper – limits the visible area */}
           <div className="relative mx-auto max-w-3xl w-full">
             {/* Track container – clips overflow */}
