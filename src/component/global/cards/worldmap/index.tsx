@@ -25,6 +25,8 @@ export default function WorldMapVisualization() {
         priority
         style={{ objectFit: 'contain', width: '100%', height: 'auto' }}
       />
+      {/* Half-globe mask */}
+      <div className="globe-mask absolute inset-0 bg-gradient-to-r from-slate-900/90 to-transparent pointer-events-none" />
     </div>
   );
 }

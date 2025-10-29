@@ -20,17 +20,23 @@ const CourseSection: React.FC = () => {
           Want to know more <br className="hidden sm:block" /> about our courses?
         </h2>
 
-        <Button className="w-full sm:w-auto bg-purple-600 hover:bg-purple-700 text-white rounded-full px-6 py-3 text-base sm:text-lg font-medium">
+        <Button
+          className="inline-block h-[40px] px-5 bg-[#6a1b9a] text-white rounded-md no-underline transition-colors duration-200 hover:bg-[#4a148c]"
+        >
           View All Courses
         </Button>
+
       </div>
 
       {/* Courses Grid */}
-      <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {CoursesSection_ue.map((item: any, index: number) => (
-          <ProgramCard key={index} item={item} />
-        ))}
-      </div>
+    <div
+  className="grid gap-4 sm:gap-6 grid-cols-[repeat(auto-fit,minmax(300px,1fr))]"
+>
+  {CoursesSection_ue.map((item: any, index: number) => (
+    <ProgramCard key={index} item={item} />
+  ))}
+</div>
+
     </section>
   );
 };

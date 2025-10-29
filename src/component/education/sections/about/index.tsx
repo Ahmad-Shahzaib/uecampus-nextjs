@@ -1,6 +1,8 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { motion } from "framer-motion"
+import Link from "next/link"
 
 export function AboutSection() {
   return (
@@ -22,13 +24,22 @@ export function AboutSection() {
       <div className="relative z-10 space-y-6">
         {/* Label */}
         <div className="inline-block">
-          <span className="text-sm font-medium text-white/80 tracking-wide">About Us</span>
+          <span className="text-4xl sm:text-5xl text-white lg:text-6xl font-bold leading-tight tracking-tight">About Us</span>
         </div>
 
-        {/* Main Heading */}
-        <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight">
-          <span className="text-balance">Why Study at UeCampus?</span>
-        </h1>
+        {/* Title */}
+        <motion.h2
+          initial={{ opacity: 0, y: -15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+          viewport={{ once: true }}
+          className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight"
+        >
+          <span className="text-white inline-block mr-2">Why</span>
+          <span className="text-white inline-block mr-2">Study</span>
+          <span className="text-white inline-block mr-2">at</span>
+          <span className="text-white inline-block text-purple-300">UeCampus?</span>
+        </motion.h2>
 
         {/* Description */}
         <p className="text-base lg:text-lg text-white/90 leading-relaxed max-w-lg">

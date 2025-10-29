@@ -4,7 +4,7 @@ import { HeroContent } from "../content";
 export function HeroSection() {
   return (
     <section
-      className="hero-pattern min-h-screen flex items-center justify-center px-4 py-12 md:py-0"
+      className="hero-pattern  flex items-center justify-center px-4 py-12"
       style={{
         backgroundColor: 'rgb(106, 27, 154)', // solid purple base
         backgroundImage: `
