@@ -26,7 +26,7 @@ export default function Faqs() {
       }}
     >
       {/* Background overlay */}
-      <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+      <div className="absolute pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">

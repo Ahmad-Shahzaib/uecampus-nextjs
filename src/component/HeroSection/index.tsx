@@ -13,16 +13,16 @@ const HeroSection = ({
 }) => {
   return (
     <div className="bg-black w-full flex justify-center rounded-lg">
-      <div className="relative w-[calc(100%-24px)] h-[500px] flex items-center justify-center mx-auto overflow-hidden rounded-lg">
+      <div className="relative w-[calc(100%-24px)] h-[620px] flex items-center justify-center mx-auto overflow-hidden rounded-lg">
         <video
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute  w-full h-full object-cover"
           src="https://newwebsite.uecampus.com/wp-content/uploads/2025/09/video-banner.mp4"
           autoPlay
           loop
           muted
           playsInline
         />
-        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="absolute "></div>
 
         <div className="relative z-10 text-center px-6 sm:px-8 max-w-4xl mx-auto">
           <div className="w-1/2 mx-auto">
