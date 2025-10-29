@@ -1,4 +1,6 @@
 import { FeatureCardProps } from "@/component/testinomials/testinomials-card";
+import { BookOpen, Award, Briefcase, Clock, DollarSign, Users, Zap, Globe } from "lucide-react"
+
 
 type HeroSection = FeatureCardProps;
 
@@ -198,5 +200,49 @@ export const faqItems = [
     question: "Is there a mobile app for studying?",
     answer:
       "Yes, our mobile app is available on both iOS and Android, allowing you to learn on the go anytime, anywhere.",
+  },
+]
+
+
+export const features = [
+  {
+    icon: BookOpen,
+    title: "Learn From Anywhere",
+    description: "Study from the comfort of your home with flexible online schedules that fit your life.",
+  },
+  {
+    icon: Award,
+    title: "Globally Recognized Degrees",
+    description: "Earn credentials that are respected by employers and institutions worldwide.",
+  },
+  {
+    icon: Briefcase,
+    title: "Career Advancement",
+    description: "Gain skills and qualifications that open doors to new job opportunities and promotions.",
+  },
+  {
+    icon: Clock,
+    title: "Flexible Timings",
+    description: "Balance work, life, and study with self-paced programs or scheduled classes.",
+  },
+  {
+    icon: DollarSign,
+    title: "Affordable Tuition",
+    description: "Access quality education without the high cost—many programs offer payment plans.",
+  },
+  {
+    icon: Users,
+    title: "Expert Faculty",
+    description: "Learn from experienced instructors with real-world industry knowledge.",
+  },
+  {
+    icon: Zap,
+    title: "Certifications & Credentials",
+    description: "Get certified along the way to boost your resume before graduation.",
+  },
+  {
+    icon: Globe,
+    title: "Global Community",
+    description: "Join a diverse student network and collaborate on international projects.",
   },
 ]

@@ -17,7 +17,7 @@ const NavigationSection = () => {
                         <NavigationMenuTrigger>About Us</NavigationMenuTrigger>
                         <NavigationMenuContent>
                             <div className="grid gap-3 p-4 w-[400px]">
-                                <NavigationMenuLink href="/product1">Product 1</NavigationMenuLink>
+                                <NavigationMenuLink href="/about-us">Product 1</NavigationMenuLink>
                                 <NavigationMenuLink href="/product2">Product 2</NavigationMenuLink>
                             </div>
                         </NavigationMenuContent>
