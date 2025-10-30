@@ -30,28 +30,28 @@ export default function Page() {
           title="Scholarships at UeCampus"
         />
       </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 m-5">
-                    <StatCard
-                      stat="36+"
-                      title="Online Courses"
-                      description="Our degrees are recognized internationally, opening doors to global careers."
-                      variant="dark"
-                    />
-      
-                    <StatCard
-                      stat="4.9"
-                      title="Course Rating"
-                      description="Learn from industry experts who bring real-world experience to the classroom."
-                      variant="light"
-                    />
-      
-                    <StatCard
-                      stat="100"
-                      title="Students"
-                      description="Study at your own pace with courses designed for busy lifestyles."
-                      variant="light"
-                    />
-                  </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 m-5">
+        <StatCard
+          stat="36+"
+          title="Online Courses"
+          description="Our degrees are recognized internationally, opening doors to global careers."
+          variant="dark"
+        />
+
+        <StatCard
+          stat="4.9"
+          title="Course Rating"
+          description="Learn from industry experts who bring real-world experience to the classroom."
+          variant="light"
+        />
+
+        <StatCard
+          stat="100"
+          title="Students"
+          description="Study at your own pace with courses designed for busy lifestyles."
+          variant="light"
+        />
+      </div>
       <div className="min-h-screen bg-gray-800 py-8 px-8">
         <div
           className="
@@ -69,6 +69,9 @@ export default function Page() {
       </div>
       <div>
         <CouresSection />
+      </div>
+      <div className="bg-gray-900 rounded-2xl m-5">
+        <LogoCarousel logos={PARTNER_LOGOS} />
       </div>
       <div>
         <TestimonialCarousel />
