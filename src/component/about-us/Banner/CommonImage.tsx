@@ -1,15 +1,22 @@
-import React from 'react'
+import React from "react";
 
-interface CommonImageProps {
-    imageurls: string;
+interface CircularImageProps {
+  imageUrl: string;
+  alt?: string;
 }
 
-const CommonImage = ({imageUrl}) => {
+const CircularImage = ({ imageUrl, alt = "Student" }: CircularImageProps) => {
   return (
-   <div className="w-44 h-44 rounded-full overflow-hidden border-8 border-white shadow-xl ring-4 ring-sky-200/50">
-            <image src={imageUrl} alt="Common Image" className="w-full h-full object-cover"/>
+    <div className="w-full md:w-1/2 h-auto flex items-center justify-center">
+      <div className="relative w-full max-w-md rounded-lg overflow-hidden shadow-xl">
+        <img
+          src={imageUrl}
+          alt={alt}
+          className="w-full h-auto object-cover"
+        />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default CommonImage
+export default CircularImage;

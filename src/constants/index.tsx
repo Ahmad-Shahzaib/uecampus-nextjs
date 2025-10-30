@@ -247,3 +247,12 @@ export const features = [
   },
 ]
 
+const PartnerCard =[
+  {
+    imageurl : "https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/academic-partners-image.png",
+    title: "Our Academic Partners",
+    description: "Our partners are at the heart of UeCampus’s commitment to delivering quality education. We collaborate with reputable universities and educational institutions worldwide to co-create and validate our programs, ensuring they meet the highest academic standards.",
+    buttonText: "View All Partners",
+    
+  }
+]

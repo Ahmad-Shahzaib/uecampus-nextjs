@@ -1,5 +1,5 @@
-import BannerImage from "../Banner"
-import { StatCard } from "./card"
+import BannerImage from "../Banner";
+import { StatCard } from "./card";
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -18,27 +18,34 @@ const structuredData = {
     ratingValue: "4.9",
     ratingCount: "100",
   },
-}
+};
 
 export default function AboutUsStats() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
 
       <main className="min-h-screen bg-white">
         <div className="m-5 rounded-2xl">
-        <BannerImage imageUrl="https://newwebsite.uecampus.com/wp-content/uploads/2025/08/thumbnail-1.jpg" title="About UeCampus" />
-
+          <BannerImage
+            imageUrl="https://newwebsite.uecampus.com/wp-content/uploads/2025/08/thumbnail-1.jpg"
+            title="About UeCampus"
+          />
         </div>
         {/* Hero Section */}
         <section className="px-6 py-12">
           <div className="w-full mx-auto">
             {/* Main Heading */}
-           <h1 className="text-2xl sm:text-4xl md:text-4xl lg:text-5xl  font-semibold text-purple-600 mb-12 leading-tight text-balance">
-            Your Online Learning<br/>
-            Platform, For the<br/>
-            Community, For You.
-          </h1>
+            <h1 className="text-2xl sm:text-4xl md:text-4xl lg:text-5xl  font-semibold text-purple-600 mb-12 leading-tight text-balance">
+              Your Online Learning
+              <br />
+              Platform, For the
+              <br />
+              Community, For You.
+            </h1>
 
             {/* Stats Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -67,5 +74,5 @@ export default function AboutUsStats() {
         </section>
       </main>
     </>
-  )
+  );
 }
