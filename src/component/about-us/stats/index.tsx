@@ -27,7 +27,7 @@ export default function AboutUsStats() {
 
       <main className="min-h-screen bg-white">
         <div className="m-5 rounded-2xl">
-        <BannerImage  />
+        <BannerImage imageUrl="https://newwebsite.uecampus.com/wp-content/uploads/2025/08/thumbnail-1.jpg" title="About UeCampus" />
 
         </div>
         {/* Hero Section */}

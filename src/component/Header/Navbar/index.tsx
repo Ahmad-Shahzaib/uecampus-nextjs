@@ -28,7 +28,7 @@ const NavigationSection = ({ mobile = false }) => {
           <NavigationMenuContent>
             <div className="grid gap-3 p-4 w-[300px]">
               <NavigationMenuLink href="/about-us">About UeCampus</NavigationMenuLink>
-              <NavigationMenuLink href="/team">Accreditation & Partners </NavigationMenuLink>
+              <NavigationMenuLink href="/accreditation-partners">Accreditation & Partners </NavigationMenuLink>
               <NavigationMenuLink href="/faqs">Frequently Asked Questions</NavigationMenuLink>
             </div>
           </NavigationMenuContent>

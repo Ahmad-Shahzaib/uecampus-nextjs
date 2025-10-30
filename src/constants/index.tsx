@@ -246,3 +246,4 @@ export const features = [
     description: "Join a diverse student network and collaborate on international projects.",
   },
 ]
+

@@ -9,7 +9,7 @@ const Page = () => {
     return (
         <div>
             <div>
-                <AboutUsStats />
+                <AboutUsStats  />
             </div>
             <div className="min-h-screen bg-gray-800">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6 lg:p-8 mx-auto">
