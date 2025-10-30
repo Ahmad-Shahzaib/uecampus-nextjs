@@ -1,7 +1,7 @@
 export function HeroContent() {
   return (
     <div className="text-white  space-y-6 text-center md:text-left">
-      <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold leading-tight tracking-tight">
+      <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-semibold leading-tight tracking-tight">
         Join UeCampus Today or Book a Meeting!
       </h1>
 

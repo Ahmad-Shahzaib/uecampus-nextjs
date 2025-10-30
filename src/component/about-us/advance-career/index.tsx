@@ -3,9 +3,10 @@ import { features } from "@/constants"
 
 export default function AdvanceCareer() {
     return (
-        <main className="min-h-screen bg-white px-6 py-16 sm:px-8 lg:px-12">
-            <div className="mx-auto max-w-7xl">
-                <h1 className="mb-16 text-4xl font-bold text-purple-600 sm:text-5xl lg:text-6xl text-center">
+        <main className="min-h-screen bg-white px-6 py-16 ">
+            <div className="mx-auto w-full
+            ">
+                <h1 className="mb-16 text-3xl font-semibold text-purple-600 sm:text-5xl lg:text-5xl px-4">
                     Advance your career with an online degree
                 </h1>
 
@@ -21,9 +22,9 @@ export default function AdvanceCareer() {
                         return (
                             <Card
                                 key={index}
-                                className="border-0 bg-white p-6 shadow-none transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl"
+                                className="border bg-white p-6 shadow-none transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl"
                             >
-                                <div className="mb-4 inline-flex rounded-lg bg-purple-600 p-3">
+                                <div className="mb-4 inline-flex rounded-lg bg-purple-600 w-13 p-3">
                                     <Icon className="h-6 w-6 text-white" />
                                 </div>
 

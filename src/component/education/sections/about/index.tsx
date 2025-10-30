@@ -24,7 +24,7 @@ export function AboutSection() {
       <div className="relative z-10 space-y-6">
         {/* Label */}
         <div className="inline-block">
-          <span className="text-4xl sm:text-5xl text-white lg:text-6xl font-bold leading-tight tracking-tight">
+          <span className="text-4xl sm:text-4xl text-white lg:text-5xl font-semibold leading-tight tracking-tight">
             About Us
           </span>
         </div>
@@ -35,7 +35,7 @@ export function AboutSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
           viewport={{ once: true }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight"
+          className="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight tracking-tight"
         >
           <span className="text-white inline-block mr-2">Why</span>
           <span className="text-white inline-block mr-2">Study</span>

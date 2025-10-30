@@ -20,7 +20,7 @@ export function StatCard({ stat, title, description, variant }: StatCardProps) {
     >
       <div className="space-y-3">
         <div className="flex items-center gap-3">
-          <span className="text-5xl sm:text-6xl font-bold text-gray-400">{stat}</span>
+          <span className="text-5xl sm:text-6xl font-bold text-gray-300 ">{stat}</span>
         </div>
         <div>
           <h2 className="text-lg sm:text-xl font-semibold mb-2">{title}</h2>

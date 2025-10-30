@@ -17,11 +17,12 @@ const Page = () => {
                     <EducationSection />
                 </div>
             </div>
-            <div>
-                <JoinUs />
-            </div>
+           
             <div>
                 <AdvanceCareer />
+            </div>
+             <div>
+                <JoinUs />
             </div>
         </div>
     )
