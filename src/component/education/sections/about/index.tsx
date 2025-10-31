@@ -9,9 +9,9 @@ export function AboutSection() {
     <section
       className="relative rounded-2xl p-4 lg:p-8 flex flex-col justify-between min-h-[500px] lg:min-h-[600px] bg-purple-900/90 overflow-hidden"
       style={{
-        backgroundImage: `
+        backgroundImage:`
           url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-2.png'),
-        linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #7B1FA2 100%);
+        linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #7B1FA2 100%)
 
         `,
         backgroundSize: "cover, auto",

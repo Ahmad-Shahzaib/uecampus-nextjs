@@ -6,22 +6,50 @@ import JoinUs from '@/component/joinus'
 import React from 'react'
 
 const Page = () => {
+    const cardData = {
+        backgroundClass: "bg-[#1b232a] text-[#FFFFFF]",
+        title: "Mission",
+        description:
+            "At UeCampus, our mission is to expand access to higher education by providing flexible, affordable, and high-quality online learning opportunities for students worldwide. We are dedicated to breaking down barriers and empowering individuals from all backgrounds to unlock their full potential through knowledge, skills, and opportunity-driven education.",
+        backgroundImage:
+            "",
+    }
+
+    const cardData1 = {
+        backgroundClass: "bg-[#2B303A] text-[#FFFFFF]",
+        title: "Vision",
+        description:
+            "Our vision is to be a global leader in online education, recognized for creating pathways to opportunity and success. UeCampus envisions a future where every learner, regardless of circumstance, has the chance to learn, grow, and achieve their goals through inclusive and innovative education.",
+        backgroundImage:
+            "",
+    }
+
     return (
         <div>
             <div>
-                <AboutUsStats  />
+                <AboutUsStats />
             </div>
-            <div className="min-h-screen bg-gray-800">
+            <div className="min-h-screen">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6 lg:p-8 mx-auto">
                     <AboutSection />
-                    <EducationSection />
+                    <EducationSection
+                        cardData1={
+                            cardData
+                        }
+                        cardData2={
+                            cardData1
+                        }
+                        link={false}
+
+
+                    />
                 </div>
             </div>
-           
+
             <div>
                 <AdvanceCareer />
             </div>
-             <div>
+            <div>
                 <JoinUs />
             </div>
         </div>

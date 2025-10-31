@@ -13,9 +13,10 @@ import { CoursesSection_ue, FEATURE_CARDS, HeroSection_ue, PARTNER_LOGOS, studen
 import { useDispatch, useSelector } from "@/redux/store";
 import { fetchCoursesData } from "@/redux/thunk/courses";
 import { useEffect } from "react";
-
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
 
   const dispatch = useDispatch();
   const { data, isLoading, error } = useSelector((state) => state.courses);
@@ -24,6 +25,24 @@ export default function Home() {
   useEffect(() => {
     dispatch(fetchCoursesData({}));
   }, [dispatch]);
+
+      const cardData = {
+        backgroundClass: "text-[#6a1b9a]",
+        title: "Quality Education That’s Affordable — Because Your Future Matters",
+        description:
+            "Quality Education That’s Affordable — Because Your Future Matters At UeCampus, we believe that access to top-tier education should never be limited by cost. That’s why we’re committed to offering internationally accredited degree programmes that don’t break the bank — making your dream of earning a quality degree achievable and affordable at the comfort of your home.",
+        backgroundImage:
+            "https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.png",
+    }
+
+    const cardData1 = {
+        backgroundClass: "text-[#6a1b9a]",
+        title: "Vision",
+        description:
+            "Our vision is to be a global leader in online education, recognized for creating pathways to opportunity and success. UeCampus envisions a future where every learner, regardless of circumstance, has the chance to learn, grow, and achieve their goals through inclusive and innovative education.",
+        backgroundImage:
+            "",
+    }
 
   return (
     <div>
@@ -69,7 +88,7 @@ export default function Home() {
     "
         >
           <AboutSection />
-          <EducationSection />
+          <EducationSection cardData1={cardData} cardData2={cardData1} link={true} />
         </div>
       </div>
 

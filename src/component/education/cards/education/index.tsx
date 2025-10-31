@@ -2,29 +2,36 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 
-export function EducationCard() {
+interface EducationCardProps {
+  title: string
+  description: string
+  backgroundImage?: string
+  backgroundClass?:string
+}
+
+export function EducationCard({
+  title,
+  description,
+  backgroundImage = "https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.png",
+  backgroundClass
+}: EducationCardProps) {
   return (
-    <Card className="bg-white border-0 shadow-lg rounded-2xl overflow-hidden">
+    <Card className={`border-0 shadow-lg rounded-2xl overflow-hidden ${backgroundClass}`}>
       <CardContent
-        className="lg:px-8 px-4 py-4 lg:p-10 bg-fit bg-center"
+        className={`lg:px-8 px-4 py-6 lg:py-10 bg-cover bg-center ${backgroundClass}`}
         style={{
-          backgroundImage:
-            "url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.png')",
-            objectFit: 'cover',
+          backgroundImage: `url('${backgroundImage}')`,
+          
         }}
       >
-        {/* Heading */}
-        <h2 className="text-xl lg:text-xl xl:text-2xl font-bold text-purple-700 leading-tight mb-6">
-          <span className="text-balance">
-            Quality Education That's Affordable — Because Your Future Matters
-          </span>
+        {/* Title */}
+        <h2 className="text-xl lg:text-2xl font-bold  leading-tight mb-6">
+          <span className="text-balance">{title}</span>
         </h2>
 
         {/* Description */}
-        <p className="text-base lg:text-lg text-gray-700 leading-relaxed">
-          At UeCampus, we believe that access to top-tier education should never be limited by cost. That's why we're
-          committed to offering internationally accredited degree programmes that don't break the bank — making your
-          dream of earning a quality degree achievable and affordable at the comfort of your home.
+        <p className="text-base lg:text-lg  leading-relaxed">
+          {description}
         </p>
       </CardContent>
     </Card>
