@@ -4,11 +4,12 @@ import LogoSection from "./Logo";
 import NavigationSection from "./Navbar";
 import ButtonSection from "./HeaderButton";
 import { Menu, X } from "lucide-react";
-
+import { useRouter } from "next/navigation";
 
 const HeaderSection = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -24,7 +25,9 @@ const HeaderSection = () => {
     >
       <div className="flex items-center justify-between py-4 relative">
         {/* Left: Logo */}
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0" onClick={()=>{
+          router.push("/")
+        }}>
           <LogoSection />
         </div>
 
@@ -57,7 +60,9 @@ const HeaderSection = () => {
             <button className="w-full border border-purple-600 text-purple-700 font-semibold py-2 rounded-full">
               Student Portal
             </button>
-            <button className="w-full bg-purple-700 text-white font-semibold py-2 rounded-full">
+            <button onClick={()=>{
+              router.push("/enquire-now")
+            }} className="w-full cursor-pointer bg-purple-700 text-white font-semibold py-2 rounded-full">
               Enquire Now
             </button>
           </div>
