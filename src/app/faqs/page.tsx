@@ -14,18 +14,23 @@ const Page = () => {
 
     return (
         <>
-            <div className="p-5 flex flex-col md:flex-row justify-between items-center gap-2">
-                <div className='w-[48%]'>
-                    <CircularImage imageUrl="https://newwebsite.uecampus.com/wp-content/uploads/2025/08/featured-course-thumbnail.jpg"
-                        imageStyles='w-full h-auto flex items-center justify-center'
-                        imageContainer=""
-                    />
-                </div>
+           <div className="p-5 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-8">
+  <div className="w-full md:w-1/2 lg:w-5/12">
+    <CircularImage
+      imageUrl="https://newwebsite.uecampus.com/wp-content/uploads/2025/08/featured-course-thumbnail.jpg"
+      imageStyles="w-full h-auto flex items-center justify-center"
+      imageContainer=""
+    />
+  </div>
 
-                <div className='w-[48%]'>
-                    <FrequentlyAskedQuestionHeader title={faqData.title} description={faqData.description} />
-                </div>
-            </div>
+  <div className="w-full md:w-1/2 lg:w-6/12">
+    <FrequentlyAskedQuestionHeader
+      title={faqData.title}
+      description={faqData.description}
+    />
+  </div>
+</div>
+
             <div>
                 <Faqs />
             </div>
