@@ -149,3 +149,14 @@
 .animate-slideDown {
   animation: slideDown 0.25s ease-out;
 }
+
+
+@layer utilities {
+  .outline-text {
+    font-size: 6rem;
+    font-weight: bold;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px #1b232a;
+  }
+}

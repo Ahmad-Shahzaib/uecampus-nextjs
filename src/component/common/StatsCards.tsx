@@ -1,31 +1,44 @@
-import React from 'react'
-import { StatCard } from '../about-us/stats/card'
+import React from "react";
+import { StatCard } from "../about-us/stats/card";
 
-const StatsCards = () => {
-    return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <StatCard
-                stat="36+"
-                title="Online Courses"
-                description="Our degrees are recognized internationally, opening doors to global careers."
-                variant="dark"
-            />
+const statsData = [
+  {
+    stat: "36+",
+    title: "Online Courses",
+    description:
+      "Our degrees are recognized internationally, opening doors to global careers.",
+    variant: "dark",
+  },
+  {
+    stat: "4.9",
+    title: "Course Rating",
+    description:
+      "Learn from industry experts who bring real-world experience to the classroom.",
+    variant: "light",
+  },
+  {
+    stat: "100",
+    title: "Students",
+    description:
+      "Study at your own pace with courses designed for busy lifestyles.",
+    variant: "light",
+  },
+];
 
-            <StatCard
-                stat="4.9"
-                title="Course Rating"
-                description="Learn from industry experts who bring real-world experience to the classroom."
-                variant="light"
-            />
+const StatsCards = ({ data = statsData }) => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {data.map((item, index) => (
+        <StatCard
+          key={index}
+          stat={item.stat}
+          title={item.title}
+          description={item.description}
+          variant={item.variant}
+        />
+      ))}
+    </div>
+  );
+};
 
-            <StatCard
-                stat="100"
-                title="Students"
-                description="Study at your own pace with courses designed for busy lifestyles."
-                variant="light"
-            />
-        </div>
-    )
-}
-
-export default StatsCards
+export default StatsCards;

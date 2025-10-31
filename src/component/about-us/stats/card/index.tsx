@@ -4,7 +4,7 @@ interface StatCardProps {
   stat: string
   title: string
   description: string
-  variant: "dark" | "light"
+  variant?: any
 }
 
 export function StatCard({ stat, title, description, variant }: StatCardProps) {
@@ -18,9 +18,9 @@ export function StatCard({ stat, title, description, variant }: StatCardProps) {
       role="region"
       aria-label={`${title}: ${stat}`}
     >
-      <div className="space-y-3">
+      <div className="space-y-3 flex flex-row gap-2">
         <div className="flex items-center gap-3">
-          <span className="text-5xl sm:text-6xl font-bold text-gray-300 ">{stat}</span>
+          <span className={`text-[6rem] font-bold ${isDark ? "text-white" : "outline-text"}`}>{stat}</span>
         </div>
         <div>
           <h2 className="text-lg sm:text-xl font-semibold mb-2">{title}</h2>
