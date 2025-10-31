@@ -8,7 +8,9 @@ const ButtonSection = () => {
   const router = useRouter();
   return (
     <div className="flex gap-3">
-      <Button variant="outline" className="border-purple-600 text-purple-700">
+      <Button  onClick={()=>{
+              router.push("https://app.uecampus.com/login")
+            }} variant="outline" className="border-purple-600 text-purple-700">
         Student Portal
       </Button>
       <Button onClick={()=>{

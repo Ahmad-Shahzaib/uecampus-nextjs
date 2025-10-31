@@ -99,7 +99,7 @@ if (mobile) {
         </NavigationMenuItem>
 
         <NavigationMenuItem>
-          <NavigationMenuLink href="/programmes">Programmes & Diploma</NavigationMenuLink>
+          <NavigationMenuLink href="/courses">Programmes & Diploma</NavigationMenuLink>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
