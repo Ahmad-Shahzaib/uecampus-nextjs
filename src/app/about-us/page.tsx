@@ -29,7 +29,7 @@ const Page = () => {
             <div>
                 <AboutUsStats />
             </div>
-            <div className="min-h-screen">
+            <div className="">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6 lg:p-8 mx-auto">
                     <AboutSection 
                     label="About Us"
@@ -53,7 +53,7 @@ const Page = () => {
             </div>
 
             <div>
-                <AdvanceCareer />
+                <AdvanceCareer mainClass="" />
             </div>
             <div>
                 <JoinUs />

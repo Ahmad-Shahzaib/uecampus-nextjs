@@ -1,9 +1,9 @@
 import { Card } from "@/components/ui/card"
 import { features } from "@/constants"
 
-export default function AdvanceCareer() {
+export default function AdvanceCareer({mainClass="min-h-screen"}) {
     return (
-        <main className="min-h-screen bg-white px-6 py-8 ">
+        <main className={`${mainClass} bg-white px-6 py-8`}>
             <div className="mx-auto w-full
             ">
                 <h1 className="mb-16 text-3xl font-semibold text-[#6A1B9A] sm:text-5xl lg:text-5xl px-4">
