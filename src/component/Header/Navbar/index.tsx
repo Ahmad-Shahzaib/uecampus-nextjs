@@ -24,7 +24,7 @@ if (mobile) {
         <button
           aria-expanded={aboutOpen}
           onClick={() => setAboutOpen((s) => !s)}
-          className="w-full flex items-center justify-between text-left py-2 px-1"
+          className="w-full flex items-center  text-left py-2 px-1"
         >
           <span>About Us</span>
           <span className="ml-2">
