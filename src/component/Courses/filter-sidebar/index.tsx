@@ -50,7 +50,7 @@ export default function FilterSidebar() {
   }
 
   return (
-    <aside className="w-56 flex-shrink-0">
+    <aside className="sm:w-56 flex-full flex-shrink-0">
       <Card className="p-6 bg-white">
         <h2 className="text-lg font-bold  mb-6 text-purple-800">Filter Courses</h2>
 
