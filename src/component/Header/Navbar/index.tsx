@@ -47,7 +47,7 @@ const NavigationSection = ({ mobile = false }) => {
         </NavigationMenuItem>
 
         <NavigationMenuItem>
-          <NavigationMenuLink href="/contact">Contact Us</NavigationMenuLink>
+          <NavigationMenuLink href="/contact-us">Contact Us</NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

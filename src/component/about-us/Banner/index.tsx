@@ -8,7 +8,7 @@ interface BannerProps {
 const Banner = ({ imageUrl, title }: BannerProps) => {
   return (
     <div
-      className="relative rounded-2xl w-full h-[60vh] bg-cover bg-center flex items-center justify-start text-white"
+      className="relative rounded-2xl w-full h-[40vh] bg-cover bg-center flex items-center justify-start text-white"
       style={{ backgroundImage: `url(${imageUrl})` }}
     >
       {/* Overlay */}

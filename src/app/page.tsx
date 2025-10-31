@@ -1,5 +1,5 @@
 "use client";
-import TestimonialCarousel from "@/component/carousal";
+import TestimonialCarousel from "@/component/common/Carousal";
 import CouresSection from "@/component/Courses";
 import { AboutSection } from "@/component/education/sections/about";
 import { EducationSection } from "@/component/education/sections/education";

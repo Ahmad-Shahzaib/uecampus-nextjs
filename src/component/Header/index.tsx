@@ -5,6 +5,7 @@ import NavigationSection from "./Navbar";
 import ButtonSection from "./HeaderButton";
 import { Menu, X } from "lucide-react";
 
+
 const HeaderSection = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
