@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import Link from "next/link";
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -7,15 +8,66 @@ import {
   NavigationMenuTrigger,
   NavigationMenuContent,
 } from "@/components/ui/navigation-menu";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
-const NavigationSection = ({ mobile = false }) => {
+type Props = {
+  mobile?: boolean;
+};
+
+const NavigationSection: React.FC<Props> = ({ mobile = false }) => {
+  const [aboutOpen, setAboutOpen] = useState(false);
+
   if (mobile) {
     return (
       <ul className="flex flex-col gap-3 w-full text-gray-800 font-medium">
-        <li>About Us</li>
-        <li>Programmes & Diploma</li>
-        <li>Scholarship</li>
-        <li>Contact Us</li>
+        <li>
+          <button
+            aria-expanded={aboutOpen}
+            onClick={() => setAboutOpen((s) => !s)}
+            className="w-full flex items-center justify-between text-left py-2 px-1"
+          >
+            <span>About Us</span>
+            <span className="ml-2">{aboutOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}</span>
+          </button>
+
+          {aboutOpen && (
+            <ul className="pl-4 mt-2 flex flex-col gap-2 text-sm">
+              <li>
+                <Link href="/about-us" className="block py-1">
+                  About UeCampus
+                </Link>
+              </li>
+              <li>
+                <Link href="/accreditation-partners" className="block py-1">
+                  Accreditation &amp; Partners
+                </Link>
+              </li>
+              <li>
+                <Link href="/faqs" className="block py-1">
+                  Frequently Asked Questions
+                </Link>
+              </li>
+            </ul>
+          )}
+        </li>
+
+        <li>
+          <Link href="/programmes" className="block py-2">
+            Programmes & Diploma
+          </Link>
+        </li>
+
+        <li>
+          <Link href="/scholarship" className="block py-2">
+            Scholarship
+          </Link>
+        </li>
+
+        <li>
+          <Link href="/contact-us" className="block py-2">
+            Contact Us
+          </Link>
+        </li>
       </ul>
     );
   }
@@ -28,22 +80,18 @@ const NavigationSection = ({ mobile = false }) => {
           <NavigationMenuContent>
             <div className="grid gap-3 p-4 w-[300px]">
               <NavigationMenuLink href="/about-us">About UeCampus</NavigationMenuLink>
-              <NavigationMenuLink href="/accreditation-partners">Accreditation & Partners </NavigationMenuLink>
+              <NavigationMenuLink href="/accreditation-partners">Accreditation &amp; Partners </NavigationMenuLink>
               <NavigationMenuLink href="/faqs">Frequently Asked Questions</NavigationMenuLink>
             </div>
           </NavigationMenuContent>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
-          <NavigationMenuLink href="/programmes">
-            Programmes & Diploma
-          </NavigationMenuLink>
+          <NavigationMenuLink href="/programmes">Programmes & Diploma</NavigationMenuLink>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
-          <NavigationMenuLink href="/scholarship">
-            Scholarship
-          </NavigationMenuLink>
+          <NavigationMenuLink href="/scholarship">Scholarship</NavigationMenuLink>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
