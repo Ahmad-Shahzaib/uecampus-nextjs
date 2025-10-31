@@ -44,7 +44,7 @@ const HeaderSection = () => {
             onClick={() => setMenuOpen(!menuOpen)}
             className="text-gray-700 focus:outline-none"
           >
-            {menuOpen ? <X size={26} /> : <Menu size={26} />}
+            {menuOpen ? <Menu size={26} /> : <Menu size={26} />}
           </button>
         </div>
       </div>

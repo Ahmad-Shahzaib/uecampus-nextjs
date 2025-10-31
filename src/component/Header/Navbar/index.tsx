@@ -17,60 +17,72 @@ type Props = {
 const NavigationSection: React.FC<Props> = ({ mobile = false }) => {
   const [aboutOpen, setAboutOpen] = useState(false);
 
-  if (mobile) {
-    return (
-      <ul className="flex flex-col gap-3 w-full text-gray-800 font-medium">
-        <li>
-          <button
-            aria-expanded={aboutOpen}
-            onClick={() => setAboutOpen((s) => !s)}
-            className="w-full flex items-center justify-between text-left py-2 px-1"
+if (mobile) {
+  return (
+    <ul className="flex flex-col gap-2 w-full text-gray-800 font-medium relative">
+      <li className="relative">
+        <button
+          aria-expanded={aboutOpen}
+          onClick={() => setAboutOpen((s) => !s)}
+          className="w-full flex items-center justify-between text-left py-2 px-1"
+        >
+          <span>About Us</span>
+          <span className="ml-2">
+            {aboutOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+          </span>
+        </button>
+    
+        {aboutOpen && (
+          <ul
+            className="absolute left-0 top-full mt-1 w-[260px] bg-white shadow-lg rounded-lg border border-gray-100 p-4 z-50"
           >
-            <span>About Us</span>
-            <span className="ml-2">{aboutOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}</span>
-          </button>
+            <li>
+              <Link
+                href="/about-us"
+                className="block py-1 hover:text-purple-600 transition-colors"
+              >
+                About UeCampus
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/accreditation-partners"
+                className="block py-1 hover:text-purple-600 transition-colors"
+              >
+                Accreditation &amp; Partners
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/faqs"
+                className="block py-1 hover:text-purple-600 transition-colors"
+              >
+                Frequently Asked Questions
+              </Link>
+            </li>
+          </ul>
+        )}
+      </li>
 
-          {aboutOpen && (
-            <ul className="pl-4 mt-2 flex flex-col gap-2 text-sm">
-              <li>
-                <Link href="/about-us" className="block py-1">
-                  About UeCampus
-                </Link>
-              </li>
-              <li>
-                <Link href="/accreditation-partners" className="block py-1">
-                  Accreditation &amp; Partners
-                </Link>
-              </li>
-              <li>
-                <Link href="/faqs" className="block py-1">
-                  Frequently Asked Questions
-                </Link>
-              </li>
-            </ul>
-          )}
-        </li>
+      <li>
+        <Link href="/programmes" className="block py-2">
+          Programmes & Diploma
+        </Link>
+      </li>
+      <li>
+        <Link href="/scholarship" className="block py-2">
+          Scholarship
+        </Link>
+      </li>
+      <li>
+        <Link href="/contact-us" className="block py-2">
+          Contact Us
+        </Link>
+      </li>
+    </ul>
+  );
+}
 
-        <li>
-          <Link href="/programmes" className="block py-2">
-            Programmes & Diploma
-          </Link>
-        </li>
-
-        <li>
-          <Link href="/scholarship" className="block py-2">
-            Scholarship
-          </Link>
-        </li>
-
-        <li>
-          <Link href="/contact-us" className="block py-2">
-            Contact Us
-          </Link>
-        </li>
-      </ul>
-    );
-  }
 
   return (
     <NavigationMenu>
