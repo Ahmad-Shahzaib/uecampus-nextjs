@@ -107,7 +107,7 @@ export default function Home() {
     return (
         <div className="flex flex-col min-h-screen bg-background">
             <div className="flex sm:flex-row flex-col w-full gap-8 p-8">
-                {/* <FilterSidebar /> */}
+                <FilterSidebar />
                 <div className="flex-1">
                     <header className="bg-white border-b border-border p-4">
                         <div className="w-full  flex flex-col sm:flex-row  gap-4 sm:gap-6 px-2 sm:px-6">
@@ -131,11 +131,11 @@ export default function Home() {
                             </div>
                         </div>
                     </header>
-                    {/* <div className="space-y-6">
+                    <div className="space-y-6">
                         {displayedCourses.map((course) => (
                             <CourseCard key={course.id} course={course} />
                         ))}
-                    </div> */}
+                    </div>
 
                     {/* Pagination */}
                     <div className="mt-8 flex justify-center">
