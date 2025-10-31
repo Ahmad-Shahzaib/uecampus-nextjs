@@ -52,11 +52,11 @@ export default function FilterSidebar() {
   return (
     <aside className="w-56 flex-shrink-0">
       <Card className="p-6 bg-white">
-        <h2 className="text-lg font-bold text-foreground mb-6">Filter Courses</h2>
+        <h2 className="text-lg font-bold  mb-6 text-purple-800">Filter Courses</h2>
 
         {/* Programme Type */}
         <div className="mb-8">
-          <h3 className="font-semibold text-foreground mb-3">Programme Type</h3>
+          <h3 className="font-semibold text-purple-800 mb-3">Programme Type</h3>
           <div className="space-y-3">
             {Object.keys(filters.programmeType).map((option) => (
               <div key={option} className="flex items-center gap-2">
@@ -75,7 +75,7 @@ export default function FilterSidebar() {
 
         {/* Area of Study */}
         <div className="mb-8">
-          <h3 className="font-semibold text-foreground mb-3">Area of Study</h3>
+          <h3 className="font-semibold text-purple-800 mb-3">Area of Study</h3>
           <div className="space-y-3">
             {Object.keys(filters.areaOfStudy).map((option) => (
               <div key={option} className="flex items-center gap-2">
@@ -94,7 +94,7 @@ export default function FilterSidebar() {
 
         {/* University */}
         <div className="mb-8">
-          <h3 className="font-semibold text-foreground mb-3">University</h3>
+          <h3 className="font-semibold text-purple-800 mb-3">University</h3>
           <div className="space-y-3">
             {Object.keys(filters.university).map((option) => (
               <div key={option} className="flex items-center gap-2">
@@ -113,7 +113,7 @@ export default function FilterSidebar() {
 
         {/* Level */}
         <div className="mb-8">
-          <h3 className="font-semibold text-foreground mb-3">Level</h3>
+          <h3 className="font-semibold text-purple-800 mb-3">Level</h3>
           <div className="space-y-3">
             {Object.keys(filters.level).map((option) => (
               <div key={option} className="flex items-center gap-2">
@@ -130,8 +130,8 @@ export default function FilterSidebar() {
           </div>
         </div>
 
-        <Button className="w-full bg-gray-800 hover:bg-gray-900 text-white mb-2">Apply Filters</Button>
-        <Button variant="outline" className="w-full bg-transparent">
+        <Button className="w-full bg-gray-800 hover:bg-gray-900 border-0 rounded text-white mb-2">Apply Filters</Button>
+        <Button variant="outline" className="w-full bg-transparent hover:bg-gray-900 border-0 rounded hover:text-white">
           Clear Filters
         </Button>
       </Card>

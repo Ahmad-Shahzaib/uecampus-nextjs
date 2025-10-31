@@ -1,18 +1,19 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Search } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import CourseCard from "@/component/Courses/courses-card"
-import FilterSidebar from "@/component/Courses/filter-sidebar"
-import PaginationComponent from "@/component/Courses/pagination"
-
+import { useState } from "react";
+import { Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import CourseCard from "@/component/Courses/courses-card";
+import FilterSidebar from "@/component/Courses/filter-sidebar";
+import PaginationComponent from "@/component/Courses/pagination";
+import { Input } from "@/components/ui/input";
 
 const courses = [
   {
     id: 1,
     title: "Level 7 Diploma in Health and Social Care",
-    image: "/health-and-social-care-diploma.jpg",
+    image:
+      "https://newwebsite.uecampus.com/wp-content/uploads/2025/10/Website-Body-11-300x224.png",
     credits: "120 Credits",
     duration: "Duration: 1 year",
     level: "Level 7",
@@ -25,7 +26,8 @@ const courses = [
   {
     id: 2,
     title: "Level 7 Diploma in Data Science",
-    image: "/data-science-diploma-technology.jpg",
+    image:
+      "https://newwebsite.uecampus.com/wp-content/uploads/2025/10/Website-Body-10-300x224.png",
     credits: "120 Credits",
     duration: "Duration: 1 year",
     level: "Level 7",
@@ -38,7 +40,8 @@ const courses = [
   {
     id: 3,
     title: "Level 7 Diploma in Accounting and Finance",
-    image: "/accounting-finance-diploma-business.jpg",
+    image:
+      "https://newwebsite.uecampus.com/wp-content/uploads/2025/10/Website-Body-1-3-300x224.png",
     credits: "120 Credits",
     duration: "Duration: 1 year",
     level: "Level 7",
@@ -51,7 +54,8 @@ const courses = [
   {
     id: 4,
     title: "Extended Level 5 Diploma in Business Management",
-    image: "/business-management-diploma-professional.jpg",
+    image:
+      "https://newwebsite.uecampus.com/wp-content/uploads/2025/10/Website-Body-9-300x224.png",
     credits: "120 Credits",
     duration: "Duration: 1 year",
     level: "Level 5",
@@ -64,7 +68,8 @@ const courses = [
   {
     id: 5,
     title: "Level 5 Diploma in Cyber Security",
-    image: "/cyber-security-diploma-technology-lock.jpg",
+    image:
+      "https://newwebsite.uecampus.com/wp-content/uploads/2025/10/Website-Body-8-300x224.png",
     credits: "120 Credits",
     duration: "Duration: 1 year",
     level: "Level 5",
@@ -77,7 +82,8 @@ const courses = [
   {
     id: 6,
     title: "Level 5 Diploma in Information Technology",
-    image: "/information-technology-diploma-computer.jpg",
+    image:
+      "https://newwebsite.uecampus.com/wp-content/uploads/2025/10/Website-Body-7-300x224.png",
     credits: "120 Credits",
     duration: "Duration: 1 year",
     level: "Level 5",
@@ -87,32 +93,43 @@ const courses = [
     userInfo: "User: Guest",
     timeInfo: "3 months",
   },
-]
+];
 
 export default function Home() {
-  const [currentPage, setCurrentPage] = useState(1)
-  const coursesPerPage = 6
-  const totalPages = Math.ceil(courses.length / coursesPerPage)
+  const [currentPage, setCurrentPage] = useState(1);
+  const coursesPerPage = 6;
+  const totalPages = Math.ceil(courses.length / coursesPerPage);
 
-  const startIndex = (currentPage - 1) * coursesPerPage
-  const endIndex = startIndex + coursesPerPage
-  const displayedCourses = courses.slice(startIndex, endIndex)
+  const startIndex = (currentPage - 1) * coursesPerPage;
+  const endIndex = startIndex + coursesPerPage;
+  const displayedCourses = courses.slice(startIndex, endIndex);
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
       {/* Header with Search */}
       <header className="bg-white border-b border-border p-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="w-full px-8 mx-auto flex items-center justify-between">
           <h1 className="text-2xl font-bold text-foreground">Courses</h1>
-          <Button className="bg-purple-600 hover:bg-purple-700 text-white gap-2">
-            <Search className="w-4 h-4" />
-            Search
-          </Button>
+
+          <div className="w-1/2
+           flex items-center rounded-lg border border-input bg-background shadow-sm focus-within:ring-1 focus-within:ring-ring">
+            <div className="relative flex-1 py-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+              <Input
+                type="search"
+                placeholder="Find your course"
+                className="h-10 pl-10 pr-3 bg-transparent border-0 rounded-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-muted-foreground"
+              />
+            </div>
+            <Button className="h-12 px-4  rounded-l-none rounded-r-lg bg-purple-600 hover:bg-purple-700 text-white font-medium">
+              Search
+            </Button>
+          </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <div className="flex flex-1 max-w-7xl mx-auto w-full gap-8 p-6">
+      <div className="flex flex-1  mx-auto w-full gap-8 p-8">
         {/* Sidebar */}
         <FilterSidebar />
 
@@ -126,10 +143,14 @@ export default function Home() {
 
           {/* Pagination */}
           <div className="mt-8 flex justify-center">
-            <PaginationComponent currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+            <PaginationComponent
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+            />
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
