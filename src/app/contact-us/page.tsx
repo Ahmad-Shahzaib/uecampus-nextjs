@@ -1,6 +1,7 @@
 "use client";
 import StatsCards from '@/component/common/StatsCards';
 import ContactPage from '@/component/contact-us/contact';
+import ContactUsSection from '@/component/contact-us/contact/ContactUsSection';
 import JoinUs from '@/component/joinus';
 
 const page = () => {
@@ -12,6 +13,9 @@ const page = () => {
             </div>
             <div className='px-6'>
                 <StatsCards />
+            </div>
+            <div className='px-6 my-8'>
+                <ContactUsSection />
             </div>
 
         </>
