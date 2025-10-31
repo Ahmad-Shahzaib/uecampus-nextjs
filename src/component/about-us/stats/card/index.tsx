@@ -4,7 +4,7 @@ interface StatCardProps {
   stat: string
   title: string
   description: string
-  variant?: "dark" | "light"
+  variant?:any
 }
 
 export function StatCard({ stat, title, description, variant = "light" }: StatCardProps) {
