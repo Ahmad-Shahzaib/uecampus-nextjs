@@ -138,7 +138,7 @@ export default function TestimonialCarousel() {
 
         {/* Right Section (Carousel) */}
         <div className="flex-1 relative w-full">
-          <div className="relative mx-auto max-w-3xl w-full">
+          <div className="relative mx-auto max-w-4xl sm:ml-20 w-full">
             <div className="overflow-hidden rounded-2xl bg-white shadow-lg">
               <div
                 className="flex transition-transform duration-500 ease-in-out"
