@@ -10,23 +10,29 @@ import { Facebook, Mail } from "lucide-react";
 
 interface FormData {
   fullName: string;
+  lastName: string;
   email: string;
   phone: string;
+  dob: string;
   program: string[];
   specializations: string[];
   university: string[];
   academicYear: string;
+  additionalInfo: string;
 }
 
 export function ScholarshipForm(): JSX.Element {
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
+    lastName: "",
     email: "",
     phone: "",
+    dob: "",
     program: [],
     specializations: [],
     university: [],
     academicYear: "",
+    additionalInfo: "",
   });
 
   // Options
@@ -54,7 +60,9 @@ export function ScholarshipForm(): JSX.Element {
   ];
 
   // Handlers
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -79,10 +87,10 @@ export function ScholarshipForm(): JSX.Element {
   };
 
   return (
-    <main className=" bg-gradient-to-br from-purple-50 to-indigo-100 flex  p-4 md:p-8">
-      <div className="w-full ">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden shadow-2xl bg-white h-[680px] ">
-          {/* Left Side - Image (50% width) */}
+    <main className="bg-gradient-to-br from-purple-50 to-indigo-100 flex p-4 md:p-8">
+      <div className="w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden shadow-2xl bg-white h-[680px]">
+          {/* Left Side - Image */}
           <div className="relative h-64 lg:h-full">
             <img
               src="https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/thumbnail-9.jpg"
@@ -92,10 +100,9 @@ export function ScholarshipForm(): JSX.Element {
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent lg:hidden"></div>
           </div>
 
-          {/* Right Side - Form (50% width + scrollable) */}
+          {/* Right Side - Form */}
           <div className="bg-gradient-to-b from-[#6A1B9A] to-purple-800 p-6 md:p-8 overflow-y-auto lg:max-h-screen">
-            <div className="">
-              {/* Header */}
+            <div>
               <div className="mb-6">
                 <h1 className="text-white lg:text-4xl md:text-2xl font-semibold leading-tight">
                   Enquire Today & Get a Scholarship Discount!
@@ -103,7 +110,7 @@ export function ScholarshipForm(): JSX.Element {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5 text-sm">
-                {/* First Name */}
+                {/* Full Name */}
                 <div>
                   <label className="block text-white text-xs md:text-sm font-medium mb-1">
                     Full Name
@@ -118,7 +125,8 @@ export function ScholarshipForm(): JSX.Element {
                     required
                   />
                 </div>
-                {/* last name  */}
+
+                {/* Last Name */}
                 <div>
                   <label className="block text-white text-xs md:text-sm font-medium mb-1">
                     Last Name
@@ -166,7 +174,7 @@ export function ScholarshipForm(): JSX.Element {
                   />
                 </div>
 
-                {/*  DOB */}
+                {/* Date of Birth */}
                 <div>
                   <label className="block text-white text-xs md:text-sm font-medium mb-1">
                     Date of Birth
@@ -180,7 +188,8 @@ export function ScholarshipForm(): JSX.Element {
                     required
                   />
                 </div>
-                {/* Program Interested - Scrollable */}
+
+                {/* Program Interested */}
                 <div>
                   <label className="block text-white font-bold mb-2">
                     Program Interested
@@ -194,7 +203,6 @@ export function ScholarshipForm(): JSX.Element {
                           onCheckedChange={() =>
                             handleCheckboxChange("program", prog)
                           }
-                          className="border-white data-[state=checked]:bg-white data-[state=checked]:text-purple-600"
                         />
                         <label
                           htmlFor={`prog-${prog}`}
@@ -207,7 +215,7 @@ export function ScholarshipForm(): JSX.Element {
                   </div>
                 </div>
 
-                {/* Specializations - Scrollable */}
+                {/* Specializations */}
                 <div>
                   <label className="block text-white font-bold mb-2">
                     Specializations
@@ -221,11 +229,10 @@ export function ScholarshipForm(): JSX.Element {
                           onCheckedChange={() =>
                             handleCheckboxChange("specializations", spec)
                           }
-                          className="border-white data-[state=checked]:bg-white data-[state=checked]:text-purple-600"
                         />
                         <label
                           htmlFor={`spec-${spec}`}
-                          className="text-white text-xs md:text-sm cursor-pointer leading-tight"
+                          className="text-white text-xs md:text-sm cursor-pointer"
                         >
                           {spec}
                         </label>
@@ -234,7 +241,7 @@ export function ScholarshipForm(): JSX.Element {
                   </div>
                 </div>
 
-                {/* University Interested In */}
+                {/* University Interested */}
                 <div>
                   <label className="block text-white font-bold mb-2">
                     University Interested In
@@ -248,7 +255,6 @@ export function ScholarshipForm(): JSX.Element {
                           onCheckedChange={() =>
                             handleCheckboxChange("university", uni)
                           }
-                          className="border-white data-[state=checked]:bg-white data-[state=checked]:text-purple-600"
                         />
                         <label
                           htmlFor={`uni-${uni}`}
@@ -261,7 +267,7 @@ export function ScholarshipForm(): JSX.Element {
                   </div>
                 </div>
 
-                {/* Joining Academic Year */}
+                {/* Academic Year */}
                 <div>
                   <label className="block text-white font-bold mb-2">
                     Joining Academic Year
@@ -273,14 +279,10 @@ export function ScholarshipForm(): JSX.Element {
                     <div className="bg-purple-900/50 backdrop-blur-sm rounded-lg p-3 space-y-2 max-h-40 overflow-y-auto border border-purple-400/30 scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-purple-900">
                       {academicYearOptions.map((year) => (
                         <div key={year} className="flex items-center space-x-2">
-                          <RadioGroupItem
-                            value={year}
-                            id={`year-${year}`}
-                            className="border-white text-white data-[state=checked]:bg-white data-[state=checked]:text-purple-600"
-                          />
+                          <RadioGroupItem value={year} id={`year-${year}`} />
                           <Label
                             htmlFor={`year-${year}`}
-                            className="text-white text-xs md:text-sm cursor-pointer font-normal"
+                            className="text-white text-xs md:text-sm cursor-pointer"
                           >
                             {year}
                           </Label>
@@ -290,7 +292,7 @@ export function ScholarshipForm(): JSX.Element {
                   </RadioGroup>
                 </div>
 
-                {/* text area */}
+                {/* Additional Info */}
                 <div>
                   <label className="block text-white text-xs md:text-sm font-medium mb-1">
                     Additional Information
@@ -303,57 +305,8 @@ export function ScholarshipForm(): JSX.Element {
                     className="w-full bg-white rounded-2xl text-gray-900 border-0 h-24 p-2 text-sm resize-none"
                   />
                 </div>
-                <div>
-                  <p className="text-white py-1 text-xs md:text-sm">
-                    UeCampus is committed to protecting and respecting your
-                    privacy, and we’ll only use your personal information to
-                    administer your account and to provide the products and
-                    services you requested from us. From time to time, we would
-                    like to contact you about our products and services, as well
-                    as other content that may be of interest to you. If you
-                    consent to us contacting you for this purpose, please tick
-                    below to say how you would like us to contact you:
-                  </p>
-                  <Checkbox
-                    id="consent-email"
-                    className="border-white data-[state=checked]:bg-white data-[state=checked]:text-purple-600"
-                  />
-                  <label
-                    htmlFor="consent-email"
-                    className="text-white text-xs md:text-sm cursor-pointer ml-2"
-                  >
-                    I agree to receive other communications from UeCampus.
-                  </label>
-                  <p className="text-white py-1 text-xs md:text-sm">
-                    You can unsubscribe from these communications at any time.
-                    For more information on how to unsubscribe, our privacy
-                    practices, and how we are committed to protecting and
-                    respecting your privacy, please review our Privacy Policy.
-                    By clicking submit below, you consent to allow UeCampus to
-                    store and process the personal information submitted above
-                    to provide you the content requested.
-                  </p>
-                </div>
 
-                {/* Social Buttons */}
-                <div className="flex gap-2 pt-2">
-                  <Button
-                    type="button"
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white h-9 text-xs md:text-sm"
-                  >
-                    <Facebook className="w-4 h-4 mr-1" />
-                    Facebook
-                  </Button>
-                  <Button
-                    type="button"
-                    className="flex-1 bg-white hover:bg-gray-100 text-gray-900 h-9 text-xs md:text-sm"
-                  >
-                    <Mail className="w-4 h-4 mr-1" />
-                    Google
-                  </Button>
-                </div>
-
-                {/* Submit */}
+                {/* Submit Button */}
                 <Button
                   type="submit"
                   className="w-full bg-white text-purple-700 hover:bg-gray-100 font-bold h-11 text-sm md:text-base mt-4 shadow-lg"
