@@ -15,7 +15,7 @@ const Banner = ({ imageUrl, title }: BannerProps) => {
       <div className="absolute rounded-2xl inset-0 bg-black/50"></div>
 
       {/* Content */}
-      <h1 className="relative text-4xl md:text-6xl font-semibold drop-shadow-lg pl-7">
+      <h1 className="relative text-5xl md:text-7xl font-semibold drop-shadow-lg pl-10">
         {title}
       </h1>
     </div>

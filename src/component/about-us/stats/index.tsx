@@ -1,3 +1,4 @@
+import StatsCards from "@/component/common/StatsCards";
 import BannerImage from "../Banner";
 import { StatCard } from "./card";
 
@@ -20,6 +21,31 @@ const structuredData = {
   },
 };
 
+const statsData = [
+    {
+      stat: "36+",
+      title: "Online Courses",
+      description:
+        "Explore a wide range of flexible, career-focused programs.",
+      variant: "dark",
+    },
+    {
+      stat: "4.9",
+      title: "Course Rating",
+      description:
+        "Trusted and highly rated by our students worldwide.",
+      variant: "light",
+    },
+    {
+      stat: "100",
+      title: "Students",
+      description:
+        "A growing global community of engaged learners.",
+      variant: "light",
+    },
+  ];
+
+
 export default function AboutUsStats() {
   return (
     <>
@@ -39,7 +65,7 @@ export default function AboutUsStats() {
         <section className="px-6 py-12">
           <div className="w-full mx-auto">
             {/* Main Heading */}
-            <h1 className="text-2xl sm:text-4xl md:text-4xl lg:text-5xl  font-semibold text-purple-600 mb-12 leading-tight text-balance">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl leading-[1.4]  font-semibold text-[#6A1B9A] mb-12  text-balance">
               Your Online Learning
               <br />
               Platform, For the
@@ -48,28 +74,7 @@ export default function AboutUsStats() {
             </h1>
 
             {/* Stats Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <StatCard
-                stat="36+"
-                title="Online Courses"
-                description="Our degrees are recognized internationally, opening doors to global careers."
-                variant="dark"
-              />
-
-              <StatCard
-                stat="4.9"
-                title="Course Rating"
-                description="Learn from industry experts who bring real-world experience to the classroom."
-                variant="light"
-              />
-
-              <StatCard
-                stat="100"
-                title="Students"
-                description="Study at your own pace with courses designed for busy lifestyles."
-                variant="light"
-              />
-            </div>
+         <StatsCards data={statsData} />
           </div>
         </section>
       </main>
