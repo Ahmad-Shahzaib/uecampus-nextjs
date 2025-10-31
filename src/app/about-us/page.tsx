@@ -31,7 +31,13 @@ const Page = () => {
             </div>
             <div className="min-h-screen">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6 lg:p-8 mx-auto">
-                    <AboutSection />
+                    <AboutSection 
+                    label="About Us"
+                    title="Why Study at UeCampus?"
+                    highlight=''
+                    buttonText=''
+                    description='Founded in 2020, UeCampus is a global online education platform dedicated to making quality education accessible to all. Partnering with prestigious universities, we offer diverse programs designed to meet the needs of a global student community. UeCampus combines flexibility and innovation, providing interactive, technology-driven learning experiences that foster growth and career advancement.'
+                    />
                     <EducationSection
                         cardData1={
                             cardData
