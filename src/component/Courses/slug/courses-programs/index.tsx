@@ -82,10 +82,10 @@ export default function ProgramPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3 text-gray-700 text-base sm:text-lg">
-                  <span className="text-purple-600 font-bold mr-2">•</span>
+                  <span className="text-[#6a1b9a] font-bold mr-2">•</span>
                   <span>
                     Apply today for the{" "}
-                    <span className="font-bold text-purple-600">
+                    <span className="font-bold text-[#6a1b9a]">
                       Level 7 Diploma in Health and Social Care
                     </span>{" "}
                     and lead with compassion, strategy, and vision.
@@ -113,7 +113,7 @@ export default function ProgramPage() {
                   >
                     <div className="p-6 space-y-4">
                       {/* Badge */}
-                      <Badge className="bg-white text-purple-600 hover:bg-white/90 w-fit rounded-full text-xs sm:text-sm">
+                      <Badge className="bg-white text-[#6a1b9a] hover:bg-white/90 w-fit rounded-full text-xs sm:text-sm">
                         {course.category}
                       </Badge>
 
@@ -191,7 +191,7 @@ export default function ProgramPage() {
                   onClick={() => setActiveTab(tab)}
                   className={`text-sm font-medium pb-2 border-b-2 transition-colors flex-shrink-0 ${
                     activeTab === tab
-                      ? "text-purple-600 border-purple-600"
+                      ? "text-[#6a1b9a] border-purple-600"
                       : "text-gray-700 hover:text-gray-900 border-transparent hover:border-gray-300"
                   }`}
                 >
