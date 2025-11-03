@@ -7,6 +7,7 @@ const nextConfig = {
       "cdn.pixabay.com",
       "res.cloudinary.com",
       "hebbkx1anhila5yf.public.blob.vercel-storage.com",
+      'example.com',
 
     ],
   },

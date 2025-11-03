@@ -55,7 +55,7 @@ const HealthSocialCarePage: React.FC = () => {
               id="units-accordion-content"
               className={`transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}
             >
-              <div className="px-6 pb-8">
+              <div className="lg:px-6 pb-8 sm:px-2 ">
                 <table className="w-full border border-gray-300 rounded-lg overflow-hidden">
                   <thead className="bg-purple-100">
                     <tr>
