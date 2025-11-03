@@ -3,6 +3,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation"; // Add this import
 
 interface CourseCardProps {
   course: {
@@ -20,6 +21,12 @@ interface CourseCardProps {
 }
 
 export default function CourseCard({ course }: CourseCardProps) {
+  const router = useRouter();
+
+  const navigateToCourseDetail = () => {
+    router.push(`/detail?id=${course.id}`); // Navigate to /detail with course ID
+  };
+
   return (
     <Card className="overflow-hidden bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
       <div className="flex flex-col md:flex-row gap-4 md:gap-6 p-4 md:p-6">
@@ -71,6 +78,7 @@ export default function CourseCard({ course }: CourseCardProps) {
             </div>
             <Button
               variant="ghost"
+              onClick={navigateToCourseDetail} // Attach the handler here
               className="text-gray-600 hover:text-purple-700 cursor-pointer gap-1 p-0"
             >
               Course Details

@@ -30,8 +30,8 @@ const features: FeatureCard[] = [
 
 export default function CoursesFeaturesCards() {
   return (
-    <main className="min-h-screen bg-background p-8">
-      <div className="mx-auto max-w-7xl">
+    <main className="h-full bg-background p-4">
+      <div className="mx-auto w-full">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {features.map((feature, index) => (
             <Card key={index} className="border border-gray-300 bg-white">

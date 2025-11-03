@@ -63,7 +63,7 @@ const NavigationSection: React.FC<Props> = ({ mobile = false }) => {
         </li>
 
         <li>
-          <Link href="/programmes" className="block py-2">
+          <Link href="/courses" className="block py-2">
             Programmes & Diploma
           </Link>
         </li>
