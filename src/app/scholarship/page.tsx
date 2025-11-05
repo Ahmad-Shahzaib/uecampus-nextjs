@@ -13,16 +13,24 @@ import {
   CoursesSection_ue,
   FEATURE_CARDS,
   HeroSection_ue,
-  PARTNER_LOGOS,
+  /* PARTNER_LOGOS, */
   studentLocations,
 } from "@/constants";
 import { useDispatch, useSelector } from "@/redux/store";
 import { fetchCoursesData } from "@/redux/thunk/courses";
+import { fetchTestinomialsData } from "@/redux/thunk/testinomials";
 import { useEffect } from "react";
 import Banner from "@/component/about-us/Banner";
 import { StatCard } from "@/component/about-us/stats/card";
 import StatsCards from "@/component/common/StatsCards";
 export default function Page() {
+
+  const dispatch = useDispatch();
+  const logos = useSelector((state) => state.testinomials?.data ?? []);
+
+  useEffect(() => {
+    dispatch(fetchTestinomialsData());
+  }, [dispatch]);
 
   const cardData = {
     backgroundClass: "bg-[#1b232a] text-[#FFFFFF]",
@@ -112,7 +120,7 @@ export default function Page() {
         <TestimonialCarousel />
       </div>
       <div className="bg-gray-900 rounded-2xl m-5">
-        <LogoCarousel logos={PARTNER_LOGOS} />
+        <LogoCarousel logos={logos} />
       </div>
     </div>
   );

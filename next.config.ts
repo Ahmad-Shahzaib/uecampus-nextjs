@@ -8,6 +8,7 @@ const nextConfig = {
       "res.cloudinary.com",
       "hebbkx1anhila5yf.public.blob.vercel-storage.com",
       'example.com',
+      "uecampus.com"
 
     ],
   },

@@ -9,9 +9,10 @@ import HeroSection from "@/component/HeroSection";
 import JoinUs from "@/component/joinus";
 import { LogoCarousel } from "@/component/partners";
 import { FeatureCard } from "@/component/testinomials/testinomials-card";
-import { CoursesSection_ue, FEATURE_CARDS, HeroSection_ue, PARTNER_LOGOS, studentLocations } from "@/constants";
+import { CoursesSection_ue, FEATURE_CARDS, HeroSection_ue, /* PARTNER_LOGOS, */ studentLocations } from "@/constants";
 import { useDispatch, useSelector } from "@/redux/store";
 import { fetchCoursesData } from "@/redux/thunk/courses";
+import { fetchTestinomialsData } from "@/redux/thunk/testinomials";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -20,10 +21,13 @@ export default function Home() {
 
   const dispatch = useDispatch();
   const { data, isLoading, error } = useSelector((state) => state.courses);
+  const logos = useSelector((state) => state.testinomials?.data ?? []);
   console.log("courses data", data)
 
   useEffect(() => {
     dispatch(fetchCoursesData({}));
+    // fetch affiliation/partner logos
+    dispatch(fetchTestinomialsData());
   }, [dispatch]);
 
       const cardData = {
@@ -69,7 +73,7 @@ export default function Home() {
         </div>
 
         <div className="sm:px-10 px-4">
-          <LogoCarousel logos={PARTNER_LOGOS} />
+          <LogoCarousel logos={logos} />
         </div>
       </div>
      
