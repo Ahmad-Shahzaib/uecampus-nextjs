@@ -9,6 +9,8 @@ import aboutReducer from "./slices/aboutSlice";
 import testinomialsReducer from "./slices/testinomialsSlice";
 import heroReducer from "./slices/heroSlice";
 import studentFeedbackReducer from "./slices/studentFeedback"; // Add this import
+import featureCardsReducer from "./slices/featureCards";
+import aboutSectionReducer from "./slices/aboutSection";
 
 const createNoopStorage = () => ({
   getItem(): Promise<null> {
@@ -65,6 +67,13 @@ const testinomialsPersistConfig: PersistConfig<any> = {
   whitelist: [],
 };
 
+const featureCardsPersistConfig: PersistConfig<any> = {
+  key: "featureCards",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: [],
+};
+
 // Add persist config for student feedback
 const studentFeedbackPersistConfig: PersistConfig<any> = {
   key: "studentFeedback",
@@ -72,15 +81,23 @@ const studentFeedbackPersistConfig: PersistConfig<any> = {
   keyPrefix: "redux-",
   whitelist: [], // You can add properties to persist if needed
 };
-
+const aboutSectionPersistConfig = {
+  key: "aboutSection",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: [],
+};
 const appReducer = combineReducers({
   courses: persistReducer(coursesPersistConfig, coursesReducer),
   faqs: persistReducer(faqsPersistConfig, faqsReducer),
   testinomials: persistReducer(testinomialsPersistConfig, testinomialsReducer),
   hero: persistReducer(heroPersistConfig, heroReducer),
   about: persistReducer(aboutPersistConfig, aboutReducer),
+  featureCards: persistReducer(featureCardsPersistConfig, featureCardsReducer),
   // Add student feedback reducer
   studentFeedback: persistReducer(studentFeedbackPersistConfig, studentFeedbackReducer),
+  // Add about section reducer
+  aboutSection: persistReducer(aboutSectionPersistConfig, aboutSectionReducer),
 });
 
 const rootReducer: Reducer = (
