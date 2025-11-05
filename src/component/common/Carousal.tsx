@@ -1,10 +1,13 @@
+// src/component/TestimonialCarousel.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useDispatch, useSelector } from "@/redux/store";
+import { fetchStudentFeedbackData } from "@/redux/thunk/studentFeedback";
 
 interface Testimonial {
-  id: number;
+  id: string;
   name: string;
   degree: string;
   country: string;
@@ -12,51 +15,19 @@ interface Testimonial {
   text: string;
 }
 
-const testimonials: Testimonial[] = [
-  {
-    id: 1,
-    name: "Jacek",
-    degree: "Bachelor of Business Administration in Marketing",
-    country: "Poland",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop",
-    text: "Completing my BBA in Marketing at UeCampus was a game-changer for my career. The comprehensive curriculum and practical training equipped me with the skills and confidence to excel in the marketing industry. UeCampus truly prepares you for success.",
-  },
-  {
-    id: 2,
-    name: "Maria",
-    degree: "Bachelor of Business Administration in Marketing",
-    country: "Spain",
-    image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop",
-    text: "The education I received at UeCampus transformed my perspective on business. The faculty is incredibly supportive and the curriculum is designed with real-world applications in mind. I feel fully prepared for my career ahead.",
-  },
-  {
-    id: 3,
-    name: "Ahmed",
-    degree: "Bachelor of Business Administration in Marketing",
-    country: "UAE",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop",
-    text: "UeCampus provided me with not just theoretical knowledge but practical experience that matters. The networking opportunities and mentorship from industry professionals have been invaluable to my growth.",
-  },
-  {
-    id: 4,
-    name: "Sophie",
-    degree: "Bachelor of Business Administration in Marketing",
-    country: "France",
-    image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop",
-    text: "The quality of education at UeCampus is exceptional. I gained hands-on experience through projects and internships that directly contributed to landing my dream job. Highly recommend this program!",
-  },
-];
-
 export default function TestimonialCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  
+  const dispatch = useDispatch();
+  const { data: testimonials, isLoading, error } = useSelector((state) => state.studentFeedback);
+
+  useEffect(() => {
+    dispatch(fetchStudentFeedbackData());
+  }, [dispatch]);
 
   const handlePrevious = () => {
-    if (isTransitioning) return;
+    if (isTransitioning || testimonials.length === 0) return;
     setIsTransitioning(true);
     setCurrentIndex((prev) =>
       prev === 0 ? testimonials.length - 1 : prev - 1
@@ -65,7 +36,7 @@ export default function TestimonialCarousel() {
   };
 
   const handleNext = () => {
-    if (isTransitioning) return;
+    if (isTransitioning || testimonials.length === 0) return;
     setIsTransitioning(true);
     setCurrentIndex((prev) =>
       prev === testimonials.length - 1 ? 0 : prev + 1
@@ -74,11 +45,41 @@ export default function TestimonialCarousel() {
   };
 
   const goToSlide = (index: number) => {
-    if (isTransitioning || index === currentIndex) return;
+    if (isTransitioning || index === currentIndex || testimonials.length === 0) return;
     setIsTransitioning(true);
     setCurrentIndex(index);
     setTimeout(() => setIsTransitioning(false), 500);
   };
+
+  if (isLoading) {
+    return (
+      <section className="relative w-full bg-white py-6 overflow-hidden">
+        <div className="flex justify-center items-center h-64">
+          <div className="text-lg text-gray-600">Loading testimonials...</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="relative w-full bg-white py-6 overflow-hidden">
+        <div className="flex justify-center items-center h-64">
+          <div className="text-lg text-red-600">Error loading testimonials: {error}</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (testimonials.length === 0) {
+    return (
+      <section className="relative w-full bg-white py-6 overflow-hidden">
+        <div className="flex justify-center items-center h-64">
+          <div className="text-lg text-gray-600">No testimonials available</div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="relative w-full bg-white py-6 overflow-hidden">
@@ -150,7 +151,7 @@ export default function TestimonialCarousel() {
                     className="w-full flex-shrink-0 px-3 sm:px-6 py-6 sm:py-8"
                   >
                     <div className="flex flex-col md:flex-row items-center md:items-start gap-6 sm:gap-8">
-                      {/* ✅ Image size increased here */}
+                      {/* Image */}
                       <div className="relative h-56 w-44 sm:h-64 sm:w-52 md:h-72 md:w-60 lg:h-80 lg:w-64 flex-shrink-0 overflow-hidden rounded-xl shadow-md">
                         <img
                           src={t.image}

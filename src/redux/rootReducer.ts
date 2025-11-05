@@ -1,3 +1,4 @@
+// src/redux/rootReducer.ts
 import { AnyAction, combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
@@ -7,7 +8,7 @@ import faqsReducer from "./slices/faqs";
 import aboutReducer from "./slices/aboutSlice";
 import testinomialsReducer from "./slices/testinomialsSlice";
 import heroReducer from "./slices/heroSlice";
-
+import studentFeedbackReducer from "./slices/studentFeedback"; // Add this import
 
 const createNoopStorage = () => ({
   getItem(): Promise<null> {
@@ -21,7 +22,6 @@ const createNoopStorage = () => ({
   },
 });
 
-
 const storage =
   typeof window !== "undefined"
     ? createWebStorage("local")
@@ -33,7 +33,6 @@ const rootPersistConfig: PersistConfig<any> = {
   keyPrefix: "redux-",
   whitelist: [],
 };
-
 
 const coursesPersistConfig: PersistConfig<any> = {
   key: "courses",
@@ -67,14 +66,22 @@ const testinomialsPersistConfig: PersistConfig<any> = {
   whitelist: [],
 };
 
-
+// Add persist config for student feedback
+const studentFeedbackPersistConfig: PersistConfig<any> = {
+  key: "studentFeedback",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: [], // You can add properties to persist if needed
+};
 
 const appReducer = combineReducers({
   courses: persistReducer(coursesPersistConfig, coursesReducer),
   faqs: persistReducer(faqsPersistConfig, faqsReducer),
   testinomials: persistReducer(testinomialsPersistConfig, testinomialsReducer),
   hero: persistReducer(heroPersistConfig, heroReducer),
-  about: persistReducer(aboutPersistConfig, aboutReducer)
+  about: persistReducer(aboutPersistConfig, aboutReducer),
+  // Add student feedback reducer
+  studentFeedback: persistReducer(studentFeedbackPersistConfig, studentFeedbackReducer),
 });
 
 const rootReducer: Reducer = (
