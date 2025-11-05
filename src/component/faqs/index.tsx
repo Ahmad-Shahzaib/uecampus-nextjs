@@ -1,59 +1,62 @@
+// src/component/Faqs.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Minus } from "lucide-react";
+import { useDispatch, useSelector } from "@/redux/store";
+import { fetchFaqsData } from "@/redux/thunk/faqs";
 
 export default function Faqs() {
-  const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  
+  const dispatch = useDispatch();
+  const { faqContent, data: faqs, isLoading, error } = useSelector((state) => state.faqs);
 
-  const faqItems = [
-    {
-      id: 1,
-      question: "What is UeCampus?",
-      answer:
-        "UeCampus is an online learning platform offering a variety of courses and degrees.",
-    },
-    {
-      id: 2,
-      question: "How do I enroll in a course?",
-      answer:
-        "You can enroll by visiting the UeCampus website and following the registration process.",
-    },
-    {
-      id: 3,
-      question: "Are the degrees recognized globally?",
-      answer:
-        "Yes, UeCampus degrees are recognized globally by accredited institutions.",
-    },
-    {
-      id: 4,
-      question: "Can I study part-time?",
-      answer:
-        "Yes, part-time study options are available to suit your schedule.",
-    },
-    {
-      id: 5,
-      question: "What support is available for students?",
-      answer:
-        "Students receive 24/7 support, including academic advising and technical assistance.",
-    },
-    {
-      id: 6,
-      question: "How much does it cost?",
-      answer:
-        "Costs vary by course; please check the UeCampus website for detailed pricing.",
-    },
-    {
-      id: 7,
-      question: "Is there a mobile app for studying?",
-      answer:
-        "Yes, UeCampus offers a mobile app for convenient learning on the go.",
-    },
-  ];
+  useEffect(() => {
+    dispatch(fetchFaqsData());
+  }, [dispatch]);
 
-  const toggleExpand = (id: number) => {
+  const toggleExpand = (id: string) => {
     setExpandedId((prev) => (prev === id ? null : id));
   };
+
+  if (isLoading) {
+    return (
+      <section className="relative min-h-screen overflow-hidden text-white font-sans flex items-center justify-center"
+        style={{
+          backgroundImage: `
+            url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-2.png'),
+            linear-gradient(to bottom, rgb(27 35 42), rgb(27 35 42))
+          `,
+          backgroundBlendMode: "overlay",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <div className="text-xl">Loading FAQs...</div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="relative min-h-screen overflow-hidden text-white font-sans flex items-center justify-center"
+        style={{
+          backgroundImage: `
+            url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-2.png'),
+            linear-gradient(to bottom, rgb(27 35 42), rgb(27 35 42))
+          `,
+          backgroundBlendMode: "overlay",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <div className="text-xl text-red-400">Error loading FAQs: {error}</div>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -75,33 +78,32 @@ export default function Faqs() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           {/* LEFT – Headline */}
           <div className="flex flex-col justify-center text-center lg:text-left lg:items-start min-h-[500px] lg:min-h-screen">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl leading-[1.6] font-medium ">
-              Everything you
-              <br />
-              need to know about
-              <br />
-              <span className="text-white">UeCampus</span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl leading-[1.6] font-medium">
+              {faqContent?.title || "Everything you need to know about UeCampus"}
             </h1>
+            <p className="mt-6 text-lg text-gray-300 max-w-lg">
+              {faqContent?.description || "Frequently Asked Questions"}
+            </p>
           </div>
 
           {/* RIGHT – FAQ Accordion */}
           <div className="w-full space-y-4">
-            {faqItems.map((item, idx) => {
-              const isOpen = expandedId === item.id;
+            {faqs.map((item, idx) => {
+              const isOpen = expandedId === item._id;
               return (
                 <div
-                  key={item.id}
+                  key={item._id}
                   className="border-b border-slate-700/60 transition-all duration-300"
                 >
                   <button
-                    onClick={() => toggleExpand(item.id)}
+                    onClick={() => toggleExpand(item._id)}
                     aria-expanded={isOpen}
                     className="flex w-full items-center justify-between gap-4 py-5 text-left transition-colors rounded-xl px-2 sm:px-4 hover:bg-slate-800/40"
                   >
                     <div className="flex flex-1 items-center gap-4">
-                      {/* NUMBER – EXACTLY LIKE IN IMAGE */}
+                      {/* NUMBER */}
                       <span
-                        className="text-4xl accordion-number text-right    font-extrabold text-[#999]"
+                        className="text-4xl accordion-number text-right font-extrabold text-[#999]"
                         style={{ fontVariantNumeric: "tabular-nums" }}
                       >
                         {String(idx + 1).padStart(2, "0")}
@@ -127,7 +129,7 @@ export default function Faqs() {
                   <div
                     className={`overflow-hidden transition-all duration-500 ease-in-out ${
                       isOpen
-                        ? "max-h-96 opacity-100 py-3 pl-16 pr-4" // pl-16 aligns with w-12 + gap
+                        ? "max-h-96 opacity-100 py-3 pl-16 pr-4"
                         : "max-h-0 opacity-0"
                     }`}
                   >
