@@ -1,20 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchTestinomialsData } from "../thunk/testinomials";
 
-interface Testinomial {
-    _id: string;
-    name: string;
-    program: string;
-    feedback: string;
-    image: string;
-    createdAt: string;
-    updatedAt: string;
+interface LogoItem {
+    id: string;
+    name?: string;
+    src: string;
+    alt?: string;
+    createdAt?: string | null;
+    updatedAt?: string | null;
 }
 
 interface TestinomialsState {
     isLoading: boolean;
     error: string | null;
-    data: Testinomial[];
+    data: LogoItem[];
 }
 
 const initialState: TestinomialsState = {
@@ -35,13 +34,17 @@ const testinomialsSlice = createSlice({
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(fetchTestinomialsData.fulfilled, (state, action: PayloadAction<Testinomial[]>) => {
+            .addCase(fetchTestinomialsData.fulfilled, (state, action: PayloadAction<LogoItem[]>) => {
                 state.isLoading = false;
                 state.data = action.payload;
             })
             .addCase(fetchTestinomialsData.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.error.message || "Failed to fetch testimonials";
+                // Prefer rejectWithValue payload (available at action.payload) if provided
+                // but fallback to action.error.message
+                // action.payload may be set when rejectWithValue is used in the thunk
+                const payload = (action as unknown as { payload?: unknown }).payload;
+                state.error = (typeof payload === "string" ? payload : undefined) || action.error?.message || "Failed to fetch testimonials";
             });
     },
 });
