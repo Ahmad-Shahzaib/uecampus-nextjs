@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ProgramCard } from "./CourseCard";
 import { CoursesSection_ue } from "@/constants";
@@ -20,27 +20,36 @@ interface Course {
 const CourseSection: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { data: courses, isLoading, error } = useSelector((state: RootState) => state.courses);
+  
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     dispatch(fetchCoursesData({}));
   }, [dispatch]);
 
-  // Debug: Log the courses data
+  // Debug
   useEffect(() => {
     console.log("Courses from API:", courses);
-    console.log("Featured course IDs:", CoursesSection_ue.map(c => c.id));
+    console.log("Featured IDs:", CoursesSection_ue.map(c => c.id));
   }, [courses]);
 
-  // Get the IDs of courses we want to feature
+  // Get featured course IDs from constants
   const featuredCourseIds = CoursesSection_ue.map(course => course.id);
   
-  // Filter courses to only show featured ones
+  // Filter featured courses
   const featuredCourses = courses.filter(course => 
     featuredCourseIds.includes(course.id)
   );
 
-  // Fallback: If no featured courses, show all courses
-  const coursesToShow = featuredCourses.length > 0 ? featuredCourses : courses;
+  // Decide which courses to display
+  const coursesToShow = showAll 
+    ? courses 
+    : featuredCourses.length > 0 
+      ? featuredCourses.slice(0, 4) 
+      : courses.slice(0, 4);
+
+  const totalFeatured = featuredCourses.length;
+  const hasMore = showAll ? false : (featuredCourses.length > 3 || courses.length > 3);
 
   return (
     <section
@@ -56,39 +65,55 @@ const CourseSection: React.FC = () => {
           Want to know more <br className="hidden sm:block" /> about our courses?
         </h2>
 
-        <Button
-          className="inline-block h-[40px] px-5 bg-[#6A1B9A] text-white rounded-md no-underline transition-colors duration-200 hover:bg-[#4a148c]"
-        >
-          View All Courses
-        </Button>
+        <div className="flex gap-4">
+          {!showAll && hasMore && (
+            <Button
+              onClick={() => setShowAll(true)}
+              className="h-[40px] px-5 bg-[#6A1B9A] text-white rounded-md transition-colors duration-200 hover:bg-[#4a148c]"
+            >
+              View All Courses
+            </Button>
+          )}
+          {showAll && (
+            <Button
+              onClick={() => setShowAll(false)}
+              variant="outline"
+              className="h-[40px] px-5 border-[#6A1B9A] text-[#6A1B9A] rounded-md hover:bg-[#6A1B9A] hover:text-white"
+            >
+              Show Less
+            </Button>
+          )}
+        </div>
       </div>
 
       {/* Courses Grid */}
       <div className="grid gap-4 sm:gap-6 grid-cols-[repeat(auto-fit,minmax(275px,1fr))]">
         {isLoading ? (
-          // Loading state
-          Array.from({ length: 3 }).map((_, index) => (
-            <div key={index} className="animate-pulse">
-              <div className="w-full h-80 bg-gray-800 rounded-3xl"></div>
+          // Loading skeletons
+          Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="animate-pulse">
+              <div className="w-full h-80 bg-gray-300 dark:bg-gray-700 rounded-3xl"></div>
             </div>
           ))
         ) : error ? (
-          // Error state
-          <div className="col-span-full text-center text-red-500 py-8">
-            {error}
-          </div>
+          <div className="col-span-full text-center text-red-500 py-8">{error}</div>
         ) : coursesToShow.length > 0 ? (
-          // Display courses (featured or all as fallback)
           coursesToShow.map((course) => (
             <ProgramCard key={course.id} course={course} />
           ))
         ) : (
-          // No courses available
           <div className="col-span-full text-center text-gray-500 py-8">
             No courses available at the moment.
           </div>
         )}
       </div>
+
+      {/* Optional: Show count */}
+      {showAll && (
+        <p className="text-center mt-8 text-gray-600">
+          Showing all {courses.length} course{courses.length !== 1 ? 's' : ''}
+        </p>
+      )}
     </section>
   );
 };

@@ -27,9 +27,7 @@ export function EducationSection({ cardData1, cardData2, link = true }: CardData
   return (
     <section className="flex flex-col gap-6">
       {/* Education Card */}
-      <EducationCard
-        title={cardData1?.title}
-        description={cardData1?.description}
+      <EducationCard 
         backgroundImage={cardData1?.backgroundImage}
         backgroundClass={cardData1?.backgroundClass}
       />
@@ -39,9 +37,7 @@ export function EducationSection({ cardData1, cardData2, link = true }: CardData
             <VideoCard />
           </>
         ) : (
-          <>  <EducationCard
-            title={cardData2?.title}
-            description={cardData2?.description}
+          <>  <EducationCard 
             backgroundImage={cardData2?.backgroundImage}
             backgroundClass={cardData2?.backgroundClass}
 

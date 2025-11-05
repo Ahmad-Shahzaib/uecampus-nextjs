@@ -45,9 +45,6 @@ export default function Home() {
 
   const cardData = {
     backgroundClass: "text-[#6a1b9a]",
-    title: "Quality Education That’s Affordable — Because Your Future Matters",
-    description:
-        "Quality Education That’s Affordable — Because Your Future Matters At UeCampus, we believe that access to top-tier education should never be limited by cost. That’s why we’re committed to offering internationally accredited degree programmes that don’t break the bank — making your dream of earning a quality degree achievable and affordable at the comfort of your home.",
     backgroundImage:
         "https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.png",
   }
