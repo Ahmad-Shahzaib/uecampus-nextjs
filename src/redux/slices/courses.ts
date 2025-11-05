@@ -1,11 +1,13 @@
+// src/redux/slices/courses.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchCoursesData } from "../thunk/courses";
 
 interface Course {
     _id: string;
+    name: string;
     title: string;
-    description: string;
-    image: string;
+    detail: string;
+    image_path: string;
     link: string;
     createdAt: string;
     updatedAt: string;

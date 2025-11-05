@@ -40,7 +40,6 @@ const coursesPersistConfig: PersistConfig<any> = {
   keyPrefix: "redux-",
   whitelist: [],
 };
-
 const aboutPersistConfig: PersistConfig<any> = {
   key: "about",
   storage,

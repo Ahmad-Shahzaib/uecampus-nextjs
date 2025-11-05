@@ -1,3 +1,4 @@
+// src/redux/store.ts
 import { configureStore } from "@reduxjs/toolkit";
 import {
   TypedUseSelectorHook,
@@ -7,15 +8,12 @@ import {
 import { persistReducer, persistStore } from "redux-persist";
 import { rootPersistConfig, rootReducer } from "./rootReducer";
 
-// ----------------------------------------------------------------------
-
 const store = configureStore({
   reducer: persistReducer(rootPersistConfig, rootReducer),
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
-      
     }).concat(),
 });
 
