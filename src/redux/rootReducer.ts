@@ -11,6 +11,8 @@ import heroReducer from "./slices/heroSlice";
 import studentFeedbackReducer from "./slices/studentFeedback"; // Add this import
 import featureCardsReducer from "./slices/featureCards";
 import aboutSectionReducer from "./slices/aboutSection";
+import howToApplyReducer from "./slices/howToApply";
+
 
 const createNoopStorage = () => ({
   getItem(): Promise<null> {
@@ -87,6 +89,15 @@ const aboutSectionPersistConfig = {
   keyPrefix: "redux-",
   whitelist: [],
 };
+
+const howToApplyPersistConfig = {
+  key: "howToApply",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: ["data"], // Persist the data
+};
+
+
 const appReducer = combineReducers({
   courses: persistReducer(coursesPersistConfig, coursesReducer),
   faqs: persistReducer(faqsPersistConfig, faqsReducer),
@@ -98,6 +109,8 @@ const appReducer = combineReducers({
   studentFeedback: persistReducer(studentFeedbackPersistConfig, studentFeedbackReducer),
   // Add about section reducer
   aboutSection: persistReducer(aboutSectionPersistConfig, aboutSectionReducer),
+    howToApply: persistReducer(howToApplyPersistConfig, howToApplyReducer),
+
 });
 
 const rootReducer: Reducer = (
