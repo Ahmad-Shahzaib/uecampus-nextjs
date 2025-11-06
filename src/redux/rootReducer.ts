@@ -8,11 +8,11 @@ import faqsReducer from "./slices/faqs";
 import aboutReducer from "./slices/aboutSlice";
 import testinomialsReducer from "./slices/testinomialsSlice";
 import heroReducer from "./slices/heroSlice";
-import studentFeedbackReducer from "./slices/studentFeedback"; // Add this import
+import studentFeedbackReducer from "./slices/studentFeedback";
 import featureCardsReducer from "./slices/featureCards";
 import aboutSectionReducer from "./slices/aboutSection";
 import howToApplyReducer from "./slices/howToApply";
-
+import scholarshipReducer from "./slices/scholarship"; // Correct import
 
 const createNoopStorage = () => ({
   getItem(): Promise<null> {
@@ -76,12 +76,11 @@ const featureCardsPersistConfig: PersistConfig<any> = {
   whitelist: [],
 };
 
-// Add persist config for student feedback
 const studentFeedbackPersistConfig: PersistConfig<any> = {
   key: "studentFeedback",
   storage,
   keyPrefix: "redux-",
-  whitelist: [], // You can add properties to persist if needed
+  whitelist: [],
 };
 const aboutSectionPersistConfig = {
   key: "aboutSection",
@@ -94,9 +93,15 @@ const howToApplyPersistConfig = {
   key: "howToApply",
   storage,
   keyPrefix: "redux-",
-  whitelist: ["data"], // Persist the data
+  whitelist: ["data"],
 };
 
+const scholarshipPersistConfig = {
+  key: "scholarship",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: ["data"], // Persist the data
+};  
 
 const appReducer = combineReducers({
   courses: persistReducer(coursesPersistConfig, coursesReducer),
@@ -105,12 +110,10 @@ const appReducer = combineReducers({
   hero: persistReducer(heroPersistConfig, heroReducer),
   about: persistReducer(aboutPersistConfig, aboutReducer),
   featureCards: persistReducer(featureCardsPersistConfig, featureCardsReducer),
-  // Add student feedback reducer
   studentFeedback: persistReducer(studentFeedbackPersistConfig, studentFeedbackReducer),
-  // Add about section reducer
   aboutSection: persistReducer(aboutSectionPersistConfig, aboutSectionReducer),
-    howToApply: persistReducer(howToApplyPersistConfig, howToApplyReducer),
-
+  howToApply: persistReducer(howToApplyPersistConfig, howToApplyReducer),
+  scholarship: persistReducer(scholarshipPersistConfig, scholarshipReducer), // Use the actual reducer
 });
 
 const rootReducer: Reducer = (
