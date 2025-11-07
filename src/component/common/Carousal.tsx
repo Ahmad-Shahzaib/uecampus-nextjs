@@ -1,89 +1,236 @@
+// src/component/TestimonialCarousel.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback, useMemo, memo } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useDispatch, useSelector } from "@/redux/store";
+import { fetchStudentFeedbackData } from "@/redux/thunk/studentFeedback";
 
 interface Testimonial {
-  id: number;
+  id: string;
   name: string;
   degree: string;
   country: string;
   image: string;
   text: string;
+  createdAt?: string | null;
+  updatedAt?: string | null;
 }
 
-const testimonials: Testimonial[] = [
-  {
-    id: 1,
-    name: "Jacek",
-    degree: "Bachelor of Business Administration in Marketing",
-    country: "Poland",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop",
-    text: "Completing my BBA in Marketing at UeCampus was a game-changer for my career. The comprehensive curriculum and practical training equipped me with the skills and confidence to excel in the marketing industry. UeCampus truly prepares you for success.",
-  },
-  {
-    id: 2,
-    name: "Maria",
-    degree: "Bachelor of Business Administration in Marketing",
-    country: "Spain",
-    image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop",
-    text: "The education I received at UeCampus transformed my perspective on business. The faculty is incredibly supportive and the curriculum is designed with real-world applications in mind. I feel fully prepared for my career ahead.",
-  },
-  {
-    id: 3,
-    name: "Ahmed",
-    degree: "Bachelor of Business Administration in Marketing",
-    country: "UAE",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop",
-    text: "UeCampus provided me with not just theoretical knowledge but practical experience that matters. The networking opportunities and mentorship from industry professionals have been invaluable to my growth.",
-  },
-  {
-    id: 4,
-    name: "Sophie",
-    degree: "Bachelor of Business Administration in Marketing",
-    country: "France",
-    image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop",
-    text: "The quality of education at UeCampus is exceptional. I gained hands-on experience through projects and internships that directly contributed to landing my dream job. Highly recommend this program!",
-  },
-];
+interface TestimonialCarouselProps {
+  autoPlay?: boolean;
+  autoPlayInterval?: number;
+  showDots?: boolean;
+  showArrows?: boolean;
+}
 
-export default function TestimonialCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+// Memoized Image Component with lazy loading
+const LazyImage = memo(({ src, alt, className }: { src: string; alt: string; className: string }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
-  const handlePrevious = () => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setCurrentIndex((prev) =>
-      prev === 0 ? testimonials.length - 1 : prev - 1
-    );
-    setTimeout(() => setIsTransitioning(false), 500);
-  };
+  const handleLoad = useCallback(() => {
+    setIsLoading(false);
+  }, []);
 
-  const handleNext = () => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setCurrentIndex((prev) =>
-      prev === testimonials.length - 1 ? 0 : prev + 1
-    );
-    setTimeout(() => setIsTransitioning(false), 500);
-  };
-
-  const goToSlide = (index: number) => {
-    if (isTransitioning || index === currentIndex) return;
-    setIsTransitioning(true);
-    setCurrentIndex(index);
-    setTimeout(() => setIsTransitioning(false), 500);
-  };
+  const handleError = useCallback(() => {
+    setIsLoading(false);
+    setHasError(true);
+  }, []);
 
   return (
+    <div className="relative">
+      {isLoading && (
+        <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-xl flex items-center justify-center">
+          <div className="text-gray-400 text-sm">Loading...</div>
+        </div>
+      )}
+      {hasError ? (
+        <div className="bg-gray-200 rounded-xl flex items-center justify-center h-full w-full">
+          <div className="text-gray-400 text-sm">Image not available</div>
+        </div>
+      ) : (
+        <img
+          src={src}
+          alt={alt}
+          className={className}
+          onLoad={handleLoad}
+          onError={handleError}
+          loading="lazy"
+        />
+      )}
+    </div>
+  );
+});
+
+LazyImage.displayName = 'LazyImage';
+
+const TestimonialCarousel = memo(({ 
+  autoPlay = false, 
+  autoPlayInterval = 5000,
+  showDots = true,
+  showArrows = true
+}: TestimonialCarouselProps = {}) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  
+  const dispatch = useDispatch();
+  const { data: testimonials, isLoading, error } = useSelector((state) => state.studentFeedback);
+
+  // Memoize testimonials to prevent unnecessary re-renders
+  const memoizedTestimonials = useMemo(() => testimonials || [], [testimonials]);
+
+  useEffect(() => {
+    if (memoizedTestimonials.length === 0) {
+      dispatch(fetchStudentFeedbackData());
+    }
+  }, [dispatch, memoizedTestimonials.length]);
+
+  // Auto-play functionality
+  useEffect(() => {
+    if (!autoPlay || memoizedTestimonials.length <= 1 || isTransitioning) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex(prev => (prev + 1) % memoizedTestimonials.length);
+    }, autoPlayInterval);
+
+    return () => clearInterval(interval);
+  }, [autoPlay, autoPlayInterval, memoizedTestimonials.length, isTransitioning]);
+
+  // Debounced navigation functions
+  const navigate = useCallback((direction: 'prev' | 'next') => {
+    if (isTransitioning || memoizedTestimonials.length === 0) return;
+    
+    setIsTransitioning(true);
+    
+    if (direction === 'prev') {
+      setCurrentIndex(prev => prev === 0 ? memoizedTestimonials.length - 1 : prev - 1);
+    } else {
+      setCurrentIndex(prev => (prev + 1) % memoizedTestimonials.length);
+    }
+    
+    // Use requestAnimationFrame for smoother transitions
+    requestAnimationFrame(() => {
+      setTimeout(() => setIsTransitioning(false), 300);
+    });
+  }, [isTransitioning, memoizedTestimonials.length]);
+
+  const handlePrevious = useCallback(() => navigate('prev'), [navigate]);
+  const handleNext = useCallback(() => navigate('next'), [navigate]);
+
+  const goToSlide = useCallback((index: number) => {
+    if (isTransitioning || index === currentIndex || memoizedTestimonials.length === 0) return;
+    
+    setIsTransitioning(true);
+    setCurrentIndex(index);
+    
+    requestAnimationFrame(() => {
+      setTimeout(() => setIsTransitioning(false), 300);
+    });
+  }, [isTransitioning, currentIndex, memoizedTestimonials.length]);
+
+  // Touch handlers for mobile swipe
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      handleNext();
+    } else if (isRightSwipe) {
+      handlePrevious();
+    }
+  }, [touchStart, touchEnd, handleNext, handlePrevious]);
+
+  // Keyboard navigation
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    switch (e.key) {
+      case 'ArrowLeft':
+        e.preventDefault();
+        handlePrevious();
+        break;
+      case 'ArrowRight':
+        e.preventDefault();
+        handleNext();
+        break;
+      case 'Home':
+        e.preventDefault();
+        goToSlide(0);
+        break;
+      case 'End':
+        e.preventDefault();
+        goToSlide(memoizedTestimonials.length - 1);
+        break;
+    }
+  }, [handlePrevious, handleNext, goToSlide, memoizedTestimonials.length]);
+
+  // Loading state component
+  const LoadingComponent = useMemo(() => (
     <section className="relative w-full bg-white py-6 overflow-hidden">
+      <div className="flex justify-center items-center h-64">
+        <div className="flex items-center space-x-2">
+          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#6A1B9A]"></div>
+          <span className="text-lg text-gray-600">Loading testimonials...</span>
+        </div>
+      </div>
+    </section>
+  ), []);
+
+  // Error state component
+  const ErrorComponent = useMemo(() => (
+    <section className="relative w-full bg-white py-6 overflow-hidden">
+      <div className="flex justify-center items-center h-64">
+        <div className="text-center">
+          <div className="text-lg text-red-600 mb-2">Error loading testimonials</div>
+          {error && <div className="text-sm text-gray-500">{error}</div>}
+          <button 
+            onClick={() => dispatch(fetchStudentFeedbackData())}
+            className="mt-4 px-4 py-2 bg-[#6A1B9A] text-white rounded-lg hover:bg-[#5A1A8A] transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    </section>
+  ), [error, dispatch]);
+
+  // Empty state component
+  const EmptyComponent = useMemo(() => (
+    <section className="relative w-full bg-white py-6 overflow-hidden">
+      <div className="flex justify-center items-center h-64">
+        <div className="text-lg text-gray-600">No testimonials available</div>
+      </div>
+    </section>
+  ), []);
+
+  // Early returns for different states
+  if (isLoading) return LoadingComponent;
+  if (error) return ErrorComponent;
+  if (memoizedTestimonials.length === 0) return EmptyComponent;
+
+  return (
+    <section 
+      className="relative w-full bg-white py-6 overflow-hidden"
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="region"
+      aria-label="Student testimonials carousel"
+    >
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-10" aria-hidden="true">
         <svg
           className="h-full w-full"
           viewBox="0 0 1200 800"
@@ -139,22 +286,32 @@ export default function TestimonialCarousel() {
         {/* Right Section (Carousel) */}
         <div className="flex-1 relative w-full">
           <div className="relative mx-auto max-w-4xl sm:ml-20 w-full">
-            <div className="overflow-hidden rounded-2xl bg-white shadow-lg">
+            <div 
+              className="overflow-hidden rounded-2xl bg-white shadow-lg"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
               <div
-                className="flex transition-transform duration-500 ease-in-out"
+                className={`flex transition-transform duration-300 ease-out ${isTransitioning ? 'pointer-events-none' : ''}`}
                 style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+                role="listbox"
+                aria-label="Student testimonials"
               >
-                {testimonials.map((t) => (
+                {memoizedTestimonials.map((testimonial: Testimonial, index: number) => (
                   <div
-                    key={t.id}
+                    key={testimonial.id}
                     className="w-full flex-shrink-0 px-3 sm:px-6 py-6 sm:py-8"
+                    role="option"
+                    aria-selected={index === currentIndex}
+                    aria-label={`Testimonial ${index + 1} of ${memoizedTestimonials.length}`}
                   >
                     <div className="flex flex-col md:flex-row items-center md:items-start gap-6 sm:gap-8">
-                      {/* ✅ Image size increased here */}
+                      {/* Image */}
                       <div className="relative h-56 w-44 sm:h-64 sm:w-52 md:h-72 md:w-60 lg:h-80 lg:w-64 flex-shrink-0 overflow-hidden rounded-xl shadow-md">
-                        <img
-                          src={t.image}
-                          alt={t.name}
+                        <LazyImage
+                          src={testimonial.image}
+                          alt={`${testimonial.name} - Student from ${testimonial.country}`}
                           className="h-full w-full object-cover rounded-xl"
                         />
                       </div>
@@ -162,11 +319,13 @@ export default function TestimonialCarousel() {
                       {/* Text */}
                       <div className="text-center md:text-left flex-1">
                         <h3 className="text-base sm:text-lg font-semibold text-gray-900">
-                          {t.name} - {t.degree} - {t.country}
+                          {testimonial.name}
+                          {testimonial.degree && ` - ${testimonial.degree}`}
+                          {testimonial.country && ` - ${testimonial.country}`}
                         </h3>
-                        <p className="mt-3 text-gray-600 leading-relaxed text-sm sm:text-base">
-                          {t.text}
-                        </p>
+                        <blockquote className="mt-3 text-gray-600 leading-relaxed text-sm sm:text-base">
+                          "{testimonial.text}"
+                        </blockquote>
                       </div>
                     </div>
                   </div>
@@ -174,39 +333,59 @@ export default function TestimonialCarousel() {
               </div>
             </div>
 
-            {/* Arrows */}
-            <button
-              onClick={handlePrevious}
-              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white text-gray-700 shadow-md hover:bg-gray-100 transition z-10"
-              aria-label="Previous testimonial"
-            >
-              <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
-            </button>
+            {/* Navigation Arrows */}
+            {showArrows && memoizedTestimonials.length > 1 && (
+              <>
+                <button
+                  onClick={handlePrevious}
+                  disabled={isTransitioning}
+                  className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white text-gray-700 shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#6A1B9A] focus:ring-opacity-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed z-10"
+                  aria-label="Previous testimonial"
+                  type="button"
+                >
+                  <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
+                </button>
 
-            <button
-              onClick={handleNext}
-              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white text-gray-700 shadow-md hover:bg-gray-100 transition z-10"
-              aria-label="Next testimonial"
-            >
-              <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
-            </button>
+                <button
+                  onClick={handleNext}
+                  disabled={isTransitioning}
+                  className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white text-gray-700 shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#6A1B9A] focus:ring-opacity-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed z-10"
+                  aria-label="Next testimonial"
+                  type="button"
+                >
+                  <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
+                </button>
+              </>
+            )}
           </div>
 
-          {/* Dots */}
-          <div className="mt-5 sm:mt-6 flex justify-center gap-2">
-            {testimonials.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => goToSlide(i)}
-                className={`h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full transition-colors duration-300 ${
-                  i === currentIndex ? "bg-gray-600" : "bg-gray-300"
-                }`}
-                aria-label={`Go to slide ${i + 1}`}
-              />
-            ))}
-          </div>
+          {/* Pagination Dots */}
+          {showDots && memoizedTestimonials.length > 1 && (
+            <div className="mt-5 sm:mt-6 flex justify-center gap-2" role="tablist" aria-label="Testimonial navigation">
+              {memoizedTestimonials.map((testimonial: Testimonial, index: number) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  disabled={isTransitioning}
+                  className={`h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#6A1B9A] focus:ring-opacity-50 disabled:cursor-not-allowed ${
+                    index === currentIndex 
+                      ? "bg-[#6A1B9A] scale-110" 
+                      : "bg-gray-300 hover:bg-gray-400"
+                  }`}
+                  aria-label={`Go to testimonial ${index + 1}`}
+                  aria-selected={index === currentIndex}
+                  role="tab"
+                  type="button"
+                />  
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>
   );
-}
+});
+
+TestimonialCarousel.displayName = 'TestimonialCarousel';
+
+export default TestimonialCarousel;

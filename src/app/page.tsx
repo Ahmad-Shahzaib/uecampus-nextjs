@@ -9,97 +9,137 @@ import HeroSection from "@/component/HeroSection";
 import JoinUs from "@/component/joinus";
 import { LogoCarousel } from "@/component/partners";
 import { FeatureCard } from "@/component/testinomials/testinomials-card";
-import { CoursesSection_ue, FEATURE_CARDS, HeroSection_ue, /* PARTNER_LOGOS, */ studentLocations } from "@/constants";
-import { useDispatch, useSelector } from "@/redux/store";
+import {
+  CoursesSection_ue,
+  HeroSection_ue,
+  studentLocations,
+} from "@/constants";
+import { RootState, useDispatch, useSelector } from "@/redux/store";
 import { fetchCoursesData } from "@/redux/thunk/courses";
 import { fetchTestinomialsData } from "@/redux/thunk/testinomials";
+import { fetchFeatureCardsData } from "@/redux/thunk/featureCards";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { fetchAboutSectionData } from "@/redux/thunk/aboutSection";
 
 export default function Home() {
   const router = useRouter();
 
   const dispatch = useDispatch();
-  const { data, isLoading, error } = useSelector((state) => state.courses);
-  const logos = useSelector((state) => state.testinomials?.data ?? []);
-  console.log("courses data", data)
+  const {
+    data: courses,
+    isLoading: coursesLoading,
+    error: coursesError,
+  } = useSelector((state) => state.courses);
+  const { data: testimonials, isLoading: testimonialsLoading } = useSelector(
+    (state) => state.testinomials
+  );
+  const featureState = useSelector((state) => (state as any).featureCards);
+  const featureCards = featureState?.data ?? [];
+  const featureCardsLoading = featureState?.isLoading ?? false;
+  const featureCardsError = featureState?.error ?? null;
+  const {
+    data: cards,
+    isLoading,
+    error,
+  } = useSelector((state: RootState) => state.featureCards);
+  const {
+    data: about,
+    isLoading: aboutLoading,
+    error: aboutError,
+  } = useSelector((state: RootState) => state.aboutSection);
 
   useEffect(() => {
     dispatch(fetchCoursesData({}));
-    // fetch affiliation/partner logos
     dispatch(fetchTestinomialsData());
+    dispatch(fetchFeatureCardsData());
+    dispatch(fetchFeatureCardsData());
+    dispatch(fetchAboutSectionData());
   }, [dispatch]);
 
-      const cardData = {
-        backgroundClass: "text-[#6a1b9a]",
-        title: "Quality Education That’s Affordable — Because Your Future Matters",
-        description:
-            "Quality Education That’s Affordable — Because Your Future Matters At UeCampus, we believe that access to top-tier education should never be limited by cost. That’s why we’re committed to offering internationally accredited degree programmes that don’t break the bank — making your dream of earning a quality degree achievable and affordable at the comfort of your home.",
-        backgroundImage:
-            "https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.png",
-    }
+  const cardData = {
+    backgroundClass: "text-[#6a1b9a]",
+    backgroundImage:
+      "https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.png",
+    about: {
+      secondCardTitle: about?.secondCardTitle,
+      secondCardDescription: about?.secondCardDescription,
+    },
+  };
 
-    const cardData1 = {
-        backgroundClass: "text-[#6a1b9a]",
-        title: "Vision",
-        description:
-            "Our vision is to be a global leader in online education, recognized for creating pathways to opportunity and success. UeCampus envisions a future where every learner, regardless of circumstance, has the chance to learn, grow, and achieve their goals through inclusive and innovative education.",
-        backgroundImage:
-            "",
-    }
+  const cardData1 = {
+    backgroundClass: "text-[#6a1b9a]",
+    title: "Vision",
+    description:
+      "Our vision is to be a global leader in online education, recognized for creating pathways to opportunity and success. UeCampus envisions a future where every learner, regardless of circumstance, has the chance to learn, grow, and achieve their goals through inclusive and innovative education.",
+    about: {
+      secondCardTitle: about?.secondCardTitle,
+      secondCardDescription: about?.secondCardDescription,
+    },
+    backgroundImage: "",
+  };
 
   return (
     <div>
-      <div className="py-6  bg-gray-800 flex flex-col space-y-8">
+      <div className="py-6 bg-gray-800 flex flex-col space-y-8">
         <div className="sm:px-10 px-4">
-    {HeroSection_ue.map((section, index) => (
-          <HeroSection key={index} title={section.title} description={section.description} variant={section.variant} />
-        )
-        )}
+          {HeroSection_ue.map((section, index) => (
+            <HeroSection
+              key={index}
+              title={section.title}
+              description={section.description}
+              variant={section.variant}
+            />
+          ))}
         </div>
-    
-        <div className="flex h-auto justify-center sm:px-10 px-4">
-         <div className="grid gap-4 md:gap-6 grid-cols-[repeat(auto-fit,minmax(230px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(280px,1fr))] w-full">
 
-            {FEATURE_CARDS.map((card, index) => (
+        <div className="sm:px-10 px-4">
+          <div className="grid gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {cards?.map((section: any, index: number) => (
               <FeatureCard
-                key={index}
-                title={card.title}
-                description={card.description}
-                variant={card.variant}
+                key={section.id || `feature-${index}`}
+                section={section}
+                index={index}
               />
             ))}
           </div>
         </div>
 
         <div className="sm:px-10 px-4">
-          <LogoCarousel logos={logos} />
+          <LogoCarousel logos={testimonials} />
         </div>
       </div>
-     
+
       <div>
         <CouresSection />
       </div>
       <div className="min-h-screen bg-gray-800 py-8 px-8">
         <div
           className="
-      grid 
-      gap-6 
-      mx-auto 
-     
-      grid-cols-1 
-      md:grid-cols-[minmax(300px,1fr)_minmax(300px,1fr)]
-    "
+            grid 
+            gap-6 
+            mx-auto 
+            grid-cols-1 
+            md:grid-cols-[minmax(300px,1fr)_minmax(300px,1fr)]
+          "
         >
-          <AboutSection />
-          <EducationSection cardData1={cardData} cardData2={cardData1} link={true} />
+          <AboutSection
+            about={about}
+            isLoading={aboutLoading}
+            error={aboutError}
+          />
+          <EducationSection
+            cardData1={cardData}
+            cardData2={cardData1}
+            link={true}
+          />
         </div>
       </div>
 
       <div>
         <div>
-        <TestimonialCarousel />
-      </div>
+          <TestimonialCarousel />
+        </div>
         <GlobalCampusSection
           title="Bringing the World Into Our Classrooms"
           description="UECampus is home to a vibrant community of international students who represent a wide range of countries and cultural backgrounds. Their presence strengthens our mission to provide globally relevant education and fosters an environment of academic exchange and cross-cultural learning. Our international students are shaping the future—locally and globally."
@@ -109,14 +149,10 @@ export default function Home() {
       <div>
         <Faqs />
       </div>
-      
+
       <div>
         <JoinUs />
       </div>
     </div>
   );
 }
-
-
-
-

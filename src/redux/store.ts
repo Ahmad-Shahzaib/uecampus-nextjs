@@ -1,3 +1,4 @@
+// src/redux/store.ts
 import { configureStore } from "@reduxjs/toolkit";
 import {
   TypedUseSelectorHook,
@@ -6,8 +7,6 @@ import {
 } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import { rootPersistConfig, rootReducer } from "./rootReducer";
-
-// ----------------------------------------------------------------------
 
 const store = configureStore({
   reducer: persistReducer(rootPersistConfig, rootReducer),

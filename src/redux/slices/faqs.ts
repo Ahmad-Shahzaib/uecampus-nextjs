@@ -1,5 +1,14 @@
+// src/redux/slices/faqs.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchFaqsData } from "../thunk/faqs";
+
+interface FaqContent {
+    id: number;
+    title: string;
+    description: string;
+    created_at: string | null;
+    updated_at: string;
+}
 
 interface Faq {
     _id: string;
@@ -12,12 +21,14 @@ interface Faq {
 interface FaqsState {
     isLoading: boolean;
     error: string | null;
+    faqContent: FaqContent | null;
     data: Faq[];
 }
 
 const initialState: FaqsState = {
     isLoading: false,
     error: null,
+    faqContent: null,
     data: [],
 };
 
@@ -33,9 +44,10 @@ const faqsSlice = createSlice({
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(fetchFaqsData.fulfilled, (state, action: PayloadAction<Faq[]>) => {
+            .addCase(fetchFaqsData.fulfilled, (state, action: PayloadAction<{faqContent: FaqContent, faqs: Faq[]}>) => {
                 state.isLoading = false;
-                state.data = action.payload;
+                state.faqContent = action.payload.faqContent;
+                state.data = action.payload.faqs;
             })
             .addCase(fetchFaqsData.rejected, (state, action) => {
                 state.isLoading = false;

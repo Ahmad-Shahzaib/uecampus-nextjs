@@ -1,67 +1,97 @@
-"use client"
+// src/components/VideoCard.tsx
+"use client";
 
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Play, Share2 } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Play, Share2 } from "lucide-react";
+import { RootState } from "@/redux/rootReducer";
+import { AppDispatch } from "@/redux/store";
+import { fetchAboutSectionData } from "@/redux/thunk/aboutSection";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export function VideoCard() {
+  const dispatch = useDispatch<AppDispatch>();
+  const { data: about, isLoading } = useSelector(
+    (state: RootState) => state.aboutSection
+  );
+
+  useEffect(() => {
+    if (!about) dispatch(fetchAboutSectionData());
+  }, [dispatch, about]);
+
+  // Extract YouTube URL
+  const youtubeUrl = about?.youtubeVideo; 
+  const videoId = youtubeUrl 
+    ? youtubeUrl 
+    : youtubeUrl 
+
+  const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+
+  if (isLoading || !about) {
+    return (
+      <Card className="bg-purple-700 border-0 shadow-lg rounded-2xl overflow-hidden animate-pulse">
+        <CardContent className="p-0">
+          <div className="aspect-video lg:h-80  bg-purple-600" />
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card className="bg-gradient-to-br from-purple-600 to-purple-800 border-0 shadow-lg rounded-2xl overflow-hidden">
       <CardContent className="p-0">
-        <div className="relative aspect-video lg:aspect-auto lg:h-80 bg-gradient-to-br from-purple-600 to-purple-900 flex flex-col items-center justify-center">
-          {/* Video Placeholder Background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-600/50 to-purple-900/50" />
+        <div className="relative aspect-video lg:aspect-auto lg:h-80">
+          {/* Embedded YouTube Video */}
+          <iframe
+            src={embedUrl}
+            title="UeCampus Student Testimonial"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="absolute inset-0 w-full h-full"
+          />
 
-          {/* Content */}
-          <div className="relative z-10 flex flex-col items-center justify-center h-full gap-6 px-6">
-            {/* Video Info */}
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                <div className="w-6 h-6 rounded-full bg-white/40" />
+          {/* Overlay Play Button (Optional - for thumbnail feel) */}
+          <div className="absolute inset-0 flex items-center justify-center bg-purple-600/30 opacity-0 hover:opacity-100 transition-opacity cursor-pointer"
+               onClick={() => window.open(youtubeUrl, "_blank")}>
+            <div className="relative">
+              <div className="absolute inset-0 bg-red-500 rounded-full blur-xl opacity-70" />
+              <div className="relative w-20 h-20 bg-red-500 rounded-full flex items-center justify-center shadow-2xl">
+                <Play className="w-10 h-10 text-white fill-white ml-2" />
               </div>
-              <span className="text-white text-sm font-medium">
-                Why study at UeCampus? | Student Testimonial | Part 1
-              </span>
-            </div>
-
-            {/* Play Button */}
-            <div className="flex items-center justify-center">
-              <div className="relative">
-                <div className="absolute inset-0 bg-red-500 rounded-full blur-lg opacity-50" />
-                <button className="relative w-20 h-20 bg-red-500 rounded-full flex items-center justify-center hover:bg-red-600 transition-colors shadow-lg">
-                  <Play className="w-8 h-8 text-white fill-white ml-1" />
-                </button>
-              </div>
-            </div>
-
-            {/* Title */}
-            <div className="text-center mt-4">
-              <h3 className="text-3xl lg:text-5xl font-bold text-white tracking-tight">UECAMPUS</h3>
-              <p className="text-white/80 text-sm lg:text-base mt-2 tracking-widest">STUDENT TESTIMONIAL</p>
             </div>
           </div>
 
-          {/* Bottom Actions */}
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/40 to-transparent p-6 flex items-center justify-between">
+          {/* Bottom Bar */}
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <Button
               variant="outline"
-              className="border-white text-white hover:bg-white/10 gap-2 bg-transparent"
+              className="border-white text-white hover:bg-white/20 bg-white/10 backdrop-blur-sm"
               size="sm"
+              onClick={() => window.open(youtubeUrl, "_blank")}
             >
-              <span>Watch on YouTube</span>
+              Watch on YouTube
             </Button>
 
-            <div className="flex gap-2">
-              <button className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors">
-                <span className="text-white text-sm">Watch Later</span>
+            <div className="flex gap-3">
+              <button className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-sm">
+                <span className="text-white text-sm font-medium">Watch Later</span>
               </button>
-              <button className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors">
+              <button className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-sm">
                 <Share2 className="w-5 h-5 text-white" />
               </button>
             </div>
           </div>
+
+          {/* Title Badge */}
+          <div className="absolute top-4 left-4 bg-white/20 backdrop-blur-md rounded-full px-4 py-2 flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-white/40" />
+            <span className="text-white text-sm font-semibold">
+              Why study at UeCampus? | Student Testimonial
+            </span>
+          </div>
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
