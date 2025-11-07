@@ -12,7 +12,8 @@ import studentFeedbackReducer from "./slices/studentFeedback";
 import featureCardsReducer from "./slices/featureCards";
 import aboutSectionReducer from "./slices/aboutSection";
 import howToApplyReducer from "./slices/howToApply";
-import scholarshipReducer from "./slices/scholarship"; // Correct import
+import scholarshipReducer from "./slices/scholarship";
+import onlineDegreeCardsReducer from "./slices/onlineDegreeCards"; // Added import
 
 const createNoopStorage = () => ({
   getItem(): Promise<null> {
@@ -100,8 +101,16 @@ const scholarshipPersistConfig = {
   key: "scholarship",
   storage,
   keyPrefix: "redux-",
-  whitelist: ["data"], // Persist the data
-};  
+  whitelist: ["data"],
+};
+
+// Added persist config for onlineDegreeCards
+const onlineDegreeCardsPersistConfig: PersistConfig<any> = {
+  key: "onlineDegreeCards",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: [], // Not persisting any data for onlineDegreeCards
+};
 
 const appReducer = combineReducers({
   courses: persistReducer(coursesPersistConfig, coursesReducer),
@@ -113,7 +122,9 @@ const appReducer = combineReducers({
   studentFeedback: persistReducer(studentFeedbackPersistConfig, studentFeedbackReducer),
   aboutSection: persistReducer(aboutSectionPersistConfig, aboutSectionReducer),
   howToApply: persistReducer(howToApplyPersistConfig, howToApplyReducer),
-  scholarship: persistReducer(scholarshipPersistConfig, scholarshipReducer), // Use the actual reducer
+  scholarship: persistReducer(scholarshipPersistConfig, scholarshipReducer),
+  // Added onlineDegreeCards reducer
+  onlineDegreeCards: persistReducer(onlineDegreeCardsPersistConfig, onlineDegreeCardsReducer),
 });
 
 const rootReducer: Reducer = (
