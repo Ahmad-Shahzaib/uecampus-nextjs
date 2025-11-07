@@ -1,4 +1,3 @@
-// src/redux/rootReducer.ts
 import { AnyAction, combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
@@ -13,7 +12,8 @@ import featureCardsReducer from "./slices/featureCards";
 import aboutSectionReducer from "./slices/aboutSection";
 import howToApplyReducer from "./slices/howToApply";
 import scholarshipReducer from "./slices/scholarship";
-import onlineDegreeCardsReducer from "./slices/onlineDegreeCards"; // Added import
+import onlineDegreeCardsReducer from "./slices/onlineDegreeCards";
+import accreditationReducer from "./slices/accreditationSlice"; // Added this import
 
 const createNoopStorage = () => ({
   getItem(): Promise<null> {
@@ -104,12 +104,18 @@ const scholarshipPersistConfig = {
   whitelist: ["data"],
 };
 
-// Added persist config for onlineDegreeCards
 const onlineDegreeCardsPersistConfig: PersistConfig<any> = {
   key: "onlineDegreeCards",
   storage,
   keyPrefix: "redux-",
-  whitelist: [], // Not persisting any data for onlineDegreeCards
+  whitelist: [],
+};
+
+const accreditationPersistConfig: PersistConfig<any> = {
+  key: "accreditation",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: [],
 };
 
 const appReducer = combineReducers({
@@ -123,8 +129,8 @@ const appReducer = combineReducers({
   aboutSection: persistReducer(aboutSectionPersistConfig, aboutSectionReducer),
   howToApply: persistReducer(howToApplyPersistConfig, howToApplyReducer),
   scholarship: persistReducer(scholarshipPersistConfig, scholarshipReducer),
-  // Added onlineDegreeCards reducer
   onlineDegreeCards: persistReducer(onlineDegreeCardsPersistConfig, onlineDegreeCardsReducer),
+  accreditation: persistReducer(accreditationPersistConfig, accreditationReducer),
 });
 
 const rootReducer: Reducer = (
