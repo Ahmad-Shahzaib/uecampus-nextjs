@@ -9,7 +9,7 @@ import HeroSection from "@/component/HeroSection";
 import JoinUs from "@/component/joinus";
 import { LogoCarousel } from "@/component/partners";
 import { FeatureCard } from "@/component/testinomials/testinomials-card";
-import { useDispatch, useSelector } from "@/redux/store";
+import { RootState, useDispatch, useSelector } from "@/redux/store";
 import { fetchCoursesData } from "@/redux/thunk/courses";
 import { fetchTestinomialsData } from "@/redux/thunk/testinomials";
 import { fetchScholarshipData } from "@/redux/thunk/scholarship";
@@ -24,7 +24,9 @@ export default function Page() {
   const scholarshipData = useSelector((state) => state.scholarship?.data);
   const scholarshipLoading = useSelector((state) => state.scholarship?.isLoading);
   const scholarshipError = useSelector((state) => state.scholarship?.error);
-
+  const { data: about, isLoading: aboutLoading, error: aboutError } = useSelector(
+    (state: RootState) => state.aboutSection
+  );
   useEffect(() => {
     dispatch(fetchTestinomialsData());
     dispatch(fetchScholarshipData());
@@ -58,6 +60,10 @@ export default function Page() {
     title: "Quality Education That's Affordable — Because Your Future Matters",
     description: "This scholarship is awarded to outstanding students who demonstrate exceptional academic achievement. Whether you're a high-performing high school graduate or a top-ranking university student, UeCampus recognizes your hard work and dedication. Eligible applicants may receive partial or full tuition support based on their academic performance and qualifications.",
     backgroundImage: "",
+     about: {
+      secondCardTitle: about?.secondCardTitle,
+      secondCardDescription: about?.secondCardDescription,
+    }
   };
 
   const cardData1 = {
@@ -65,6 +71,10 @@ export default function Page() {
     title: "Scholarships for Residents of Developing Countries",
     description: "We are committed to creating global learning opportunities, especially for students from regions with limited access to higher education. This scholarship is specifically designed to support residents of developing countries by offering substantial tuition reductions. It aims to empower talented individuals who are eager to advance their education and make a positive impact in their communities.",
     backgroundImage: "",
+    about: {
+      secondCardTitle: about?.secondCardTitle,
+      secondCardDescription: about?.secondCardDescription,
+    }
   };
 
   return (
