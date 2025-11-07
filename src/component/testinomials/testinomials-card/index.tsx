@@ -3,54 +3,23 @@
 
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/rootReducer";
+import { useDispatch } from "@/redux/store";
 import { fetchFeatureCardsData } from "@/redux/thunk/featureCards";
-import { AppDispatch } from "@/redux/store";
 
 export interface FeatureCardProps {
-  cardId: number; // Add cardId prop to identify which card to display
+  section: {
+    title: string;
+    description?: string;
+  };
+  /** index can be a variant name or a numeric index (1,2,3) */
+  index?: number | "primary" | "secondary" | "tertiary";
 }
 
-export function FeatureCard({ cardId }: FeatureCardProps) {
-  const dispatch = useDispatch<AppDispatch>();
-  const { data: cards, isLoading, error } = useSelector((state: RootState) => state.featureCards);
-  const [cardData, setCardData] = useState<any>(null);
+type VariantType = "primary" | "secondary" | "tertiary";
 
-  useEffect(() => {
-    dispatch(fetchFeatureCardsData());
-  }, [dispatch]);
+export function FeatureCard({ section, index }: FeatureCardProps) {
 
-  useEffect(() => {
-    if (cards.length > 0) {
-      const card = cards.find((c) => c.id === cardId);
-      setCardData(card);
-    }
-  }, [cards, cardId]);
-
-  if (isLoading) {
-    return (
-      <Card className="border-0 rounded-2xl p-4 md:p-6 shadow-lg animate-pulse">
-        <div className="space-y-4">
-          <div className="h-8 bg-gray-700 rounded"></div>
-          <div className="h-4 bg-gray-700 rounded w-3/4"></div>
-          <div className="h-4 bg-gray-700 rounded w-5/6"></div>
-        </div>
-      </Card>
-    );
-  }
-
-  if (error || !cardData) {
-    return (
-      <Card className="border-0 rounded-2xl p-4 md:p-6 shadow-lg bg-red-900 text-white">
-        <div className="text-center">
-          <p>Failed to load card data</p>
-        </div>
-      </Card>
-    );
-  }
-
-  const variantStyles = {
+  const variantStyles: Record<VariantType, { container: string; title: string; description: string }> = {
     primary: {
       container: "bg-gradient-to-br from-purple-600 to-purple-700 text-white",
       title: "text-white",
@@ -68,7 +37,24 @@ export function FeatureCard({ cardId }: FeatureCardProps) {
     },
   };
 
-  const styles = variantStyles[cardData.variant];
+  // Normalize index: accept 1/2/3 or variant strings. Fallback to 'tertiary'.
+  const normalizeIndex = (idx?: number | string): VariantType => {
+    if (typeof idx === "number") {
+      if (idx === 1) return "primary";
+      if (idx === 2) return "secondary";
+      return "tertiary";
+    }
+    if (typeof idx === "string") {
+      const lower = idx.toLowerCase();
+      if (lower === "primary" || lower === "secondary" || lower === "tertiary") {
+        return lower as VariantType;
+      }
+    }
+    return "tertiary";
+  };
+
+  const validIndex = normalizeIndex(index);
+  const styles = variantStyles[validIndex];
 
   return (
     <Card
@@ -76,10 +62,10 @@ export function FeatureCard({ cardId }: FeatureCardProps) {
     >
       <div className="space-y-4">
         <h2 className={`${styles.title} text-2xl md:text-3xl font-semibold leading-tight text-balance`}>
-          {cardData.title}
+          {section.title}
         </h2>
         <p className={`${styles.description} text-sm md:text-base leading-relaxed`}>
-          {cardData.description}
+          {section.description}
         </p>
       </div>
     </Card>

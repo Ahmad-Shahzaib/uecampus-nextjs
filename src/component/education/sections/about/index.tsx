@@ -1,29 +1,11 @@
-// src/component/education/sections/about/index.tsx
 "use client";
 
-import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-import { fetchAboutSectionData } from "@/redux/thunk/aboutSection";
-import { AppDispatch } from "@/redux/store";
 
-export function AboutSection() {
-  const dispatch = useDispatch<AppDispatch>();
-  const { data: about, isLoading, error } = useSelector(
-    (state: RootState) => state.aboutSection
-  );
+export function AboutSection({about,isLoading,error}:any) {
 
-  useEffect(() => {
-    // fetch every time the component mounts
-    dispatch(fetchAboutSectionData());
-  }, [dispatch]);
-
-  /* ------------------------------------------------------------------ */
-  /*  LOADING                                                       */
-  /* ------------------------------------------------------------------ */
   if (isLoading) {
     return (
       <section className="relative rounded-2xl p-4 lg:p-8 flex flex-col justify-between min-h-[500px] lg:min-h-[600px] overflow-hidden bg-gray-800">
@@ -40,45 +22,28 @@ export function AboutSection() {
     );
   }
 
-  /* ------------------------------------------------------------------ */
-  /*  ERROR                                                          */
-  /* ------------------------------------------------------------------ */
-  if (error || !about) {
-    return (
-      <section className="relative rounded-2xl p-4 lg:p-8 flex flex-col justify-center items-center min-h-[500px] bg-red-900 text-white">
-        <h2 className="text-2xl font-bold mb-4">Error Loading Section</h2>
-        <p className="mb-4">{error ?? "No data available"}</p>
-        <button
-          onClick={() => dispatch(fetchAboutSectionData())}
-          className="px-6 py-2 bg-white text-red-900 rounded hover:bg-gray-200 transition"
-        >
-          Retry
-        </button>
-      </section>
-    );
-  }
-
-  /* ------------------------------------------------------------------ */
-  /*  SUCCESS – render only API data                                 */
-  /* ------------------------------------------------------------------ */
   const {
-    title,
-    title2,
-    description,
-    buttonText,
-    buttonLink,
+    title = "",
+    title2 = "",
+    description = "",
+    buttonText = "Learn more",
+    buttonLink = "#",
     backgroundImage,
-  } = about;
+  } = about ?? {};
 
   const gradient = "linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #7B1FA2 100%)";
   const buttonStyles =
     "border-white text-white hover:bg-white/10 bg-transparent transition-all duration-200";
 
+  const backgroundStyle = backgroundImage
+    ? `url('${backgroundImage}'), ${gradient}`
+    : gradient;
+
   return (
     <section
       className="relative rounded-2xl p-4 lg:p-8 flex flex-col justify-between min-h-[500px] lg:min-h-[600px] overflow-hidden"
       style={{
-        backgroundImage: `url('${backgroundImage}'), ${gradient}`,
+        backgroundImage: backgroundStyle,
         backgroundSize: "cover, auto",
         backgroundPosition: "center, center",
         backgroundRepeat: "no-repeat, no-repeat",

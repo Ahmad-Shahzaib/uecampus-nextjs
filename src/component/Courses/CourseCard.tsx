@@ -1,22 +1,12 @@
 // src/components/ProgramCard.tsx
 "use client";
 
+import React from "react";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
+import { Course, ProgramCardProps } from "./types";
 
-interface Course {
-  id: number;
-  name: string;
-  slug: string;
-  small_description: string;
-  image_path: string;
-}
-
-interface ProgramCardProps {
-  course: Course;
-}
-
-export function ProgramCard({ course }: ProgramCardProps) {
+export const ProgramCard = React.memo<ProgramCardProps>(({ course }) => {
   return (
     <article className="w-full overflow-hidden rounded-3xl bg-[#111827] shadow-xl flex flex-col justify-between transition-transform duration-300 hover:-translate-y-2">
       <div className="flex flex-col p-4 sm:p-6 md:p-8">
@@ -30,18 +20,18 @@ export function ProgramCard({ course }: ProgramCardProps) {
         </div>
 
         <h1 className="mb-3 sm:mb-4 text-lg sm:text-xl md:text-2xl font-semibold text-white leading-snug line-clamp-2">
-          {course.name}
+          {course.title || course.name}
         </h1>
 
         <p className="text-slate-300 text-sm sm:text-base leading-relaxed line-clamp-3">
-          {course.small_description}
+          {course.detail}
         </p>
       </div>
 
       <div className="relative w-full h-40 sm:h-48 md:h-56 lg:h-64 overflow-hidden rounded-t-2xl">
         <Image
           src={course.image_path}
-          alt={course.name}
+          alt={`Course: ${course.title || course.name}`}
           fill
           priority
           className="object-cover transition-transform duration-300 hover:scale-105"
@@ -52,4 +42,6 @@ export function ProgramCard({ course }: ProgramCardProps) {
       </div>
     </article>
   );
-}
+});
+
+ProgramCard.displayName = 'ProgramCard';

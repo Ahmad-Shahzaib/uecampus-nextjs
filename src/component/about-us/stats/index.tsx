@@ -1,13 +1,10 @@
-// src/component/about-us/AboutUsStats.tsx
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAboutData } from "@/redux/thunk/about";
 import { RootState } from "@/redux/rootReducer";
 import StatsCards from "@/component/common/StatsCards";
-import BannerImage from "../Banner";
-import { StatCard } from "./card";
 import Aboutbanner from "../Banner/Aboutbanner";
 
 const structuredData = {
@@ -30,65 +27,54 @@ const structuredData = {
 };
 
 export default function AboutUsStats() {
-  const dispatch = useDispatch();
-  
-  // Get about data from Redux store
-  const aboutData = useSelector((state: RootState) => state.about?.data);
-  const isLoading = useSelector((state: RootState) => state.about?.isLoading);
-  const error = useSelector((state: RootState) => state.about?.error);
+  const dispatch = useDispatch<any>();
+  const { data: aboutData, isLoading, error } = useSelector(
+    (state: RootState) => state.about ?? ({ data: null, isLoading: false, error: null } as any)
+  );
 
-  // Fetch data on component mount if not already loaded
   useEffect(() => {
-    if (!aboutData && !isLoading) {
-      dispatch(fetchAboutData());
-    }
+    if (!aboutData && !isLoading) dispatch(fetchAboutData());
   }, [dispatch, aboutData, isLoading]);
 
-  // Create stats data from API
-  // Create stats data from API
-const statsData = aboutData ? [
-  {
-    stat: aboutData.section2Title1,        // Maps to "36+"
-    title: aboutData.section2Description1,  // Maps to "Total Programs"
-    description: "Explore a wide range of flexible, career-focused programs.",
-    variant: "dark",
-  },
-  {
-    stat: aboutData.section2Title2,        // Maps to "4.9/5"
-    title: aboutData.section2Description2,  // Maps to "Average course rating"
-    description: "Trusted and highly rated by our students worldwide.",
-    variant: "light",
-  },
-  {
-    stat: aboutData.section2Title3,        // Maps to "90+"
-    title: aboutData.section2Description3,  // Maps to "Active Students"
-    description: "A growing global community of engaged learners.",
-    variant: "light",
-  },
-] : [];
+  const statsData = useMemo(() => {
+    if (!aboutData) return [];
+    return [
+      {
+        stat: aboutData.section2Title1,
+        title: aboutData.section2Description1,
+        description: "Explore a wide range of flexible, career-focused programs.",
+        variant: "dark",
+      },
+      {
+        stat: aboutData.section2Title2,
+        title: aboutData.section2Description2,
+        description: "Trusted and highly rated by our students worldwide.",
+        variant: "light",
+      },
+      {
+        stat: aboutData.section2Title3,
+        title: aboutData.section2Description3,
+        description: "A growing global community of engaged learners.",
+        variant: "light",
+      },
+    ];
+  }, [aboutData]);
 
-  // Show loading state
-  if (isLoading) {
+  if (isLoading)
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-xl">Loading about data...</div>
       </div>
     );
-  }
 
-  // Show error state
-  if (error) {
+  if (error)
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-xl text-red-500">Error: {error}</div>
       </div>
     );
-  }
 
-  // If no data yet, return null
-  if (!aboutData) {
-    return null;
-  }
+  if (!aboutData) return null;
 
   return (
     <>
@@ -96,18 +82,12 @@ const statsData = aboutData ? [
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-
       <main className="min-h-screen bg-white">
         <div className="m-5 rounded-2xl">
-          <Aboutbanner
-            imageUrl={aboutData.section2ImageUrl}
-            title={aboutData.pageTitle}
-          />
+          <Aboutbanner imageUrl={aboutData.section2ImageUrl} title={aboutData.pageTitle} />
         </div>
-        {/* Hero Section */}
         <section className="px-6 py-12">
           <div className="w-full mx-auto">
-            {/* Main Heading */}
             <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl leading-[1.4] font-semibold text-[#6A1B9A] mb-12 text-balance">
               Your Online Learning
               <br />
@@ -115,8 +95,6 @@ const statsData = aboutData ? [
               <br />
               Community, For You.
             </h1>
-
-            {/* Stats Cards Grid */}
             <StatsCards data={statsData} />
           </div>
         </section>

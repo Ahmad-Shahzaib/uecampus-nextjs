@@ -11,12 +11,13 @@ import JoinUs from "@/component/joinus";
 import { LogoCarousel } from "@/component/partners";
 import { FeatureCard } from "@/component/testinomials/testinomials-card";
 import { CoursesSection_ue, HeroSection_ue, studentLocations } from "@/constants";
-import { useDispatch, useSelector } from "@/redux/store";
+import { RootState, useDispatch, useSelector } from "@/redux/store";
 import { fetchCoursesData } from "@/redux/thunk/courses";
 import { fetchTestinomialsData } from "@/redux/thunk/testinomials";
 import { fetchFeatureCardsData } from "@/redux/thunk/featureCards";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { fetchAboutSectionData } from "@/redux/thunk/aboutSection";
 
 export default function Home() {
   const router = useRouter();
@@ -24,23 +25,28 @@ export default function Home() {
   const dispatch = useDispatch();
   const { data: courses, isLoading: coursesLoading, error: coursesError } = useSelector((state) => state.courses);
   const { data: testimonials, isLoading: testimonialsLoading } = useSelector((state) => state.testinomials);
-  // Defensive selector: in some runtime cases (e.g. reducer not yet registered) state.featureCards
-  // might be undefined. Avoid destructuring directly to prevent the runtime error reported earlier.
   const featureState = useSelector((state) => (state as any).featureCards);
   const featureCards = featureState?.data ?? [];
   const featureCardsLoading = featureState?.isLoading ?? false;
   const featureCardsError = featureState?.error ?? null;
-  
-  console.log("courses data", courses);
+    const { data: cards, isLoading, error } = useSelector((state: RootState) => state.featureCards);
+     const { data: about, isLoading: aboutLoading, error: aboutError } = useSelector(
+    (state: RootState) => state.aboutSection
+  );
 
+  console.log("AboutSection props:", { about, isLoading: aboutLoading, error: aboutError });
+
+  
   useEffect(() => {
     dispatch(fetchCoursesData({}));
     dispatch(fetchTestinomialsData());
     dispatch(fetchFeatureCardsData());
+    dispatch(fetchFeatureCardsData());
+    dispatch(fetchAboutSectionData());
+    
   }, [dispatch]);
 
   useEffect(() => {
-    console.log("Feature cards state:", { featureCards, featureCardsLoading, featureCardsError });
   }, [featureCards, featureCardsLoading, featureCardsError]);
 
   const cardData = {
@@ -66,13 +72,15 @@ export default function Home() {
           ))}
         </div>
     
-        <div className="flex h-auto justify-center sm:px-10 px-4">
-          <div className="grid gap-4 md:gap-6 grid-cols-[repeat(auto-fit,minmax(230px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(280px,1fr))] w-full">
-            {/* Render FeatureCards with cardId prop */}
-            <FeatureCard cardId={1} />
-            <FeatureCard cardId={2} />
-            <FeatureCard cardId={3} />
-          </div>
+        <div className="flex gap-3 h-auto justify-center sm:px-10 px-4">
+          {
+            cards?.map((section:any, index:any) => (
+              <div className="grid gap-4 md:gap-6 grid-cols-[repeat(auto-fit,minmax(230px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(280px,1fr))] w-full">
+                <FeatureCard  section={section} index={index} />
+              </div>
+            ))
+          }
+     
         </div>
 
         <div className="sm:px-10 px-4">
@@ -93,7 +101,11 @@ export default function Home() {
             md:grid-cols-[minmax(300px,1fr)_minmax(300px,1fr)]
           "
         >
-          <AboutSection />
+          <AboutSection 
+            about={about}
+            isLoading={aboutLoading}
+            error={aboutError}
+          />
           <EducationSection cardData1={cardData} cardData2={cardData1} link={true} />
         </div>
       </div>
