@@ -17,6 +17,8 @@ import accreditationReducer from "./slices/accreditationSlice";
 import internationalPartnershipReducer from "./slices/internationalPartnershipSlice";
 import educationCardsReducer from "./slices/educationCardsSlice";
 import contactUsReducer from "./slices/contactUsSlice";
+import detailCourseReducer from "./slices/detailCourseSlice";
+
 const createNoopStorage = () => ({
   getItem(): Promise<null> {
     return Promise.resolve(null);
@@ -139,6 +141,12 @@ const contactUsPersistConfig: PersistConfig<any> = {
   keyPrefix: "redux-",
   whitelist: ["data"],
 };
+const detailCoursePersistConfig: PersistConfig<any> = {
+  key: "detailCourse",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: ["data"],          // keep the fetched data across reloads
+};
 
 const appReducer = combineReducers({
   courses: persistReducer(coursesPersistConfig, coursesReducer),
@@ -156,6 +164,11 @@ const appReducer = combineReducers({
   internationalPartnership: persistReducer(internationalPartnershipPersistConfig, internationalPartnershipReducer),
   educationCards: persistReducer(educationCardsPersistConfig, educationCardsReducer),
   contactUs: persistReducer(contactUsPersistConfig, contactUsReducer),
+  detailCourse: persistReducer(
+    detailCoursePersistConfig,
+    detailCourseReducer
+  ),
+  
 });
 
 const rootReducer: Reducer = (

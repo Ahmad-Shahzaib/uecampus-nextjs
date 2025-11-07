@@ -9,7 +9,11 @@ import HeroSection from "@/component/HeroSection";
 import JoinUs from "@/component/joinus";
 import { LogoCarousel } from "@/component/partners";
 import { FeatureCard } from "@/component/testinomials/testinomials-card";
-import { CoursesSection_ue, HeroSection_ue, studentLocations } from "@/constants";
+import {
+  CoursesSection_ue,
+  HeroSection_ue,
+  studentLocations,
+} from "@/constants";
 import { RootState, useDispatch, useSelector } from "@/redux/store";
 import { fetchCoursesData } from "@/redux/thunk/courses";
 import { fetchTestinomialsData } from "@/redux/thunk/testinomials";
@@ -22,17 +26,28 @@ export default function Home() {
   const router = useRouter();
 
   const dispatch = useDispatch();
-  const { data: courses, isLoading: coursesLoading, error: coursesError } = useSelector((state) => state.courses);
-  const { data: testimonials, isLoading: testimonialsLoading } = useSelector((state) => state.testinomials);
+  const {
+    data: courses,
+    isLoading: coursesLoading,
+    error: coursesError,
+  } = useSelector((state) => state.courses);
+  const { data: testimonials, isLoading: testimonialsLoading } = useSelector(
+    (state) => state.testinomials
+  );
   const featureState = useSelector((state) => (state as any).featureCards);
   const featureCards = featureState?.data ?? [];
   const featureCardsLoading = featureState?.isLoading ?? false;
   const featureCardsError = featureState?.error ?? null;
-  const { data: cards, isLoading, error } = useSelector((state: RootState) => state.featureCards);
-  const { data: about, isLoading: aboutLoading, error: aboutError } = useSelector(
-    (state: RootState) => state.aboutSection
-  );
-
+  const {
+    data: cards,
+    isLoading,
+    error,
+  } = useSelector((state: RootState) => state.featureCards);
+  const {
+    data: about,
+    isLoading: aboutLoading,
+    error: aboutError,
+  } = useSelector((state: RootState) => state.aboutSection);
 
   useEffect(() => {
     dispatch(fetchCoursesData({}));
@@ -40,7 +55,6 @@ export default function Home() {
     dispatch(fetchFeatureCardsData());
     dispatch(fetchFeatureCardsData());
     dispatch(fetchAboutSectionData());
-
   }, [dispatch]);
 
   const cardData = {
@@ -50,8 +64,8 @@ export default function Home() {
     about: {
       secondCardTitle: about?.secondCardTitle,
       secondCardDescription: about?.secondCardDescription,
-    }
-  }
+    },
+  };
 
   const cardData1 = {
     backgroundClass: "text-[#6a1b9a]",
@@ -63,26 +77,32 @@ export default function Home() {
       secondCardDescription: about?.secondCardDescription,
     },
     backgroundImage: "",
-  }
+  };
 
   return (
     <div>
       <div className="py-6 bg-gray-800 flex flex-col space-y-8">
         <div className="sm:px-10 px-4">
           {HeroSection_ue.map((section, index) => (
-            <HeroSection key={index} title={section.title} description={section.description} variant={section.variant} />
+            <HeroSection
+              key={index}
+              title={section.title}
+              description={section.description}
+              variant={section.variant}
+            />
           ))}
         </div>
 
-        <div className="flex gap-3 h-auto justify-center sm:px-10 px-4">
-          {
-            cards?.map((section: any, index: any) => (
-              <div className="grid gap-4 md:gap-6 grid-cols-[repeat(auto-fit,minmax(230px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(280px,1fr))] w-full">
-                <FeatureCard section={section} index={index} />
-              </div>
-            ))
-          }
-
+        <div className="sm:px-10 px-4">
+          <div className="grid gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {cards?.map((section: any, index: number) => (
+              <FeatureCard
+                key={section.id || `feature-${index}`}
+                section={section}
+                index={index}
+              />
+            ))}
+          </div>
         </div>
 
         <div className="sm:px-10 px-4">
@@ -108,7 +128,11 @@ export default function Home() {
             isLoading={aboutLoading}
             error={aboutError}
           />
-          <EducationSection cardData1={cardData} cardData2={cardData1} link={true} />
+          <EducationSection
+            cardData1={cardData}
+            cardData2={cardData1}
+            link={true}
+          />
         </div>
       </div>
 

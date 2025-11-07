@@ -1,108 +1,56 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CourseCard from "@/component/Courses/courses-card";
 import FilterSidebar from "@/component/Courses/filter-sidebar";
 import PaginationComponent from "@/component/Courses/pagination";
 import { Input } from "@/components/ui/input";
+import { useDispatch, useSelector } from "@/redux/store";
+import { fetchCoursesData } from "@/redux/thunk/courses";
+import { RootState } from "@/redux/rootReducer";
 
-const courses = [
-    {
-        id: 1,
-        title: "Level 7 Diploma in Health and Social Care",
-        image:
-            "https://newwebsite.uecampus.com/wp-content/uploads/2025/10/Website-Body-11-300x224.png",
-        credits: "120 Credits",
-        duration: "Duration: 1 year",
-        level: "Level 7",
-        type: "Online-Open-Access",
-        description:
-            "Engage on a transformative educational journey with our Level 7 Diploma in Health and Social Care at UniCampus.",
-        userInfo: "User: Guest User",
-        timeInfo: "2 months",
-    },
-    {
-        id: 2,
-        title: "Level 7 Diploma in Data Science",
-        image:
-            "https://newwebsite.uecampus.com/wp-content/uploads/2025/10/Website-Body-10-300x224.png",
-        credits: "120 Credits",
-        duration: "Duration: 1 year",
-        level: "Level 7",
-        type: "Online-Open-Access",
-        description:
-            "Engage on a transformative educational journey with our Level 7 Diploma in Data Science at UniCampus.",
-        userInfo: "User: Guest User",
-        timeInfo: "2 months",
-    },
-    {
-        id: 3,
-        title: "Level 7 Diploma in Accounting and Finance",
-        image:
-            "https://newwebsite.uecampus.com/wp-content/uploads/2025/10/Website-Body-1-3-300x224.png",
-        credits: "120 Credits",
-        duration: "Duration: 1 year",
-        level: "Level 7",
-        type: "Online-Open-Access",
-        description:
-            "Engage on a transformative educational journey with our Level 7 Diploma in Accounting and Finance at UniCampus.",
-        userInfo: "User: Guest User",
-        timeInfo: "2 months",
-    },
-    {
-        id: 4,
-        title: "Extended Level 5 Diploma in Business Management",
-        image:
-            "https://newwebsite.uecampus.com/wp-content/uploads/2025/10/Website-Body-9-300x224.png",
-        credits: "120 Credits",
-        duration: "Duration: 1 year",
-        level: "Level 5",
-        type: "Online-Open-Access",
-        description:
-            "Engage on a transformative educational journey with our Extended Level 5 Diploma in Business Management at UniCampus.",
-        userInfo: "User: Coordinator Level",
-        timeInfo: "3 months",
-    },
-    {
-        id: 5,
-        title: "Level 5 Diploma in Cyber Security",
-        image:
-            "https://newwebsite.uecampus.com/wp-content/uploads/2025/10/Website-Body-8-300x224.png",
-        credits: "120 Credits",
-        duration: "Duration: 1 year",
-        level: "Level 5",
-        type: "Online-Open-Access",
-        description:
-            "Engage on a transformative educational journey with our Level 5 Diploma in Cyber Security at UniCampus.",
-        userInfo: "User: Guest",
-        timeInfo: "3 months",
-    },
-    {
-        id: 6,
-        title: "Level 5 Diploma in Information Technology",
-        image:
-            "https://newwebsite.uecampus.com/wp-content/uploads/2025/10/Website-Body-7-300x224.png",
-        credits: "120 Credits",
-        duration: "Duration: 1 year",
-        level: "Level 5",
-        type: "Online-Open-Access",
-        description:
-            "Engage on a transformative educational journey with our Level 5 Diploma in Information Technology at UniCampus.",
-        userInfo: "User: Guest",
-        timeInfo: "3 months",
-    },
-];
+interface Course {
+    id: number;
+    name: string;
+    slug: string;
+    program_id: string;
+    cat_id: string;
+    status: string;
+    content: string;
+    small_description: string;
+    meta_tags: string;
+    meta_description: string;
+    page: string;
+    image_path: string;
+    video: string;
+    created_at: string;
+    updated_at: string;
+}
 
 export default function Home() {
+    const dispatch = useDispatch();
+    const { data: courses, isLoading, error } = useSelector((state: RootState) => state.courses);
     const [currentPage, setCurrentPage] = useState(1);
     const coursesPerPage = 6;
-    const totalPages = Math.ceil(courses.length / coursesPerPage);
 
+    useEffect(() => {
+        dispatch(fetchCoursesData({}));
+    }, [dispatch]);
+
+    if (isLoading) {
+        return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+    }
+
+    if (error) {
+        return <div className="flex justify-center items-center min-h-screen text-red-500">{error}</div>;
+    }
+
+    const totalPages = Math.ceil((courses?.length || 0) / coursesPerPage);
     const startIndex = (currentPage - 1) * coursesPerPage;
     const endIndex = startIndex + coursesPerPage;
-    const displayedCourses = courses.slice(startIndex, endIndex);
+    const displayedCourses = courses?.slice(startIndex, endIndex) || [];
 
     return (
         <div className="flex flex-col min-h-screen bg-background">
@@ -132,7 +80,7 @@ export default function Home() {
                         </div>
                     </header>
                     <div className="space-y-6">
-                        {displayedCourses.map((course) => (
+                        {displayedCourses.map((course: Course) => (
                             <CourseCard key={course.id} course={course} />
                         ))}
                     </div>
