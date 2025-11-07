@@ -13,7 +13,9 @@ import aboutSectionReducer from "./slices/aboutSection";
 import howToApplyReducer from "./slices/howToApply";
 import scholarshipReducer from "./slices/scholarship";
 import onlineDegreeCardsReducer from "./slices/onlineDegreeCards";
-import accreditationReducer from "./slices/accreditationSlice"; // Added this import
+import accreditationReducer from "./slices/accreditationSlice";
+import internationalPartnershipReducer from "./slices/internationalPartnershipSlice";
+import educationCardsReducer from "./slices/educationCardsSlice";
 
 const createNoopStorage = () => ({
   getItem(): Promise<null> {
@@ -118,6 +120,20 @@ const accreditationPersistConfig: PersistConfig<any> = {
   whitelist: [],
 };
 
+const internationalPartnershipPersistConfig: PersistConfig<any> = {
+  key: "internationalPartnership",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: [],
+};
+
+const educationCardsPersistConfig: PersistConfig<any> = {
+  key: "educationCards",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: ["data"],
+};
+
 const appReducer = combineReducers({
   courses: persistReducer(coursesPersistConfig, coursesReducer),
   faqs: persistReducer(faqsPersistConfig, faqsReducer),
@@ -131,6 +147,8 @@ const appReducer = combineReducers({
   scholarship: persistReducer(scholarshipPersistConfig, scholarshipReducer),
   onlineDegreeCards: persistReducer(onlineDegreeCardsPersistConfig, onlineDegreeCardsReducer),
   accreditation: persistReducer(accreditationPersistConfig, accreditationReducer),
+  internationalPartnership: persistReducer(internationalPartnershipPersistConfig, internationalPartnershipReducer),
+  educationCards: persistReducer(educationCardsPersistConfig, educationCardsReducer),
 });
 
 const rootReducer: Reducer = (

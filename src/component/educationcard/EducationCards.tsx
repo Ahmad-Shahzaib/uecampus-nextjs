@@ -1,0 +1,92 @@
+"use client";
+
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/rootReducer";
+import { fetchEducationCardsData } from "@/redux/thunk/educationCardsThunk";
+import { Button } from "@/components/ui/button";
+
+const EducationCards = () => {
+  const dispatch = useDispatch();
+  const { data, isLoading, error } = useSelector(
+    (state: RootState) => state.educationCards
+  );
+
+  useEffect(() => {
+    if (!data) {
+      dispatch(fetchEducationCardsData());
+    }
+  }, [dispatch, data]);
+
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-xl text-white">Loading partners...</div>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-xl text-red-500">Error: {error}</div>
+      </div>
+    );
+
+  if (!data || data.length === 0)
+    return (
+      <div className="flex justify-center items-center ">
+        <div className="text-xl text-white">No partners found.</div>
+      </div>
+    );
+
+  return (
+    <div className="  px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {data.map((partner) => (
+            <div
+              key={partner.id}
+              className="bg-[#181818] text-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center p-6"
+            >
+              {/* Logo */}
+              <div className="mb-6 flex justify-center">
+                <img
+                  src={partner.logo}
+                  alt={partner.title}   
+                  className="h-20 object-contain"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = "none";
+                    target.parentElement!.innerHTML = `<span class='text-purple-500 font-bold text-3xl'>${partner.title.charAt(
+                      0
+                    )}</span>`;
+                  }}
+                />
+              </div>
+
+              {/* Title */}
+              <h3 className="text-lg font-semibold mb-3">{partner.title}</h3>
+
+              {/* Description */}
+              <div
+                className="text-sm text-gray-300 mb-6 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: partner.content }}
+              />
+
+              {/* Button */}
+              <Button
+               
+                 
+                className="w-full mt-auto bg-[#6A1B9A] text-white border-0 hover:text-black  py-2.5 rounded-lg font-semibold transition-colors duration-300"
+              >
+                {partner.button_name}
+              </Button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default EducationCards;
