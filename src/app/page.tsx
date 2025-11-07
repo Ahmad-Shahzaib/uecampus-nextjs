@@ -53,6 +53,10 @@ export default function Home() {
     backgroundClass: "text-[#6a1b9a]",
     backgroundImage:
         "https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.png",
+        about: {
+            secondCardTitle: about?.secondCardTitle,
+            secondCardDescription: about?.secondCardDescription,
+        }
   }
 
   const cardData1 = {
@@ -60,6 +64,10 @@ export default function Home() {
     title: "Vision",
     description:
         "Our vision is to be a global leader in online education, recognized for creating pathways to opportunity and success. UeCampus envisions a future where every learner, regardless of circumstance, has the chance to learn, grow, and achieve their goals through inclusive and innovative education.",
+        about: {
+            secondCardTitle: about?.secondCardTitle,
+            secondCardDescription: about?.secondCardDescription,
+        },
     backgroundImage: "",
   }
 
