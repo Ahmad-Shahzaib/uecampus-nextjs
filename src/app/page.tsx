@@ -1,4 +1,3 @@
-// src/app/page.tsx
 "use client";
 import TestimonialCarousel from "@/component/common/Carousal";
 import CouresSection from "@/component/Courses";
@@ -29,45 +28,40 @@ export default function Home() {
   const featureCards = featureState?.data ?? [];
   const featureCardsLoading = featureState?.isLoading ?? false;
   const featureCardsError = featureState?.error ?? null;
-    const { data: cards, isLoading, error } = useSelector((state: RootState) => state.featureCards);
-     const { data: about, isLoading: aboutLoading, error: aboutError } = useSelector(
+  const { data: cards, isLoading, error } = useSelector((state: RootState) => state.featureCards);
+  const { data: about, isLoading: aboutLoading, error: aboutError } = useSelector(
     (state: RootState) => state.aboutSection
   );
 
-  console.log("AboutSection props:", { about, isLoading: aboutLoading, error: aboutError });
 
-  
   useEffect(() => {
     dispatch(fetchCoursesData({}));
     dispatch(fetchTestinomialsData());
     dispatch(fetchFeatureCardsData());
     dispatch(fetchFeatureCardsData());
     dispatch(fetchAboutSectionData());
-    
-  }, [dispatch]);
 
-  useEffect(() => {
-  }, [featureCards, featureCardsLoading, featureCardsError]);
+  }, [dispatch]);
 
   const cardData = {
     backgroundClass: "text-[#6a1b9a]",
     backgroundImage:
-        "https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.png",
-        about: {
-            secondCardTitle: about?.secondCardTitle,
-            secondCardDescription: about?.secondCardDescription,
-        }
+      "https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.png",
+    about: {
+      secondCardTitle: about?.secondCardTitle,
+      secondCardDescription: about?.secondCardDescription,
+    }
   }
 
   const cardData1 = {
     backgroundClass: "text-[#6a1b9a]",
     title: "Vision",
     description:
-        "Our vision is to be a global leader in online education, recognized for creating pathways to opportunity and success. UeCampus envisions a future where every learner, regardless of circumstance, has the chance to learn, grow, and achieve their goals through inclusive and innovative education.",
-        about: {
-            secondCardTitle: about?.secondCardTitle,
-            secondCardDescription: about?.secondCardDescription,
-        },
+      "Our vision is to be a global leader in online education, recognized for creating pathways to opportunity and success. UeCampus envisions a future where every learner, regardless of circumstance, has the chance to learn, grow, and achieve their goals through inclusive and innovative education.",
+    about: {
+      secondCardTitle: about?.secondCardTitle,
+      secondCardDescription: about?.secondCardDescription,
+    },
     backgroundImage: "",
   }
 
@@ -79,23 +73,23 @@ export default function Home() {
             <HeroSection key={index} title={section.title} description={section.description} variant={section.variant} />
           ))}
         </div>
-    
+
         <div className="flex gap-3 h-auto justify-center sm:px-10 px-4">
           {
-            cards?.map((section:any, index:any) => (
+            cards?.map((section: any, index: any) => (
               <div className="grid gap-4 md:gap-6 grid-cols-[repeat(auto-fit,minmax(230px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(280px,1fr))] w-full">
-                <FeatureCard  section={section} index={index} />
+                <FeatureCard section={section} index={index} />
               </div>
             ))
           }
-     
+
         </div>
 
         <div className="sm:px-10 px-4">
           <LogoCarousel logos={testimonials} />
         </div>
       </div>
-     
+
       <div>
         <CouresSection />
       </div>
@@ -109,7 +103,7 @@ export default function Home() {
             md:grid-cols-[minmax(300px,1fr)_minmax(300px,1fr)]
           "
         >
-          <AboutSection 
+          <AboutSection
             about={about}
             isLoading={aboutLoading}
             error={aboutError}
@@ -131,7 +125,7 @@ export default function Home() {
       <div>
         <Faqs />
       </div>
-      
+
       <div>
         <JoinUs />
       </div>

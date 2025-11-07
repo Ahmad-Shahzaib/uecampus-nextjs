@@ -6,25 +6,23 @@ import { EducationSection } from '@/component/education/sections/education'
 import JoinUs from '@/component/joinus'
 import { RootState, useDispatch, useSelector } from "@/redux/store";
 import { fetchAboutSectionData } from '@/redux/thunk/aboutSection';
-import { useEffect } from 'react';
+import { fetchOnlineDegreeCards } from '@/redux/thunk/onlineDegreeCards';
+import { useCallback, useEffect } from 'react';
 
 
 const Page = () => {
-
-
     const dispatch = useDispatch();
 
     useEffect(() => {
-
         dispatch(fetchAboutSectionData());
+        dispatch(fetchOnlineDegreeCards());
 
     }, [dispatch]);
 
-
-    const { data: about, isLoading, error } = useSelector(
-        (state: RootState) => state.aboutSection
+    const { data: about, isLoading, error } = useSelector((state: RootState) => state.aboutSection);
+    const { data: cardsData, isLoading: cardsLoading, error: cardsError } = useSelector(
+        (state: RootState) => state.onlineDegreeCards
     );
-    console.log("AboutSection props in Page:", { about, isLoading, error });
 
 
     const cardData = {
@@ -35,7 +33,7 @@ const Page = () => {
         backgroundImage:
             "",
         about: {
-          secondCardTitle: about?.secondCardTitle,
+            secondCardTitle: about?.secondCardTitle,
             secondCardDescription: about?.secondCardDescription,
         }
     }
@@ -66,21 +64,17 @@ const Page = () => {
                         error={error}
                     />
                     <EducationSection
-                        cardData1={
-                            cardData
-                        }
-                        cardData2={
-                            cardData1
-                        }
+                        cardData1={cardData}
+                        cardData2={cardData1}
                         link={false}
-
-
                     />
                 </div>
             </div>
 
             <div>
-                <AdvanceCareer mainClass="" />
+                <AdvanceCareer mainClass=""
+                    cardsData={cardsData}
+                />
             </div>
             <div>
                 <JoinUs />

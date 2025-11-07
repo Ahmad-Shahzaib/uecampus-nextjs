@@ -12,6 +12,7 @@ import { BookOpen, Globe, Briefcase, Clock, DollarSign, Users, Award, Users2, ty
 // Define component props interface
 interface AdvanceCareerProps {
   mainClass?: string;
+  cardsData?: CardData[];
 }
 
 // Define card data interface
@@ -32,54 +33,9 @@ const iconMap: Record<string, LucideIcon> = {
   "Global Community": Users2,
 } as const;
 
-export default function AdvanceCareer({ mainClass = "min-h-screen" }: AdvanceCareerProps) {
-  const dispatch = useDispatch();
-  
-  // Get online degree cards data from Redux store with proper typing
-  const { data: cardsData, isLoading, error } = useSelector(
-    (state: RootState) => state.onlineDegreeCards
-  );
+export default function AdvanceCareer({ mainClass = "min-h-screen", cardsData }: AdvanceCareerProps) {
 
-  // Memoize the fetch function to prevent unnecessary re-renders
-  const fetchData = useCallback(() => {
-    if (!cardsData) {
-      console.log("Component mounted, fetching data...");
-      dispatch(fetchOnlineDegreeCards());
-    }
-  }, [dispatch, cardsData]);
 
-  // Fetch data on component mount
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
-  // Memoize the loading component to prevent unnecessary re-renders
-  const LoadingComponent = useMemo(() => (
-    <main className={`${mainClass} bg-white px-6 py-8`}>
-      <div className="mx-auto w-full">
-        <h1 className="mb-16 text-3xl font-semibold text-[#6A1B9A] sm:text-5xl lg:text-5xl px-4">
-          Advance your career with an online degree
-        </h1>
-        <div className="flex justify-center items-center h-64">
-          <div className="text-xl">Loading online degree cards...</div>
-        </div>
-      </div>
-    </main>
-  ), [mainClass]);
-
-  // Memoize the error component to prevent unnecessary re-renders
-  const ErrorComponent = useMemo(() => (
-    <main className={`${mainClass} bg-white px-6 py-8`}>
-      <div className="mx-auto w-full">
-        <h1 className="mb-16 text-3xl font-semibold text-[#6A1B9A] sm:text-5xl lg:text-5xl px-4">
-          Advance your career with an online degree
-        </h1>
-        <div className="flex justify-center items-center h-64">
-          <div className="text-xl text-red-500">Error: {error}</div>
-        </div>
-      </div>
-    </main>
-  ), [mainClass, error]);
 
   return (
     <main className={`${mainClass} bg-white px-6 py-8`}>
@@ -95,7 +51,7 @@ export default function AdvanceCareer({ mainClass = "min-h-screen" }: AdvanceCar
             gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
           }}
         >
-          {cardsData?.map((card:any, index:number) => {
+          {cardsData?.map((card:any, index:any) => {
             // Get the appropriate icon based on the card title
             const Icon = iconMap[card.title] || BookOpen;
             
