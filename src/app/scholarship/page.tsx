@@ -51,25 +51,6 @@ export default function Page() {
       variant: "light",
     },
   ] : [
-    // // Fallback data while loading
-    // {
-    //   stat: "36+",
-    //   title: "Online Courses",
-    //   description: "Explore a wide range of flexible, career-focused programs.",
-    //   variant: "dark",
-    // },
-    // {
-    //   stat: "4.9",
-    //   title: "Course Rating",
-    //   description: "Trusted and highly rated by our students worldwide.",
-    //   variant: "light",
-    // },
-    // {
-    //   stat: "100",
-    //   title: "Students",
-    //   description: "A growing global community of engaged learners.",
-    //   variant: "light",
-    // },
   ];
 
   const cardData = {

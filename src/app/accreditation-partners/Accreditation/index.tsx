@@ -1,6 +1,5 @@
 "use client";
 
-import Banner from "@/component/about-us/Banner";
 import CircularImage from "@/component/about-us/Banner/CommonImage";
 import React, { useEffect } from "react";
 import InternationalPartnerships from "./common/InternationalPartnerships";
@@ -71,9 +70,7 @@ const AccreditationImage = () => {
         />
       </div>
       <div className="p-5 flex flex-col md:flex-row justify-between items-center gap-6">
-        {/* Use partnershipData for CircularImage */}
         <CircularImage imageUrl={partnershipData?.hero_image || ""} />
-        {/* Use transformed partnership data for InternationalPartnerships */}
         <InternationalPartnerships 
           title={partnershipData?.title || "About Our International Partnerships"}
           description={partnershipData?.description || "International cooperation is at the core of our educational mission. We collaborate with top universities and institutions worldwide to provide diverse educational opportunities and foster global citizenship."}
