@@ -99,12 +99,9 @@ export default function Page() {
       <div className="min-h-screen py-8 px-6">
         <div className="grid gap-6 mx-auto grid-cols-1 md:grid-cols-[minmax(300px,1fr)_minmax(300px,1fr)]">
           <AboutSection
-            buttonText="Apply For Scholorship"
-            label="Scholarships"
-            title="at UeCampus"
-            highlight=""
-            description="At UeCampus, we believe that education should be a right, not a privilege. To support our mission of making higher education accessible to all, we offer a range of scholarships designed to reward achievement and reduce financial barriers."
-            buttonStyles="border-white text-[#6a1b9a] cursor-pointer hover:text-[#6a1b9a] bg-white transition-all duration-200"
+             about={about}
+            isLoading={aboutLoading}
+            error={aboutError}
           />
           <EducationSection
             cardData1={cardData}
