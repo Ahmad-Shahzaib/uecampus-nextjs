@@ -10,9 +10,11 @@ import { fetchInternationalPartnershipData } from "@/redux/thunk/internationalPa
 import { RootState } from "@/redux/rootReducer";
 import AccreditationBanner from "./AccreditationBanner";
 import EducationCards from "@/component/educationcard/EducationCards";
+import { AppDispatch } from "@/redux/store"; // Import AppDispatch type
 
 const AccreditationImage = () => {
-  const dispatch = useDispatch();
+  // Use the typed dispatch
+  const dispatch = useDispatch<AppDispatch>();
   const { data: accreditationData, isLoading: accreditationLoading, error: accreditationError } = useSelector(
     (state: RootState) => state.accreditation
   );

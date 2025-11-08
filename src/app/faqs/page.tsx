@@ -1,5 +1,5 @@
 import CircularImage from '@/component/about-us/Banner/CommonImage'
-import Faqs from '@/component/faqs'
+import Faqs from '@/component/faqs/Faqs'
 import FrequentlyAskedQuestionHeader from '@/component/faqs/faqsQuestionHeader'
 import JoinUs from '@/component/joinus'
 

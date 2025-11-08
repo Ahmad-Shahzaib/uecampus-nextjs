@@ -21,6 +21,8 @@ const persistor = persistStore(store);
 type RootState = ReturnType<typeof store.getState>;
 type AppDispatch = typeof store.dispatch;
 const useSelector: TypedUseSelectorHook<RootState> = useAppSelector;
+
+// Update this line to properly type dispatch for thunks
 const useDispatch = () => useAppDispatch<AppDispatch>();
 
 export { persistor, store, useDispatch, useSelector };

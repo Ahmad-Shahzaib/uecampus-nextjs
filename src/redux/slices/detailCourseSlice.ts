@@ -1,4 +1,3 @@
-// src/redux/slices/detailCourseSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchDetailCourseData } from "../thunk/detailCourseThunk";
 
@@ -64,6 +63,19 @@ const detailCourseSlice = createSlice({
   name: "detailCourse",
   initialState,
   reducers: {
+    // Add the missing actions that the thunk is trying to import
+    fetchCourseDetailStart: (state) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    fetchCourseDetailSuccess: (state, action: PayloadAction<DetailCourseResponse>) => {
+      state.isLoading = false;
+      state.data = action.payload;
+    },
+    fetchCourseDetailFailure: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
     resetDetailCourseState: () => initialState,
   },
   extraReducers: (builder) => {
@@ -86,5 +98,12 @@ const detailCourseSlice = createSlice({
   },
 });
 
-export const { resetDetailCourseState } = detailCourseSlice.actions;
+export const { 
+  resetDetailCourseState,
+  // Export the new actions
+  fetchCourseDetailStart,
+  fetchCourseDetailSuccess,
+  fetchCourseDetailFailure
+} = detailCourseSlice.actions;
+
 export default detailCourseSlice.reducer;

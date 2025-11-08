@@ -165,7 +165,7 @@ const appReducer = combineReducers({
   educationCards: persistReducer(educationCardsPersistConfig, educationCardsReducer),
   contactUs: persistReducer(contactUsPersistConfig, contactUsReducer),
   detailCourse: persistReducer(
-    detailCoursePersistConfig,
+    detailCoursePersistConfig,  
     detailCourseReducer
   ),
   

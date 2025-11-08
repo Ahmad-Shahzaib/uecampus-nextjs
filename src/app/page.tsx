@@ -3,7 +3,7 @@ import TestimonialCarousel from "@/component/common/Carousal";
 import CouresSection from "@/component/Courses";
 import { AboutSection } from "@/component/education/sections/about";
 import { EducationSection } from "@/component/education/sections/education";
-import Faqs from "@/component/faqs";
+import Faqs from "@/component/faqs/Faqs";
 import { GlobalCampusSection } from "@/component/global";
 import HeroSection from "@/component/HeroSection";
 import JoinUs from "@/component/joinus";

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "@/redux/store";
 import { RootState } from "@/redux/rootReducer";
 import { fetchEducationCardsData } from "@/redux/thunk/educationCardsThunk";
 import { Button } from "@/components/ui/button";
@@ -43,7 +43,7 @@ const EducationCards = () => {
     <div className="  px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {data.map((partner) => (
+          {data.map((partner :any) => (
             <div
               key={partner.id}
               className="bg-[#181818] text-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center p-6"

@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "@/redux/store";
 import { fetchScholarshipData } from "@/redux/thunk/scholarship";
 import { RootState } from "@/redux/rootReducer";
 

@@ -2,7 +2,8 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "@/redux/store";
 import { useParams } from "next/navigation";
 import { RootState } from "@/redux/rootReducer";
 import { fetchDetailCourseData } from "@/redux/thunk/detailCourseThunk";

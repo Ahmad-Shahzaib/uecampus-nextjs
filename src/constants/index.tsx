@@ -1,6 +1,11 @@
 import { FeatureCardProps } from "@/component/testinomials/testinomials-card";
 import { BookOpen, Award, Briefcase, Clock, DollarSign, Users, Zap, Globe } from "lucide-react"
-
+type HeroVariant = "primary" | "secondary" | "tertiary";
+type HeroSection = {
+  title: string;
+  description: string;
+  variant: HeroVariant;
+};
 
 
 
