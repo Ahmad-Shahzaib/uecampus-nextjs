@@ -51,15 +51,15 @@ export const PARTNER_LOGOS = [
     },
 
 ]
-export const HeroSection_ue: HeroSection[] = [
-    {
-        title: "Earn Your Degree Anytime, Anywhere with UECampus!",
-        description:
-            "Flexible, fully accredited programs designed to fit your lifestyle—study online, advance your career, and achieve your goals without boundaries",
-        variant: "primary",
-    },
+// export const HeroSection_ue: HeroSection[] = [
+//     {
+//         title: "Earn Your Degree Anytime, Anywhere with UECampus!",
+//         description:
+//             "Flexible, fully accredited programs designed to fit your lifestyle—study online, advance your career, and achieve your goals without boundaries",
+//         variant: "primary",
+//     },
 
-]
+// ]
 
 
 import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react"

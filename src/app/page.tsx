@@ -83,14 +83,7 @@ export default function Home() {
     <div>
       <div className="py-6 bg-gray-800 flex flex-col space-y-8">
         <div className="sm:px-10 px-4">
-          {HeroSection_ue.map((section, index) => (
-            <HeroSection
-              key={index}
-              title={section.title}
-              description={section.description}
-              variant={section.variant}
-            />
-          ))}
+          <HeroSection />
         </div>
 
         <div className="sm:px-10 px-4">
