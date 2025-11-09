@@ -1,23 +1,23 @@
-"use client"
+"use client";
 
-import { HeroCard } from "./cards/hero"
-import InteractiveGlobe from "./cards/worldmap"
+import { HeroCard } from "./cards/hero";
+import InteractiveGlobe from "./cards/worldmap";
 
 interface GlobalCampusSectionProps {
-  title?: string
-  description?: string
+  title?: string;
+  description?: string;
   locations?: Array<{
-    id: string
-    country: string
-    lat: number
-    lng: number
-    color: string
-  }>
+    id: string;
+    country: string;
+    lat: number;
+    lng: number;
+    color: string;
+  }>;
 }
 
 export function GlobalCampusSection({
-  title = "Bringing the World Into Our Classrooms",
-  description = "UECampus is home to a vibrant community of international students who represent a wide range of countries and cultural backgrounds. Their presence strengthens our mission to provide globally relevant education and fosters an environment of academic exchange and cross-cultural learning. Our international students are shaping the future—locally and globally.",
+  title = "",
+  description = "",
   locations = [],
 }: GlobalCampusSectionProps) {
   return (
@@ -47,5 +47,5 @@ export function GlobalCampusSection({
         </div>
       </div>
     </section>
-  )
+  );
 }

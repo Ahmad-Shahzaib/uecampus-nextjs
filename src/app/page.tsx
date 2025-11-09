@@ -11,7 +11,6 @@ import { LogoCarousel } from "@/component/partners";
 import { FeatureCard } from "@/component/testinomials/testinomials-card";
 import {
   CoursesSection_ue,
-  HeroSection_ue,
   studentLocations,
 } from "@/constants";
 import { RootState, useDispatch, useSelector } from "@/redux/store";
@@ -134,8 +133,8 @@ export default function Home() {
           <TestimonialCarousel />
         </div>
         <GlobalCampusSection
-          title="Bringing the World Into Our Classrooms"
-          description="UECampus is home to a vibrant community of international students who represent a wide range of countries and cultural backgrounds. Their presence strengthens our mission to provide globally relevant education and fosters an environment of academic exchange and cross-cultural learning. Our international students are shaping the future—locally and globally."
+          title=""
+          description=""
           locations={studentLocations}
         />
       </div>
