@@ -1,4 +1,5 @@
-import { AnyAction, combineReducers, Reducer } from "redux";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { AnyAction, combineReducers } from "redux";
 import { PersistConfig, persistReducer } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import { clearStore } from "@/redux/utils";
@@ -20,6 +21,9 @@ import contactUsReducer from "./slices/contactUsSlice";
 import detailCourseReducer from "./slices/detailCourseSlice";
 import heroSectionReducer from "./slices/heroSectionSlice"; // Add this import
 import missionReducer from "./slices/missionSlice";
+import programsReducer from "./slices/programsSlice";
+
+type GenericPersistConfig = PersistConfig<any>;
 
 const createNoopStorage = () => ({
   getItem(): Promise<null> {
@@ -38,130 +42,136 @@ const storage =
     ? createWebStorage("local")
     : createNoopStorage();
 
-const rootPersistConfig: PersistConfig<any> = {
+const rootPersistConfig: GenericPersistConfig = {
   key: "root",
   storage,
   keyPrefix: "redux-",
   whitelist: [],
 };
 
-const coursesPersistConfig: PersistConfig<any> = {
+const coursesPersistConfig: GenericPersistConfig = {
   key: "courses",
   storage,
   keyPrefix: "redux-",
   whitelist: [],
 };
-const aboutPersistConfig: PersistConfig<any> = {
+const aboutPersistConfig: GenericPersistConfig = {
   key: "about",
   storage,
   keyPrefix: "redux-",
   whitelist: [],
 };
-const faqsPersistConfig: PersistConfig<any> = {
+const faqsPersistConfig: GenericPersistConfig = {
   key: "faqs",
   storage,
   keyPrefix: "redux-",
   whitelist: [],
 };
-const heroPersistConfig: PersistConfig<any> = {
+const heroPersistConfig: GenericPersistConfig = {
   key: "hero",
   storage,
   keyPrefix: "redux-",
   whitelist: [],
 };
-const testinomialsPersistConfig: PersistConfig<any> = {
+const testinomialsPersistConfig: GenericPersistConfig = {
   key: "testinomials",
   storage,
   keyPrefix: "redux-",
   whitelist: [],
 };
 
-const featureCardsPersistConfig: PersistConfig<any> = {
+const featureCardsPersistConfig: GenericPersistConfig = {
   key: "featureCards",
   storage,
   keyPrefix: "redux-",
   whitelist: [],
 };
 
-const studentFeedbackPersistConfig: PersistConfig<any> = {
+const studentFeedbackPersistConfig: GenericPersistConfig = {
   key: "studentFeedback",
   storage,
   keyPrefix: "redux-",
   whitelist: [],
 };
-const aboutSectionPersistConfig = {
+const aboutSectionPersistConfig: GenericPersistConfig = {
   key: "aboutSection",
   storage,
   keyPrefix: "redux-",
   whitelist: [],
 };
 
-const howToApplyPersistConfig = {
+const howToApplyPersistConfig: GenericPersistConfig = {
   key: "howToApply",
   storage,
   keyPrefix: "redux-",
   whitelist: ["data"],
 };
 
-const scholarshipPersistConfig = {
+const scholarshipPersistConfig: GenericPersistConfig = {
   key: "scholarship",
   storage,
   keyPrefix: "redux-",
   whitelist: ["data"],
 };
 
-const onlineDegreeCardsPersistConfig: PersistConfig<any> = {
+const onlineDegreeCardsPersistConfig: GenericPersistConfig = {
   key: "onlineDegreeCards",
   storage,
   keyPrefix: "redux-",
   whitelist: [],
 };
 
-const accreditationPersistConfig: PersistConfig<any> = {
+const accreditationPersistConfig: GenericPersistConfig = {
   key: "accreditation",
   storage,
   keyPrefix: "redux-",
   whitelist: [],
 };
 
-const internationalPartnershipPersistConfig: PersistConfig<any> = {
+const internationalPartnershipPersistConfig: GenericPersistConfig = {
   key: "internationalPartnership",
   storage,
   keyPrefix: "redux-",
   whitelist: [],
 };
 
-const educationCardsPersistConfig: PersistConfig<any> = {
+const educationCardsPersistConfig: GenericPersistConfig = {
   key: "educationCards",
   storage,
   keyPrefix: "redux-",
   whitelist: ["data"],
 };
-const contactUsPersistConfig: PersistConfig<any> = {
+const contactUsPersistConfig: GenericPersistConfig = {
   key: "contactUs",
   storage,
   keyPrefix: "redux-",
   whitelist: ["data"],
 };
-const detailCoursePersistConfig: PersistConfig<any> = {
+const detailCoursePersistConfig: GenericPersistConfig = {
   key: "detailCourse",
   storage,
   keyPrefix: "redux-",
   whitelist: ["data"],          // keep the fetched data across reloads
 };
 
-const heroSectionPersistConfig: PersistConfig<any> = {
+const heroSectionPersistConfig: GenericPersistConfig = {
   key: "heroSection",
   storage,
   keyPrefix: "redux-",
   whitelist: ["data"], // keep the fetched data across reloads
 };
 
-const missionPersistConfig: PersistConfig<any> = {
+const missionPersistConfig: GenericPersistConfig = {
   key: "mission",
   storage,
   keyPrefix: "redux-",
   whitelist: ["data"], // keep the fetched data across reloads
+};
+const programsPersistConfig: GenericPersistConfig = {
+  key: "programs",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: ["data"],
 };
 const appReducer = combineReducers({
   courses: persistReducer(coursesPersistConfig, coursesReducer),
@@ -183,16 +193,17 @@ const appReducer = combineReducers({
     detailCoursePersistConfig,  
     detailCourseReducer
   ),
-    heroSection: persistReducer(heroSectionPersistConfig, heroSectionReducer), // Add this line
-    mission: persistReducer(missionPersistConfig, missionReducer),
-
-  
+  heroSection: persistReducer(heroSectionPersistConfig, heroSectionReducer), // Add this line
+  mission: persistReducer(missionPersistConfig, missionReducer),
+  programs: persistReducer(programsPersistConfig, programsReducer),
 });
 
-const rootReducer: Reducer = (
-  state: ReturnType<typeof appReducer> | undefined,
-  action: any | never,
-) => {
+type AppState = ReturnType<typeof appReducer>;
+
+const rootReducer = (
+  state: AppState | undefined,
+  action: AnyAction,
+): AppState => {
   if (action.type === clearStore.type) {
     storage.removeItem("redux-root");
     if (typeof window !== "undefined") {

@@ -1,140 +1,86 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
+import { useEffect, useState } from "react";
+import { Card } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useDispatch, useSelector } from "@/redux/store";
+import { RootState } from "@/redux/rootReducer";
+import { fetchProgramsData, Program } from "@/redux/thunk/programsThunk";
+
+type SelectedCategoriesState = Record<number, boolean>;
 
 export default function FilterSidebar() {
-  const [filters, setFilters] = useState({
-    programmeType: {
-      "Full-time": false,
-      "Part-time": false,
-      Online: false,
-    },
-    areaOfStudy: {
-      Business: false,
-      "Cyber Security": false,
-      Engineering: false,
-      Finance: false,
-      Health: false,
-      Information: false,
-      Technology: false,
-      Management: false,
-      Policing: false,
-      Tourism: false,
-    },
-    university: {
-      "Staffordshire University": false,
-      "Coventry University": false,
-      "University of Hertfordshire": false,
-      "University of Salford": false,
-      "Open College": false,
-      "Other College": false,
-    },
-    level: {
-      Foundation: false,
-      Undergraduate: false,
-      Postgraduate: false,
-    },
-  })
+  const dispatch = useDispatch();
+  const { data, isLoading, error } = useSelector(
+    (state: RootState) => state.programs
+  );
 
-  const handleFilterChange = (category: string, option: string) => {
-    setFilters((prev) => ({
+  const [selectedCategories, setSelectedCategories] =
+    useState<SelectedCategoriesState>({});
+
+  useEffect(() => {
+    if (!data) {
+      dispatch(fetchProgramsData());
+    }
+  }, [data, dispatch]);
+
+  const handleCategoryChange = (categoryId: number) => {
+    setSelectedCategories((prev) => ({
       ...prev,
-      [category]: {
-        ...prev[category as keyof typeof filters],
-        [option]: !prev[category as keyof typeof filters][option as never],
-      },
-    }))
-  }
+      [categoryId]: !prev[categoryId],
+    }));
+  };
 
   return (
-    <aside className="sm:w-56 flex-full flex-shrink-0">
+    <aside className="sm:w-56 flex-full shrink-0">
       <Card className="p-6 bg-white">
-        <h2 className="text-lg font-bold  mb-6 text-purple-800">Filter Courses</h2>
+        <h2 className="text-lg font-bold mb-6 text-purple-800">
+          Filter Courses
+        </h2>
 
-        {/* Programme Type */}
-        <div className="mb-8">
-          <h3 className="font-semibold text-purple-800 mb-3">Programme Type</h3>
-          <div className="space-y-3">
-            {Object.keys(filters.programmeType).map((option) => (
-              <div key={option} className="flex items-center gap-2">
-                <Checkbox
-                  id={`programme-${option}`}
-                  checked={filters.programmeType[option as keyof typeof filters.programmeType]}
-                  onCheckedChange={() => handleFilterChange("programmeType", option)}
-                />
-                <label htmlFor={`programme-${option}`} className="text-sm text-foreground cursor-pointer">
-                  {option}
-                </label>
-              </div>
-            ))}
+        {isLoading && (
+          <div className="text-sm text-gray-600">Loading programs...</div>
+        )}
+
+        {error && (
+          <div className="text-sm text-red-500">
+            Failed to load programs: {error}
           </div>
-        </div>
+        )}
 
-        {/* Area of Study */}
-        <div className="mb-8">
-          <h3 className="font-semibold text-purple-800 mb-3">Area of Study</h3>
-          <div className="space-y-3">
-            {Object.keys(filters.areaOfStudy).map((option) => (
-              <div key={option} className="flex items-center gap-2">
-                <Checkbox
-                  id={`area-${option}`}
-                  checked={filters.areaOfStudy[option as keyof typeof filters.areaOfStudy]}
-                  onCheckedChange={() => handleFilterChange("areaOfStudy", option)}
-                />
-                <label htmlFor={`area-${option}`} className="text-sm text-foreground cursor-pointer">
-                  {option}
-                </label>
+        {!isLoading && !error && data?.length === 0 && (
+          <div className="text-sm text-gray-600">No programs available.</div>
+        )}
+
+        {!isLoading &&
+          !error &&
+          data?.map((program: Program) => (
+            <div key={program.id} className="mb-8 last:mb-0">
+              <h3 className="font-semibold text-purple-800 mb-3">
+                {program.name}
+              </h3>
+              <div className="space-y-3">
+                {program.categories.map((category: Program["categories"][number]) => (
+                  <div key={category.id} className="flex items-center gap-2">
+                    <Checkbox
+                      id={`category-${category.id}`}
+                      checked={!!selectedCategories[category.id]}
+                      onCheckedChange={() =>
+                        handleCategoryChange(category.id)
+                      }
+                    />
+                    <label
+                      htmlFor={`category-${category.id}`}
+                      className="text-sm text-foreground cursor-pointer"
+                    >
+                      {category.name}
+                    </label>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* University */}
-        <div className="mb-8">
-          <h3 className="font-semibold text-purple-800 mb-3">University</h3>
-          <div className="space-y-3">
-            {Object.keys(filters.university).map((option) => (
-              <div key={option} className="flex items-center gap-2">
-                <Checkbox
-                  id={`uni-${option}`}
-                  checked={filters.university[option as keyof typeof filters.university]}
-                  onCheckedChange={() => handleFilterChange("university", option)}
-                />
-                <label htmlFor={`uni-${option}`} className="text-sm text-foreground cursor-pointer">
-                  {option}
-                </label>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Level */}
-        <div className="mb-8">
-          <h3 className="font-semibold text-purple-800 mb-3">Level</h3>
-          <div className="space-y-3">
-            {Object.keys(filters.level).map((option) => (
-              <div key={option} className="flex items-center gap-2">
-                <Checkbox
-                  id={`level-${option}`}
-                  checked={filters.level[option as keyof typeof filters.level]}
-                  onCheckedChange={() => handleFilterChange("level", option)}
-                />
-                <label htmlFor={`level-${option}`} className="text-sm text-foreground cursor-pointer">
-                  {option}
-                </label>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <Button className="w-full bg-gray-800 hover:bg-gray-900 border-0 rounded text-white mb-2">Apply Filters</Button>
-        <Button variant="outline" className="w-full bg-transparent hover:bg-gray-900 border-0 rounded hover:text-white">
-          Clear Filters
-        </Button>
+            </div>
+          ))}
       </Card>
     </aside>
-  )
+  );
 }
