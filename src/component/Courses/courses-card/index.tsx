@@ -61,14 +61,12 @@ export default function CourseCard({ course }: CourseCardProps) {
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-3">
               <span className="text-xs bg-[#F0F8FF] rounded text-gray-700 px-3 py-1">
-                Category {course.cat_id}
+              Accessibility
               </span>
               <span className="text-xs bg-[#F0F8FF] rounded text-gray-700 px-3 py-1">
                 Program {course.program_id}
               </span>
-              <span className="text-xs bg-[#F0F8FF] rounded text-gray-700 px-3 py-1">
-                Page {course.page}
-              </span>
+             
             </div>
 
             {/* Description */}
@@ -79,14 +77,14 @@ export default function CourseCard({ course }: CourseCardProps) {
 
           {/* Footer */}
           <hr className="my-2 border-gray-200" />
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4">
-            <div className="text-xs text-muted-foreground">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center  gap-2 sm:gap-4 float-end justify-end">
+            {/* <div className="text-xs text-muted-foreground">
               <p>Created: {new Date(course.created_at).toLocaleDateString()}</p>
               <p className="text-gray-600 font-medium">Updated: {new Date(course.updated_at).toLocaleDateString()}</p>
-            </div>
+            </div> */}
             <Button
               variant="ghost"
-              className="text-gray-600 hover:text-purple-700 cursor-pointer gap-1 p-0"
+              className="text-gray-600 hover:text-purple-700 cursor-pointer gap-1 p-0 float-end justify-end left"
             >
               Course Details
               <ChevronRight className="w-4 h-4" />
