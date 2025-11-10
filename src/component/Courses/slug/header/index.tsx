@@ -13,11 +13,11 @@ const CourseDetailHeader: React.FC<CourseDetailHeaderProps> = ({ name, bgImage }
       style={{ backgroundImage: `url(${bgImage})` }}
     >
       {/* Add an overlay for better text readability */}
-      <div className="absolute inset-0 bg-black bg-opacity-40 rounded-2xl"></div>
+      <div className="absolute inset-0  bg-opacity-40 rounded-2xl"></div>
       
       <div className="flex flex-col lg:flex-row w-full relative items-center lg:items-start z-10">
         {/* Left section - title (semi-transparent card on mobile) */}
-        <div className="w-full lg:flex-1 lg:pr-20 bg-black bg-opacity-50 lg:bg-transparent rounded-2xl lg:rounded-none p-8 lg:p-0 shadow-lg lg:shadow-none">
+        <div className="w-full lg:flex-1 lg:pr-20  bg-opacity-50 lg:bg-transparent rounded-2xl lg:rounded-none p-8 lg:p-0 shadow-lg lg:shadow-none">
           <h1 className="text-4xl sm:text-5xl lg:text-5xl font-semibold text-white leading-tight text-balance text-center lg:text-left">
             {name}
           </h1>

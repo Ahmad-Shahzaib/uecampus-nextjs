@@ -1,7 +1,12 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { HeroCard } from "./cards/hero";
-import InteractiveGlobe from "./cards/worldmap";
+
+// Dynamically import the LeafletMap with SSR disabled
+const LeafletMap = dynamic(() => import("@/components/ui/LeafletMap"), {
+  ssr: false,
+});
 
 interface GlobalCampusSectionProps {
   title?: string;
@@ -32,15 +37,13 @@ export function GlobalCampusSection({
       >
         {/* Text Section */}
         <div className="flex items-center justify-center w-full">
-          <HeroCard
-         
-          />
+          <HeroCard />
         </div>
 
         {/* Globe Section */}
         <div className="flex items-center justify-center w-full">
           <div className="w-full aspect-square lg:aspect-auto lg:h-96 xl:h-full">
-            <InteractiveGlobe />
+            <LeafletMap />
           </div>
         </div>
       </div>

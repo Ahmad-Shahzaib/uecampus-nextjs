@@ -43,7 +43,11 @@ const coursesSlice = createSlice({
             })
             .addCase(fetchCoursesData.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.error.message || "Failed to fetch courses";
+                // Prefer payload from rejectWithValue; fallback to generic error.message
+                state.error =
+                    (action.payload as string) ||
+                    action.error.message ||
+                    "Failed to fetch courses";
             });
     },
 });

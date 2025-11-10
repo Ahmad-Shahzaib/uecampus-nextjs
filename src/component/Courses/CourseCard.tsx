@@ -4,12 +4,22 @@
 import React from "react";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { Course, ProgramCardProps } from "./types";
+import { ProgramCardProps } from "./types";
+import { useRouter } from "next/navigation"; // ← Fixed import
 
 export const ProgramCard = React.memo<ProgramCardProps>(({ course }) => {
+  const router = useRouter();
+
+  const navigateToCourseDetail = () => {
+    router.push(`/course/${course.slug}`);
+  };
+
   return (
     <article className="w-full overflow-hidden rounded-3xl bg-[#111827] shadow-xl flex flex-col justify-between transition-transform duration-300 hover:-translate-y-2">
-      <div className="flex flex-col p-4 sm:p-6 md:p-8">
+      <div
+        className="flex flex-col p-4 sm:p-6 md:p-8 cursor-pointer"
+        onClick={navigateToCourseDetail}
+      >
         <div className="mb-4 sm:mb-5">
           <Badge
             variant="secondary"
@@ -35,13 +45,11 @@ export const ProgramCard = React.memo<ProgramCardProps>(({ course }) => {
           fill
           priority
           className="object-cover transition-transform duration-300 hover:scale-105"
-          sizes="(max-width: 640px) 100vw, 
-                 (max-width: 1024px) 50vw, 
-                 25vw"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         />
       </div>
     </article>
   );
 });
 
-ProgramCard.displayName = 'ProgramCard';
+ProgramCard.displayName = "ProgramCard";

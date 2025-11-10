@@ -35,7 +35,10 @@ export default function CourseCard({ course }: CourseCardProps) {
 
   return (
     <Card className="overflow-hidden bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
-      <div className="flex flex-col md:flex-row gap-4 md:gap-6 p-4 md:p-6">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-6 p-4 md:p-6 cursor-pointer"
+              onClick={navigateToCourseDetail} // Attach the handler here
+      
+      >
         {/* Image Section */}
         <div className="shrink-0 w-full md:w-1/3 h-52 md:h-64">
           <Image
@@ -83,7 +86,6 @@ export default function CourseCard({ course }: CourseCardProps) {
             </div>
             <Button
               variant="ghost"
-              onClick={navigateToCourseDetail} // Attach the handler here
               className="text-gray-600 hover:text-purple-700 cursor-pointer gap-1 p-0"
             >
               Course Details
