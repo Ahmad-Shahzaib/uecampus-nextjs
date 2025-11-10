@@ -3,7 +3,7 @@ import { StatCard } from "../about-us/stats/card";
 
 const statsData = [
   {
-    stat: "36+",
+    stat: "",
     title: "Online Courses",
     description:
       "Our degrees are recognized internationally, opening doors to global careers.",

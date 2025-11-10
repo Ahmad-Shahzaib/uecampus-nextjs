@@ -33,9 +33,7 @@ export function GlobalCampusSection({
         {/* Text Section */}
         <div className="flex items-center justify-center w-full">
           <HeroCard
-            title={title}
-            description={description}
-            className="w-full h-full min-h-96 lg:min-h-full"
+         
           />
         </div>
 

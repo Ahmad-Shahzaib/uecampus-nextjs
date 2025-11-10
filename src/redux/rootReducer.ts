@@ -18,6 +18,8 @@ import internationalPartnershipReducer from "./slices/internationalPartnershipSl
 import educationCardsReducer from "./slices/educationCardsSlice";
 import contactUsReducer from "./slices/contactUsSlice";
 import detailCourseReducer from "./slices/detailCourseSlice";
+import heroSectionReducer from "./slices/heroSectionSlice"; // Add this import
+import missionReducer from "./slices/missionSlice";
 
 const createNoopStorage = () => ({
   getItem(): Promise<null> {
@@ -148,6 +150,19 @@ const detailCoursePersistConfig: PersistConfig<any> = {
   whitelist: ["data"],          // keep the fetched data across reloads
 };
 
+const heroSectionPersistConfig: PersistConfig<any> = {
+  key: "heroSection",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: ["data"], // keep the fetched data across reloads
+};
+
+const missionPersistConfig: PersistConfig<any> = {
+  key: "mission",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: ["data"], // keep the fetched data across reloads
+};
 const appReducer = combineReducers({
   courses: persistReducer(coursesPersistConfig, coursesReducer),
   faqs: persistReducer(faqsPersistConfig, faqsReducer),
@@ -168,6 +183,9 @@ const appReducer = combineReducers({
     detailCoursePersistConfig,  
     detailCourseReducer
   ),
+    heroSection: persistReducer(heroSectionPersistConfig, heroSectionReducer), // Add this line
+    mission: persistReducer(missionPersistConfig, missionReducer),
+
   
 });
 

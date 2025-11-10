@@ -1,5 +1,5 @@
 // src/redux/slices/aboutSection.ts
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { fetchAboutSectionData } from "../thunk/aboutSection";
 
 interface AboutSectionData {
@@ -15,7 +15,8 @@ interface AboutSectionData {
     youtubeVideo: string;
     sliderDescription: string;
     createdAt: string | null;
-    updatedAt: string;
+    updatedAt: string; 
+    section_2_long_description_1 :string
 }
 
 interface AboutSectionState {
@@ -42,7 +43,7 @@ const aboutSectionSlice = createSlice({
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(fetchAboutSectionData.fulfilled, (state, action: PayloadAction<AboutSectionData>) => {
+            .addCase(fetchAboutSectionData.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.data = action.payload;
             })

@@ -7,7 +7,8 @@ import JoinUs from '@/component/joinus'
 import { RootState, useDispatch, useSelector } from "@/redux/store";
 import { fetchAboutSectionData } from '@/redux/thunk/aboutSection';
 import { fetchOnlineDegreeCards } from '@/redux/thunk/onlineDegreeCards';
-import { useCallback, useEffect } from 'react';
+import { fetchMissionData } from '@/redux/thunk/missionThunk';
+import { useEffect } from 'react';
 
 
 const Page = () => {
@@ -16,38 +17,38 @@ const Page = () => {
     useEffect(() => {
         dispatch(fetchAboutSectionData());
         dispatch(fetchOnlineDegreeCards());
+        dispatch(fetchMissionData());
 
     }, [dispatch]);
 
     const { data: about, isLoading, error } = useSelector((state: RootState) => state.aboutSection);
-    const { data: cardsData, isLoading: cardsLoading, error: cardsError } = useSelector(
+    const { data: cardsData } = useSelector(
         (state: RootState) => state.onlineDegreeCards
+    );
+    const { data: missionData } = useSelector(
+        (state: RootState) => state.mission
     );
 
 
     const cardData = {
         backgroundClass: "bg-[#1b232a] text-[#FFFFFF]",
-        title: "Mission",
-        description:
-            "At UeCampus, our mission is to expand access to higher education by providing flexible, affordable, and high-quality online learning opportunities for students worldwide. We are dedicated to breaking down barriers and empowering individuals from all backgrounds to unlock their full potential through knowledge, skills, and opportunity-driven education.",
-        backgroundImage:
-            "",
+        title: missionData?.mission_title || "Mission",
+        description: missionData?.mission_description || "",
+        backgroundImage: "",
         about: {
-            secondCardTitle: about?.secondCardTitle,
-            secondCardDescription: about?.secondCardDescription,
+            secondCardTitle: missionData?.mission_title || "Mission",
+            secondCardDescription: missionData?.mission_description || "",
         }
     }
 
     const cardData1 = {
         backgroundClass: "bg-[#2B303A] text-[#FFFFFF]",
-        title: "Vision",
-        description:
-            "Our vision is to be a global leader in online education, recognized for creating pathways to opportunity and success. UeCampus envisions a future where every learner, regardless of circumstance, has the chance to learn, grow, and achieve their goals through inclusive and innovative education.",
-        backgroundImage:
-            "",
+        title: missionData?.vision_title || "Vision",
+        description: missionData?.vision_description || "",
+        backgroundImage: "",
         about: {
-            secondCardTitle: about?.secondCardTitle,
-            secondCardDescription: about?.secondCardDescription,
+            secondCardTitle: missionData?.vision_title || "Vision",
+            secondCardDescription: missionData?.vision_description || "",
         }
     }
 

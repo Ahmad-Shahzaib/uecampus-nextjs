@@ -29,6 +29,7 @@ export const fetchAboutSectionData = createAsyncThunk(
                 sliderDescription: apiData.slider_description,
                 createdAt: apiData.created_at,
                 updatedAt: apiData.updated_at,
+                section_2_long_description_1: apiData.section_2_long_description_1 || "",
             };
             
             console.log("Transformed about section data:", transformedData);
