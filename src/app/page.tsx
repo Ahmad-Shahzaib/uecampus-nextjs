@@ -49,12 +49,14 @@ export default function Home() {
   } = useSelector((state: RootState) => state.aboutSection);
 
   useEffect(() => {
-    dispatch(fetchCoursesData({}));
+    // Avoid duplicate fetches if courses already present (persisted)
+    if (!courses || courses.length === 0) {
+      dispatch(fetchCoursesData({}));
+    }
     dispatch(fetchTestinomialsData());
     dispatch(fetchFeatureCardsData());
-    dispatch(fetchFeatureCardsData());
     dispatch(fetchAboutSectionData());
-  }, [dispatch]);
+  }, [dispatch, courses]);
 
   const cardData = {
     backgroundClass: "text-[#6a1b9a]",

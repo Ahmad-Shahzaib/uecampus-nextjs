@@ -17,8 +17,11 @@ const CourseSection: React.FC = () => {
   const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchCoursesData({}));
-  }, [dispatch]);
+    // Avoid refetch when data already cached via redux-persist
+    if (!courses || courses.length === 0) {
+      dispatch(fetchCoursesData({}));
+    }
+  }, [dispatch, courses]);
 
   // Get featured course names from constants (filtering out undefined entries)
   const featuredCourseNames = useMemo(() => 

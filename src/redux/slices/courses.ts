@@ -39,6 +39,7 @@ const coursesSlice = createSlice({
             })
             .addCase(fetchCoursesData.fulfilled, (state, action: PayloadAction<Course[]>) => {
                 state.isLoading = false;
+                state.error = null;
                 state.data = action.payload;
             })
             .addCase(fetchCoursesData.rejected, (state, action) => {
