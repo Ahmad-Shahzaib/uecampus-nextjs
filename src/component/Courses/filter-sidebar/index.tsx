@@ -1,22 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useDispatch, useSelector } from "@/redux/store";
 import { RootState } from "@/redux/rootReducer";
 import { fetchProgramsData, Program } from "@/redux/thunk/programsThunk";
-
-type SelectedCategoriesState = Record<number, boolean>;
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function FilterSidebar() {
   const dispatch = useDispatch();
   const { data, isLoading, error } = useSelector(
     (state: RootState) => state.programs
   );
-
-  const [selectedCategories, setSelectedCategories] =
-    useState<SelectedCategoriesState>({});
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (!data) {
@@ -25,10 +24,31 @@ export default function FilterSidebar() {
   }, [data, dispatch]);
 
   const handleCategoryChange = (categoryId: number) => {
-    setSelectedCategories((prev) => ({
-      ...prev,
-      [categoryId]: !prev[categoryId],
-    }));
+    const catIdsParam = searchParams.get("cat_ids");
+    const currentIds = new Set<number>(
+      catIdsParam
+        ? catIdsParam
+            .split(",")
+            .map((v) => parseInt(v.trim(), 10))
+            .filter((n) => !Number.isNaN(n))
+        : []
+    );
+
+    if (currentIds.has(categoryId)) {
+      currentIds.delete(categoryId);
+    } else {
+      currentIds.add(categoryId);
+    }
+
+    const selectedIds = Array.from(currentIds).sort((a, b) => a - b);
+    const params = new URLSearchParams(searchParams.toString());
+    if (selectedIds.length > 0) {
+      params.set("cat_ids", selectedIds.join(","));
+    } else {
+      params.delete("cat_ids");
+    }
+
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   return (
@@ -64,7 +84,15 @@ export default function FilterSidebar() {
                   <div key={category.id} className="flex items-center gap-2">
                     <Checkbox
                       id={`category-${category.id}`}
-                      checked={!!selectedCategories[category.id]}
+                      checked={(() => {
+                        const catIdsParam = searchParams.get("cat_ids");
+                        if (!catIdsParam) return false;
+                        const ids = catIdsParam
+                          .split(",")
+                          .map((v) => parseInt(v.trim(), 10))
+                          .filter((n) => !Number.isNaN(n));
+                        return ids.includes(category.id);
+                      })()}
                       onCheckedChange={() =>
                         handleCategoryChange(category.id)
                       }

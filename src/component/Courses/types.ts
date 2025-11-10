@@ -1,13 +1,23 @@
-// Course types for the Courses component
+// Course type used by cards; supports both legacy and new shapes
 export interface Course {
-  _id: string;
+  // Legacy fields
+  _id?: string;
+  title?: string;
+  detail?: string;
+  link?: string;
+  createdAt?: string;
+  updatedAt?: string;
+
+  // New API fields
+  id?: number;
+  slug?: string;
+  small_description?: string;
+  created_at?: string;
+  updated_at?: string;
+
+  // Shared
   name: string;
-  title: string;
-  detail: string;
   image_path: string;
-  link: string;
-  createdAt: string;
-  updatedAt: string;
 }
 
 // Featured course from constants

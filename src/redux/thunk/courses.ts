@@ -5,36 +5,54 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 const coursesApis = getAxiosInstance();
 
 interface FetchCourseParams {
-  // Define any parameters needed for fetching courses
+  cat_ids?: string; // comma-separated ids, e.g. "3,1"
 }
 
 export const fetchCoursesData = createAsyncThunk(
   "courses/fetchAll",
   async (params: FetchCourseParams, { rejectWithValue }) => {
     try {
-      const response = await coursesApis.get("/courses");
-      console.log("API Response:", response.data); // Debug log
-      
-      const coursesArray = response.data.data || []; // Extract the courses array
-      console.log("Courses Array:", coursesArray); // Debug log
-      
+      let response;
+      if (params?.cat_ids) {
+        response = await coursesApis.get("/courses/programs", {
+          params: { cat_ids: params.cat_ids },
+        });
+      } else {
+        response = await coursesApis.get("/courses");
+      }
+
+      const coursesArray =
+        response?.data?.courses ??
+        response?.data?.data ??
+        []; // Extract the courses array for either endpoint
+
       // Transform the API data to match our interface
-      const transformedCourses = coursesArray.map((course: any) => ({
-        id: course.id,
-        name: course.name,
-        slug: course.slug,
-        small_description: course.small_description,
-        image_path: course.image_path,
-        created_at: course.created_at,
-        updated_at: course.updated_at,
-      }));
-      
-      console.log("Transformed Courses:", transformedCourses); // Debug log
+      const transformedCourses = (coursesArray as unknown[]).map((course) => {
+        const c = course as {
+          id: number;
+          name: string;
+          slug: string;
+          small_description?: string;
+          image_path: string;
+          created_at: string;
+          updated_at: string;
+        };
+        return {
+          id: c.id,
+          name: c.name,
+          slug: c.slug,
+          small_description: c.small_description,
+          image_path: c.image_path,
+          created_at: c.created_at,
+          updated_at: c.updated_at,
+        };
+      });
+
       return transformedCourses;
-    } catch (error: any) {
-      console.error("Error fetching courses:", error); // Debug log
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { message?: string } } };
       const errorMessage =
-        error?.response?.data?.message || "Failed to fetch course data";
+        err?.response?.data?.message || "Failed to fetch course data";
       return rejectWithValue(errorMessage);
     }
   }

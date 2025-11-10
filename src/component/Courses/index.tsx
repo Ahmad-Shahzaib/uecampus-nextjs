@@ -30,7 +30,7 @@ const CourseSection: React.FC = () => {
   
   // Filter featured courses by matching names
   const featuredCourses = useMemo(() => 
-    courses.filter((course: Course) => 
+    courses.filter((course) => 
       featuredCourseNames.includes(course.name)
     ),
     [courses, featuredCourseNames]
@@ -113,7 +113,10 @@ const CourseSection: React.FC = () => {
           </div>
         ) : coursesToShow.length > 0 ? (
           coursesToShow.map((course: Course) => (
-            <ProgramCard key={course._id} course={course} />
+            <ProgramCard
+              key={(course.id ?? course._id ?? course.slug ?? course.name) as React.Key}
+              course={course}
+            />
           ))
         ) : (
           <div 

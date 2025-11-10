@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CourseCard from "@/component/Courses/courses-card";
@@ -10,8 +10,19 @@ import { Input } from "@/components/ui/input";
 import { useDispatch, useSelector } from "@/redux/store";
 import { fetchCoursesData } from "@/redux/thunk/courses";
 import { RootState } from "@/redux/rootReducer";
+import { useSearchParams } from "next/navigation";
 
-interface Course {
+type CourseForCard = {
+    id: number;
+    name: string;
+    slug: string;
+    image_path: string;
+    small_description: string;
+    created_at: string;
+    updated_at: string;
+};
+
+type FullCourseProp = {
     id: number;
     name: string;
     slug: string;
@@ -27,17 +38,19 @@ interface Course {
     video: string;
     created_at: string;
     updated_at: string;
-}
+};
 
-export default function Home() {
+function CoursesPageContent() {
     const dispatch = useDispatch();
     const { data: courses, isLoading, error } = useSelector((state: RootState) => state.courses);
     const [currentPage, setCurrentPage] = useState(1);
     const coursesPerPage = 6;
+    const searchParams = useSearchParams();
 
     useEffect(() => {
-        dispatch(fetchCoursesData({}));
-    }, [dispatch]);
+        const catIds = searchParams.get("cat_ids") || undefined;
+        dispatch(fetchCoursesData(catIds ? { cat_ids: catIds } : {}));
+    }, [dispatch, searchParams]);
 
     if (isLoading) {
         return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
@@ -80,9 +93,26 @@ export default function Home() {
                         </div>
                     </header>
                     <div className="space-y-6">
-                        {displayedCourses.map((course: Course) => (
-                            <CourseCard key={course.id} course={course} />
-                        ))}
+                        {(displayedCourses as unknown as CourseForCard[]).map((course) => {
+                            const fullCourse: FullCourseProp = {
+                                id: course.id,
+                                name: course.name,
+                                slug: course.slug,
+                                program_id: "",
+                                cat_id: "",
+                                status: "",
+                                content: "",
+                                small_description: course.small_description,
+                                meta_tags: "",
+                                meta_description: "",
+                                page: "",
+                                image_path: course.image_path,
+                                video: "",
+                                created_at: course.created_at,
+                                updated_at: course.updated_at,
+                            };
+                            return <CourseCard key={course.id} course={fullCourse} />;
+                        })}
                     </div>
 
                     {/* Pagination */}
@@ -96,5 +126,13 @@ export default function Home() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function Home() {
+    return (
+        <Suspense fallback={<div className="flex justify-center items-center min-h-screen">Loading...</div>}>
+            <CoursesPageContent />
+        </Suspense>
     );
 }

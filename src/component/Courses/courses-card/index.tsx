@@ -30,7 +30,7 @@ export default function CourseCard({ course }: CourseCardProps) {
   const router = useRouter();
 
   const navigateToCourseDetail = () => {
-    router.push(`/detail?id=${course.id}`); // Navigate to /detail with course ID
+    router.push(`/course/${course.slug}`);
   };
 
   return (

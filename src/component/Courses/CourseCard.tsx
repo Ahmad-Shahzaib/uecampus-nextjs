@@ -24,7 +24,7 @@ export const ProgramCard = React.memo<ProgramCardProps>(({ course }) => {
         </h1>
 
         <p className="text-slate-300 text-sm sm:text-base leading-relaxed line-clamp-3">
-          {course.detail}
+          {course.detail ?? course.small_description ?? ""}
         </p>
       </div>
 
