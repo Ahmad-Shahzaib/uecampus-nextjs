@@ -12,8 +12,8 @@ const FrequentlyAskedQuestionHeader: React.FC<FrequentlyAskedQuestionHeaderProps
     description,
 }) => {
     return (
-        <section className="px-4 md:px-5 lg:px-10 py-10 bg-white">
-            <h2 className="text-4xl md:text-5xl font-semibold text-purple-700 mb-6">
+        <section className="px-4 md:px-5 lg:px-10 py-8 bg-white">
+            <h2 className="text-4xl md:text-5xl font-semibold text-purple-700 mb-2">
                 {title}
             </h2>
 

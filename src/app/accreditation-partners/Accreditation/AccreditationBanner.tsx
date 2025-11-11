@@ -18,7 +18,7 @@ const AccreditationBanner = ({ imageUrl, title }: BannerProps) => {
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/5 rounded-2xl pointer-events-none"></div>
       {/* Content */}
-      <h1 className="relative z-10 text-5xl md:text-7xl font-semibold drop-shadow-lg pl-10">
+      <h1 className="relative z-10 text-5xl md:text-5xl font-semibold drop-shadow-lg sm:text-3xl pl-10">
         {title}
       </h1>
     </div>

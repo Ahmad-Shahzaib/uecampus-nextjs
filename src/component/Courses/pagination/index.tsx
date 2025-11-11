@@ -23,18 +23,32 @@ export default function PaginationComponent({ currentPage, totalPages, onPageCha
         Prev
       </Button>
 
-      {/* Page Numbers */}
-      {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-        <Button
-          key={page}
-          size="sm"
-          variant={currentPage === page ? "default" : "outline"}
-          onClick={() => onPageChange(page)}
-          className={currentPage === page ? "bg-purple-600 hover:bg-purple-700 text-white" : ""}
-        >
-          {page}
-        </Button>
-      ))}
+      {/* Page Numbers: only show 1, 2 and ellipsis when there are more pages */}
+      {(() => {
+        const pages: number[] = []
+        if (totalPages >= 1) pages.push(1)
+        if (totalPages >= 2) pages.push(2)
+
+        return (
+          <>
+            {pages.map((page) => (
+              <Button
+                key={page}
+                size="sm"
+                variant={currentPage === page ? "default" : "outline"}
+                onClick={() => onPageChange(page)}
+                className={currentPage === page ? "bg-purple-600 hover:bg-purple-700 text-white" : ""}
+              >
+                {page}
+              </Button>
+            ))}
+
+            {totalPages > pages.length && (
+              <span className="px-2 text-muted-foreground">…</span>
+            )}
+          </>
+        )
+      })()}
 
       <Button
         variant="outline"

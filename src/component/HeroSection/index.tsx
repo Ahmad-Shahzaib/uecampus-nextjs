@@ -76,13 +76,13 @@ const HeroSection = () => {
           </div>
 
           {/* CTA Button from API */}
-          <div className="mt-6">
+          {/* <div className="mt-6">
             <Button asChild variant="destructive" className="px-8 py-6 rounded-md">
               <a href={hero.button_link} target="_blank" rel="noopener noreferrer">
                 {hero.button_name}
               </a>
             </Button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
