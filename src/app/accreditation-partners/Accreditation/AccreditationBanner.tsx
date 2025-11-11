@@ -1,7 +1,7 @@
 import React from "react";
 
 interface BannerProps {
-  imageUrl: string;
+  imageUrl?: string;
   title: string;
 }
 
@@ -10,11 +10,15 @@ const AccreditationBanner = ({ imageUrl, title }: BannerProps) => {
 
   return (
     <div className="relative rounded-2xl w-full h-[40vh] flex items-center justify-start text-white overflow-hidden">
-      <img 
-        src={imageUrl} 
-        alt={title}
-        className="absolute inset-0 w-full h-full object-cover rounded-2xl"
-      />
+      {imageUrl ? (
+        <img 
+          src={imageUrl} 
+          alt={title}
+          className="absolute inset-0 w-full h-full object-cover rounded-2xl"
+        />
+      ) : (
+        <div className="absolute inset-0 w-full h-full rounded-2xl bg-gradient-to-r from-purple-700 to-purple-900" />
+      )}
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/5 rounded-2xl pointer-events-none"></div>
       {/* Content */}

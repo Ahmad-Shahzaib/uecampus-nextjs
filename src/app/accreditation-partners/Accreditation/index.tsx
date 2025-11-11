@@ -67,7 +67,7 @@ const AccreditationImage = () => {
     <div>
       <div className="m-5 rounded-2xl">
         <AccreditationBanner
-          imageUrl={accreditationData?.hero_image || ""} // Pass empty string if no image
+          imageUrl={accreditationData?.hero_image || undefined}
           title={accreditationData?.title || "Accreditation & Partners"}
         />
       </div>
