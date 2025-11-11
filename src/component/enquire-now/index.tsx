@@ -89,7 +89,8 @@ export function ScholarshipForm(): JSX.Element {
   return (
     <main className="bg-gradient-to-br from-purple-50 to-indigo-100 flex p-4 md:p-8">
       <div className="w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden shadow-2xl bg-white h-[680px]">
+        {/* Modified grid container: removed fixed height on mobile */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden shadow-2xl bg-white lg:h-[680px]">
           {/* Left Side - Image */}
           <div className="relative h-64 lg:h-full">
             <img
@@ -101,7 +102,8 @@ export function ScholarshipForm(): JSX.Element {
           </div>
 
           {/* Right Side - Form */}
-          <div className="bg-gradient-to-b from-[#6A1B9A] to-purple-800 p-6 md:p-8 overflow-y-auto lg:max-h-screen">
+          {/* Modified: removed height constraints and overflow on mobile */}
+          <div className="bg-gradient-to-b from-[#6A1B9A] to-purple-800 p-6 md:p-8 lg:overflow-y-auto lg:h-full">
             <div>
               <div className="mb-6">
                 <h1 className="text-white lg:text-4xl md:text-2xl font-semibold leading-tight">
