@@ -115,7 +115,7 @@ export default function ContactPage() {
           </div>
 
           {/* Right Column - Dynamic Content */}
-          <div className="w-full lg:w-1/2 bg-[#6A1B9A] p-6 lg:p-8 text-white flex flex-col justify-center">
+          <div className="w-full lg:w-1/2 bg-[#6A1B9A] p-6 lg:p-8 text-white flex flex-col ">
             {/* Header */}
             <h1 className="text-3xl lg:text-4xl font-bold mb-6 text-white">
               Contact Us

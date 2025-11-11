@@ -89,16 +89,16 @@ export const SOCIAL_LINKS = [
 
 export const FOOTER_LINKS = {
     quickLinks: [
-        { name: "About Us", href: "/about" },
-        { name: "Accreditation & Partners", href: "/accreditation" },
-        { name: "Frequently Asked Questions", href: "/faq" },
-        { name: "Scholarships", href: "/scholarships" },
+        { name: "About Us", href: "/about-us" },
+        { name: "Accreditation & Partners", href: "/accreditation-partners" },
+        { name: "Frequently Asked Questions", href: "/faqs" },
+        { name: "Scholarships", href: "/scholarship" },
     ],
     programs: [
-        { name: "Walsh Programmes", href: "/programs/walsh" },
-        { name: "PPA Programmes", href: "/programs/ppa" },
-        { name: "eie Business School", href: "/programs/eie" },
-        { name: "Qualifi Diplomas", href: "/programs/qualifi" },
+        { name: "Walsh Programmes", href: "/courses" },
+        { name: "PPA Programmes", href: "/courses" },
+        { name: "eie Business School", href: "/courses" },
+        { name: "Qualifi Diplomas", href: "/courses" },
     ],
 }
 
