@@ -88,7 +88,7 @@ export default function Home() {
         </div>
 
         <div className="sm:px-10 px-4">
-          <div className="grid gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
             {cards?.map((section: any, index: number) => (
               <FeatureCard
                 key={section.id || `feature-${index}`}
