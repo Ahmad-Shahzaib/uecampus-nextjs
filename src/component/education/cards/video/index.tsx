@@ -63,10 +63,10 @@ export function VideoCard() {
           </div>
 
           {/* Bottom Bar */}
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="absolute bottom-0 left-0 right-0  p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <Button
               variant="outline"
-              className="border-white text-white hover:bg-white/20 bg-white/10 backdrop-blur-sm"
+              className="border-white text-white hover:bg-white/20 bg-white/10 backdrop-blur-sm "
               size="sm"
               onClick={() => window.open(youtubeUrl, "_blank")}
             >
@@ -84,7 +84,7 @@ export function VideoCard() {
           </div>
 
           {/* Title Badge */}
-          <div className="absolute top-4 left-4 bg-white/20 backdrop-blur-md rounded-full px-4 py-2 flex items-center gap-3">
+          <div className="absolute top-0 left-4 bg-white/20 backdrop-blur-md rounded-full px-4 py-2 flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-white/40" />
             <span className="text-white text-sm font-semibold">
               Why study at UeCampus? | Student Testimonial

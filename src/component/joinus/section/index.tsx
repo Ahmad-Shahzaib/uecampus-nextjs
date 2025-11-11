@@ -6,7 +6,7 @@ export function HeroSection() {
     <section
       className="hero-pattern  flex items-center justify-center px-4 py-12 rounded-2xl"
       style={{
-        backgroundColor: 'rgba(106, 27, 154, 0.85)',
+        backgroundColor: '#6a1b9a',
         backgroundImage: `
        
           url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-2.png')

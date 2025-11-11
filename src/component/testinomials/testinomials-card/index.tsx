@@ -20,20 +20,20 @@ type VariantType = "primary" | "secondary" | "tertiary";
 export function FeatureCard({ section, index }: FeatureCardProps) {
 
   const variantStyles: Record<VariantType, { container: string; title: string; description: string }> = {
-    primary: {
-      container: "bg-gradient-to-br from-purple-600 to-purple-700 text-white",
-      title: "text-white",
-      description: "text-purple-100",
-    },
     secondary: {
-      container: "bg-slate-900 text-white",
+      container: "bg-white text-black",
+      title: "text-[#6a1b9a]",
+      description: "text-black",
+    },
+    primary: {
+      container: "bg-[#2C2C54] text-white",
       title: "text-white",
-      description: "text-slate-300",
+      description: "text-white",
     },
     tertiary: {
-      container: "bg-slate-100",
-      title: "text-purple-600",
-      description: "text-slate-700",
+      container: "bg-[#6a1b9a]",
+      title: "text-white",
+      description: "text-white",
     },
   };
 
