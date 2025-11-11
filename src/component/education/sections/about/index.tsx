@@ -4,8 +4,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-export function AboutSection({about,isLoading,error}:any) {
-
+export function AboutSection({ about, isLoading, error }: any) {
   if (isLoading) {
     return (
       <section className="relative rounded-2xl p-4 lg:p-8 flex flex-col justify-between min-h-[500px] lg:min-h-[600px] overflow-hidden bg-gray-800">
@@ -31,7 +30,8 @@ export function AboutSection({about,isLoading,error}:any) {
     backgroundImage,
   } = about ?? {};
 
-  const gradient = "linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #7B1FA2 100%)";
+  const gradient =
+    "linear-gradient(135deg, #4A148C 0%, #6A1B9A 50%, #7B1FA2 100%)";
   const buttonStyles =
     "border-white text-white hover:bg-white/10 bg-transparent transition-all duration-200";
 
@@ -43,11 +43,14 @@ export function AboutSection({about,isLoading,error}:any) {
     <section
       className="relative rounded-2xl p-4 lg:p-8 flex flex-col justify-between min-h-[500px] lg:min-h-[600px] overflow-hidden"
       style={{
-        backgroundImage: backgroundStyle,
-        backgroundSize: "cover, auto",
-        backgroundPosition: "center, center",
-        backgroundRepeat: "no-repeat, no-repeat",
-        backgroundBlendMode: "overlay, normal",
+        background: `
+    url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-2.png'),
+    linear-gradient(#6a1b9a)
+  `,
+        backgroundSize: "fit",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundBlendMode: "overlay", // Optional: makes grid lines blend nicely with gradient
       }}
     >
       {/* Content */}
