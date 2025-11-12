@@ -7,7 +7,11 @@ export function EducationCard({ about, bg = true, bgStyles = "" }: any) {
   const { secondCardTitle, secondCardDescription } = about;
 
   return (
-    <Card className={`border-0 shadow-lg rounded-2xl overflow-hidden  ${bgStyles}`}>
+    <Card className={`border-0 shadow-lg rounded-2xl overflow-hidden`}
+    style={{
+          backgroundImage:`url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.png')` 
+        }}
+    >
       <CardContent
         className="lg:px-8 px-4 py-6 lg:py-10 bg-cover bg-center bg-no-repeat"
         
