@@ -59,7 +59,7 @@ const HeaderSection = () => {
           <div className="flex flex-col w-full gap-3 mt-2">
             <button onClick={()=>{
               router.push("https://app.uecampus.com/login")
-            }} className="w-full border bg-[#4C136F] border-purple-600 text-purple-700 font-semibold py-2 rounded-full">
+            }} className="w-full border  border-purple-600 text-purple-700 font-semibold py-2 rounded-full">
               Student Portal
             </button>
             <button onClick={()=>{
