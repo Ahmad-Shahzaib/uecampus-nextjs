@@ -9,7 +9,7 @@ interface CourseDetailHeaderProps {
 const CourseDetailHeader: React.FC<CourseDetailHeaderProps> = ({ name, bgImage }) => {
   return (
     <div 
-      className="min-h-screen flex items-center justify-center p-4 sm:p-8 m-3 rounded-2xl lg:p-16 bg-cover bg-center"
+      className="min-h-screen flex items-center justify-center bg-[#999999] p-4 sm:p-8 m-3 rounded-2xl lg:p-16 bg-cover bg-center"
       style={{ backgroundImage: `url(${bgImage})` }}
     >
       {/* Add an overlay for better text readability */}

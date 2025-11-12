@@ -10,12 +10,12 @@ const ButtonSection = () => {
     <div className="flex gap-3">
       <Button  onClick={()=>{
               router.push("https://app.uecampus.com/login")
-            }} variant="outline" className="border-purple-600 text-purple-700">
+            }} variant="outline" className="border-purple-600 text-purple-700 ">
         Student Portal
       </Button>
       <Button onClick={()=>{
         router.push("/enquire-now")
-      }}  className="bg-purple-700 cursor-pointer hover:bg-purple-800 text-white">
+      }}  className="bg-[#4C136F] border-0 cursor-pointer hover:bg-purple-800 text-white">
         Enquire Now
       </Button>
     </div>

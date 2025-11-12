@@ -11,7 +11,7 @@ const buttonVariants = cva(
       variant: {
         default: "px-6 cursor-pointer py-2.5 rounded-full border-2 border-purple-600 text-purple-600 font-semibold hover:bg-purple-50 transition-all duration-200",
         destructive:
-          "px-6 py-2.5 cursor-pointer rounded-full bg-purple-600 text-white font-semibold hover:bg-purple-700 transition-all duration-200 shadow-sm",
+          "px-6 py-2.5 cursor-pointer rounded-full bg-[#4C136F] text-white font-semibold hover:bg-purple-700 transition-all duration-200 shadow-sm",
         outline:
           "border bg-background  cursor-pointer shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
         secondary:

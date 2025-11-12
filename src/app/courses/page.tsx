@@ -17,6 +17,9 @@ type CourseForCard = {
     name: string;
     slug: string;
     image_path: string;
+    charge_payment: string;
+    section_3_title_4?: string;
+    section_3_title_5_content?: string;
     small_description: string;
     created_at: string;
     updated_at: string;
@@ -35,6 +38,9 @@ type FullCourseProp = {
     meta_description: string;
     page: string;
     image_path: string;
+    charge_payment:string;
+    section_3_title_4?: string;
+    section_3_title_5_content?: string;
     video: string;
     created_at: string;
     updated_at: string;
@@ -108,6 +114,9 @@ function CoursesPageContent() {
                                 page: "",
                                 image_path: course.image_path,
                                 video: "",
+                                charge_payment: course.charge_payment || "",
+                                section_3_title_4: course.section_3_title_4,
+                                section_3_title_5_content: course.section_3_title_5_content,
                                 created_at: course.created_at,
                                 updated_at: course.updated_at,
                             };

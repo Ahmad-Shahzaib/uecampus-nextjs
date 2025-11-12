@@ -15,6 +15,9 @@ interface CourseCardProps {
     cat_id: string;
     status: string;
     content: string;
+    charge_payment :string;
+    section_3_title_4?: string;
+    section_3_title_5_content?: string;
     small_description: string;
     meta_tags: string;
     meta_description: string;
@@ -60,11 +63,18 @@ export default function CourseCard({ course }: CourseCardProps) {
 
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-3">
+              {course.section_3_title_4 && (
+                <span className="text-xs bg-[#F0F8FF] rounded text-gray-700 px-3 py-1">
+                  Program {course.section_3_title_4}
+                </span>
+              )}
+              {course.section_3_title_5_content && (
+                <span className="text-xs bg-[#F0F8FF] rounded text-gray-700 px-3 py-1">
+                  Duration {course.section_3_title_5_content}
+                </span>
+              )}
               <span className="text-xs bg-[#F0F8FF] rounded text-gray-700 px-3 py-1">
-              Accessibility
-              </span>
-              <span className="text-xs bg-[#F0F8FF] rounded text-gray-700 px-3 py-1">
-                Program {course.program_id}
+                Tuition {course.charge_payment ? `£${course.charge_payment}` : 'N/A'}
               </span>
              
             </div>

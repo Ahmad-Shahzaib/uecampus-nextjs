@@ -8,6 +8,9 @@ interface Course {
     name: string;
     slug: string;
     small_description: string | undefined;
+    charge_payment:string;
+    section_3_title_4: string;
+    section_3_title_5_content: string;
     image_path: string;
     created_at: string;
     updated_at: string;
