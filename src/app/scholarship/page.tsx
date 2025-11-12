@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import Banner from "@/component/about-us/Banner";
 import { StatCard } from "@/component/about-us/stats/card";
 import StatsCards from "@/component/common/StatsCards";
+import ScholarshipCards from "@/component/scholarship/scholarship-cards";
 
 export default function Page() {
   const dispatch = useDispatch();
@@ -103,11 +104,7 @@ export default function Page() {
             isLoading={aboutLoading}
             error={aboutError}
           />
-          <EducationSection
-            cardData1={cardData}
-            cardData2={cardData1}
-            link={false}
-          />
+          <ScholarshipCards />
         </div>
       </div>
       <div>

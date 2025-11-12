@@ -7,12 +7,10 @@ export function EducationCard({ about, bg = true, bgStyles = "" }: any) {
   const { secondCardTitle, secondCardDescription } = about;
 
   return (
-    <Card className={`border-0 shadow-lg rounded-2xl overflow-hidden bg-white ${bgStyles}`}>
+    <Card className={`border-0 shadow-lg rounded-2xl overflow-hidden  ${bgStyles}`}>
       <CardContent
         className="lg:px-8 px-4 py-6 lg:py-10 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: bg ? `url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.png')` : 'none',
-        }}
+        
       >
         <h2 className={`text-xl lg:text-2xl font-bold text-[#6A1B9A] leading-tight mb-6 ${bgStyles}`}>
           {secondCardTitle}

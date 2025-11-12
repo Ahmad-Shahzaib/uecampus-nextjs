@@ -40,7 +40,7 @@ export function EducationSection({ cardData1, cardData2, link = true }: any) {
         bg={false}
         bgStyles=" text-[#6A1B9A]"
       />
-      {
+      { 
         link ? (
           <>
             <VideoCard />

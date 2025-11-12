@@ -10,6 +10,9 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
         "bg-card text-card-foreground flex flex-col gap-4 rounded-xl border py-3 shadow-sm",
         className
       )}
+      style={{
+          backgroundImage:`url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.png')` 
+        }}
       {...props}
     />
   )
