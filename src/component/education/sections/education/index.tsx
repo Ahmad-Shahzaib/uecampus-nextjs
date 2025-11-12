@@ -51,7 +51,7 @@ export function EducationSection({ cardData1, cardData2, link = true }: any) {
             backgroundClass={cardData2?.backgroundClass}
             about={cardData2.about}
             bg={false}
-            bgStyles="bg-black text-white"
+            bgStyles=" text-[#6A1B9A]"
 
 
           /></>

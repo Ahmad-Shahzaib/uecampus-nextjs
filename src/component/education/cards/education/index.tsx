@@ -13,7 +13,7 @@ export function EducationCard({ about, bg = true, bgStyles = "" }: any) {
         }}
     >
       <CardContent
-        className="lg:px-8 px-4 py-6 lg:py-10 bg-cover bg-center bg-no-repeat"
+        className="lg:px-8 px-4 py-6 lg:py-10 bg-cover bg-center bg-no-repeat "
         
       >
         <h2 className={`text-xl lg:text-2xl font-bold text-[#6A1B9A] leading-tight mb-6 ${bgStyles}`}>
