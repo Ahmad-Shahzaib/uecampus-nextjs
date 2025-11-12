@@ -9,10 +9,7 @@ import HeroSection from "@/component/HeroSection";
 import JoinUs from "@/component/joinus";
 import { LogoCarousel } from "@/component/partners";
 import { FeatureCard } from "@/component/testinomials/testinomials-card";
-import {
-  CoursesSection_ue,
-  studentLocations,
-} from "@/constants";
+import { CoursesSection_ue, studentLocations } from "@/constants";
 import { RootState, useDispatch, useSelector } from "@/redux/store";
 import { fetchCoursesData } from "@/redux/thunk/courses";
 import { fetchTestinomialsData } from "@/redux/thunk/testinomials";
@@ -88,18 +85,19 @@ export default function Home() {
         </div>
 
         <div className="sm:px-10 px-4">
-          <div className="grid gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+          <div className="flex flex-col sm:flex-col md:flex-row lg:flex-row gap-6 md:gap-8">
             {cards?.map((section: any, index: number) => (
-              <FeatureCard
+              <div
                 key={section.id || `feature-${index}`}
-                section={section}
-                index={index}
-              />
+                className="flex-1 flex"
+              >
+                <FeatureCard section={section} index={index} />
+              </div>
             ))}
           </div>
         </div>
 
-        <div className="sm:px-10 px-4">
+        <div className="">
           <LogoCarousel logos={testimonials} />
         </div>
       </div>
@@ -107,28 +105,30 @@ export default function Home() {
       <div>
         <CouresSection />
       </div>
-      <div className="min-h-screen bg-gray-800 py-8 px-8">
-        <div
-          className="
-            grid 
-            gap-6 
-            mx-auto 
-            grid-cols-1 
-            md:grid-cols-[minmax(300px,1fr)_minmax(300px,1fr)]
-          "
-        >
-          <AboutSection
-            about={about}
-            isLoading={aboutLoading}
-            error={aboutError}
-          />
-          <EducationSection
-            cardData1={cardData}
-            cardData2={cardData1}
-            link={true}
-          />
-        </div>
-      </div>
+     <div className="min-h-screen bg-gray-800 py-8 px-8">
+  <div
+    className="
+      grid 
+      gap-6 
+      mx-auto 
+      grid-cols-1 
+      md:grid-cols-[minmax(300px,1fr)_minmax(300px,1fr)]
+      min-h-[600px] 
+      md:min-h-[700px] 
+    "
+  >
+    <AboutSection
+      about={about}
+      isLoading={aboutLoading}
+      error={aboutError}
+    />
+    <EducationSection
+      cardData1={cardData}
+      cardData2={cardData1}
+      link={true}
+    />
+  </div>
+</div>
 
       <div>
         <div>

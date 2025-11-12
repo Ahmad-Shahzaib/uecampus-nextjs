@@ -1,3 +1,4 @@
+// NavigationSection.tsx
 import React, { useState } from "react";
 import Link from "next/link";
 import {
@@ -19,12 +20,12 @@ const NavigationSection: React.FC<Props> = ({ mobile = false }) => {
 
   if (mobile) {
     return (
-      <ul className="flex flex-col gap-2 w-full text-gray-800 font-medium relative">
+      <ul className="flex flex-col gap-3 w-full text-gray-800 font-medium">
         <li className="relative">
           <button
             aria-expanded={aboutOpen}
             onClick={() => setAboutOpen((s) => !s)}
-            className="w-full flex items-center text-left py-2 px-1"
+            className="w-full flex items-center justify-between py-2 px-1 border-b border-gray-100"
           >
             <span>About Us</span>
             <span className="ml-2">
@@ -33,7 +34,7 @@ const NavigationSection: React.FC<Props> = ({ mobile = false }) => {
           </button>
 
           {aboutOpen && (
-            <ul className="absolute left-0 top-full mt-1 w-[260px] bg-white shadow-lg rounded-lg border border-gray-100 p-4 z-50">
+            <ul className="pl-4 mt-2 space-y-2">
               <li>
                 <Link
                   href="/about-us"
@@ -62,17 +63,17 @@ const NavigationSection: React.FC<Props> = ({ mobile = false }) => {
           )}
         </li>
 
-        <li>
+        <li className="border-b border-gray-100">
           <Link href="/courses" className="block py-2">
             Programmes & Diploma
           </Link>
         </li>
-        <li>
+        <li className="border-b border-gray-100">
           <Link href="/scholarship" className="block py-2">
             Scholarship
           </Link>
         </li>
-        <li>
+        <li className="border-b border-gray-100">
           <Link href="/contact-us" className="block py-2">
             Contact Us
           </Link>
@@ -83,21 +84,27 @@ const NavigationSection: React.FC<Props> = ({ mobile = false }) => {
 
   return (
     <NavigationMenu>
-      <NavigationMenuList>
+      <NavigationMenuList className="gap-6">
         <NavigationMenuItem>
-          <NavigationMenuTrigger>About Us</NavigationMenuTrigger>
+          <NavigationMenuTrigger className="text-gray-800 hover:text-purple-600 font-medium">
+            About Us
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <div className="grid gap-3 p-4 w-[300px]">
+            <div className="grid gap-3 p-5 w-[280px]">
               <NavigationMenuLink asChild>
-                <Link href="/about-us">About UeCampus</Link>
+                <Link href="/about-us" className="hover:text-purple-600 transition-colors">
+                  About UeCampus
+                </Link>
               </NavigationMenuLink>
               <NavigationMenuLink asChild>
-                <Link href="/accreditation-partners">
+                <Link href="/accreditation-partners" className="hover:text-purple-600 transition-colors">
                   Accreditation &amp; Partners
                 </Link>
               </NavigationMenuLink>
               <NavigationMenuLink asChild>
-                <Link href="/faqs">Frequently Asked Questions</Link>
+                <Link href="/faqs" className="hover:text-purple-600 transition-colors">
+                  Frequently Asked Questions
+                </Link>
               </NavigationMenuLink>
             </div>
           </NavigationMenuContent>
@@ -105,19 +112,25 @@ const NavigationSection: React.FC<Props> = ({ mobile = false }) => {
 
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link href="/courses">Programmes & Diploma</Link>
+            <Link href="/courses" className="text-gray-800 hover:text-purple-600 font-medium py-2">
+              Programmes & Diploma
+            </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link href="/scholarship">Scholarship</Link>
+            <Link href="/scholarship" className="text-gray-800 hover:text-purple-600 font-medium py-2">
+              Scholarship
+            </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link href="/contact-us">Contact Us</Link>
+            <Link href="/contact-us" className="text-gray-800 hover:text-purple-600 font-medium py-2">
+              Contact Us
+            </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>

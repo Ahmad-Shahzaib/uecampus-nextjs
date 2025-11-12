@@ -28,37 +28,35 @@ interface CardData1Props {
   link: Boolean
 }
 
-
 export function EducationSection({ cardData1, cardData2, link = true }: any) {
-
   return (
-    <section className="flex flex-col gap-6">
-      <EducationCard
-        backgroundImage={cardData1?.backgroundImage}
-        backgroundClass={cardData1?.backgroundClass}
-        about={cardData1.about}
-        bg={false}
-        bgStyles=" text-[#6A1B9A]"
-      />
+    <section className="flex flex-col gap-6 h-full">
+      <div className="flex-1 min-h-[250px] md:min-h-0">
+        <EducationCard
+          backgroundImage={cardData1?.backgroundImage}
+          backgroundClass={cardData1?.backgroundClass}
+          about={cardData1.about}
+          bg={false}
+          bgStyles="text-[#6A1B9A]"
+        />
+      </div>
       { 
         link ? (
-          <>
+          <div className="flex-1 min-h-[250px] md:min-h-0">
             <VideoCard />
-          </>
+          </div>
         ) : (
-          <>  <EducationCard
-            backgroundImage={cardData2?.backgroundImage}
-            backgroundClass={cardData2?.backgroundClass}
-            about={cardData2.about}
-            bg={false}
-            bgStyles=" text-[#6A1B9A]"
-
-
-          /></>
+          <div className="flex-1 min-h-[250px] md:min-h-0">
+            <EducationCard
+              backgroundImage={cardData2?.backgroundImage}
+              backgroundClass={cardData2?.backgroundClass}
+              about={cardData2.about}
+              bg={false}
+              bgStyles="text-[#6A1B9A]"
+            />
+          </div>
         )
       }
-
-
     </section>
   )
 }
