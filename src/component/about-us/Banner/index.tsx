@@ -49,7 +49,7 @@ const Banner = () => {
       style={{ backgroundImage: `url(${imageUrl})` }}
     >
       <div className="absolute rounded-2xl inset-0 bg-black/50"></div>
-      <h1 className="relative text-5xl md:text-7xl font-semibold drop-shadow-lg pl-10">
+      <h1 className="relative text-5xl md:text-7xl font-semibold drop-shadow-lg lg:pl-10 pl-4 ">
         {title}
       </h1>
     </div>
