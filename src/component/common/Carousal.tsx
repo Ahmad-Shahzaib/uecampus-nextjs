@@ -189,14 +189,14 @@ const TestimonialCarousel = memo(
           </svg>
         </div>
 
-        <div className="relative z-10 mx-auto max-w-8xl px-4 sm:px-6 lg:px-10 flex flex-col lg:flex-row lg:justify-between items-center gap-8 lg:gap-12">
+        {/* ✅ Responsive layout fixed here */}
+        <div className="relative z-10 mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-8 xl:px-10 flex flex-col md:flex-col lg:flex-row lg:items-center lg:justify-between gap-8 lg:gap-12">
           {/* Left Side: Title */}
-          {/* Left Side: Title */}
-          <div className="w-full lg:w-auto text-center lg:text-left">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-8xl font-normal text-[#6A1B9A] leading-tight">
+          <div className="w-full lg:w-[45%] text-center lg:text-left">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-normal text-[#6A1B9A] leading-tight">
               What Our <br className="hidden sm:block" /> Students Say
             </h2>
-            <p className="mt-4 sm:mt-6 text-center lg:text-left text-gray-700 text-sm sm:text-base md:text-base leading-relaxed max-w-lg mx-auto lg:mx-0">
+            <p className="mt-4 sm:mt-6 text-gray-700 text-sm sm:text-base md:text-base leading-relaxed max-w-lg mx-auto lg:mx-0">
               Hear directly from our students about their experiences, growth,
               and achievements at our university. Their stories reflect the
               quality of education and support we provide.
@@ -204,8 +204,8 @@ const TestimonialCarousel = memo(
           </div>
 
           {/* Right Side: Carousel */}
-          <div className="w-full lg:w-auto flex justify-center lg:justify-end ">
-            <div className="relative w-full max-w-3xl">
+          <div className="w-full lg:w-[55%] flex justify-center lg:justify-end">
+            <div className="relative w-full max-w-2xl md:max-w-3xl">
               <div className="overflow-hidden rounded-2xl bg-white shadow-xl py-12">
                 <div
                   className={`flex transition-transform duration-500 ease-in-out ${
@@ -265,7 +265,7 @@ const TestimonialCarousel = memo(
               {/* Dots */}
               {showDots && memoizedTestimonials.length > 1 && (
                 <div className="mt-6 flex justify-center gap-2">
-                  {memoizedTestimonials.map((_: Testimonial, index :number) => (
+                  {memoizedTestimonials.map((_: Testimonial, index: number) => (
                     <button
                       key={index}
                       onClick={() => setCurrentIndex(index)}

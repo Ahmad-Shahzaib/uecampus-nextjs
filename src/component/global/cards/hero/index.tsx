@@ -1,6 +1,6 @@
 // src/components/HeroCard.tsx
-"use client"
-import { Card } from "@/components/ui/card"
+"use client";
+import { Card } from "@/components/ui/card";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "@/redux/store";
 import { fetchHeroSectionData } from "@/redux/thunk/heroSectionThunk";
@@ -58,15 +58,37 @@ export function HeroCard() {
   }
 
   return (
-    <Card
-      className="relative overflow-hidden bg-[#6A1B9A] border-0 p-8 md:p-14 text-white shadow-2xl rounded-3xl"
-    >
-      
+    <Card className="relative overflow-hidden border-0 p-8 md:p-14 text-white shadow-2xl rounded-3xl">
+      {/* Gradient Background */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: "linear-gradient(#6A1B9A)",
+        }}
+      />
 
+      {/* Grid Line Overlay (opacity: 0.15) */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-2.png')`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 0.15,
+          zIndex: 1,
+        }}
+      />
+
+      {/* Content */}
       <div className="relative z-10 flex flex-col gap-6">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium leading-tight text-balance">{data.section_title}</h1>
-        <p className="text-base md:text-lg leading-relaxed text-purple-100 max-w-2xl text-pretty">{data.section_description}</p>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium leading-tight text-balance">
+          {data.section_title}
+        </h1>
+        <p className="text-base md:text-lg leading-relaxed text-purple-100 max-w-2xl text-pretty">
+          {data.section_description}
+        </p>
       </div>
     </Card>
-  )
+  );
 }

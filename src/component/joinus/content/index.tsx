@@ -32,7 +32,7 @@ export function HeroContent() {
   return (
     <div className="text-white space-y-6 text-center md:text-left px-4">
       {titleLines.length > 0 && (
-        <h1 className="font-sans tracking-tight leading-tight">
+        <h1 className="font-sans tracking-tight">
           {titleLines[0] && (
             <div className="text-5xl md:text-6xl font-semibold">
               {titleLines[0]}
@@ -40,7 +40,7 @@ export function HeroContent() {
           )}
 
           {titleLines[1] && (
-            <div className="text-5xl md:text-6xl font-semibold">
+            <div className="text-5xl md:text-6xl font-semibold ">
               {titleLines[1]}
             </div>
           )}

@@ -4,22 +4,27 @@ import { HeroContent } from "../content";
 export function HeroSection() {
   return (
     <section
-      className="hero-pattern  flex items-center justify-center px-4 py-12 rounded-2xl"
+      className="relative flex items-center justify-center px-4 py-12 rounded-2xl overflow-hidden"
       style={{
-        backgroundColor: '#6a1b9a',
-        backgroundImage: `
-       
-          url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-2.png')
-        `,
-        
-        backgroundSize: 'cover, auto',
-        backgroundPosition: 'center, center',
-        backgroundRepeat: 'no-repeat, no-repeat',
-        backgroundBlendMode: 'overlay, normal',
+        // Optional fallback colour – you can delete if you don’t need it
+        // backgroundColor: '#6A1B9A',
       }}
     >
-      <div className="w-full  mx-auto rounded ">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12   items-center">
+      {/* Pseudo‑element background (grid line) */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-2.png')`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 0.15,
+          zIndex: 1,
+        }}
+      />
+
+      <div className="relative w-full mx-auto rounded z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Left Content */}
           <HeroContent />
 
