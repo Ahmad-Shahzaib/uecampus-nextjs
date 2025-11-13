@@ -123,7 +123,7 @@ export default function ContactPage() {
 
             {/* Dynamic HTML description with proper spacing */}
             <div
-              className="space-y-2 text-base lg:text-base leading-relaxed"
+              className=" text-base lg:text-base"
               dangerouslySetInnerHTML={{ __html: data.contact_description }}
               style={{
                 lineHeight: "1.7",
