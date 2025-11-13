@@ -40,54 +40,57 @@ const EducationCards = () => {
     );
 
   return (
-    <div className="  px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="px-4 sm:px-6 lg:px-8 py-12 bg-gray-50">
+      <div className="w-full mx-auto">
         <div className="flex flex-col items-center justify-center space-y-4 px-4 py-8 text-center md:px-6 lg:px-8">
           <h1 className="font-semibold text-[#6a1b9a] text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight">
             Our Academic Partners
           </h1>
           <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            Our partners are at the heart of UeCampus’s commitment to delivering
+            Our partners are at the heart of UeCampus's commitment to delivering
             quality education. We collaborate with reputable universities and
             educational institutions worldwide to co-create and validate our
             programs, ensuring they meet the highest academic standards.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        {/* Updated card grid to match image layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
           {data.map((partner: any) => (
             <div
               key={partner.id}
-              className="bg-[#181818] text-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center p-6"
+              className="bg-[#181818] py-4 px-6 text-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col h-full"
             >
-              {/* Logo */}
-              <div className="mb-6 flex justify-center">
+              {/* Logo container - centered with proper spacing */}
+              <div className="flex justify-center pt-8 pb-4">
                 <img
                   src={partner.logo}
                   alt={partner.title}
-                  className="h-48 rounded object-contain"
+                  className="h-24 w-auto object-contain"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.style.display = "none";
-                    target.parentElement!.innerHTML = `<span class='text-purple-500 font-bold text-3xl'>${partner.title.charAt(
-                      0
-                    )}</span>`;
+                  
                   }}
                 />
               </div>
 
-              {/* Title */}
-              <h3 className="text-lg font-semibold mb-3">{partner.title}</h3>
+              {/* Content container with proper spacing */}
+              <div className="flex flex-col flex-grow px-6 pb-6 text-center">
+                {/* Title */}
+                <h3 className="text-xl font-bold mb-3">{partner.title}</h3>
 
-              {/* Description */}
-              <div
-                className="text-sm text-gray-300 mb-6 leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: partner.content }}
-              />
+                {/* Description */}
+                <div
+                  className="text-sm text-gray-300 mb-6 leading-relaxed flex-grow"
+                  dangerouslySetInnerHTML={{ __html: partner.content }}
+                />
 
-              {/* Button */}
-              <Button className="w-full mt-auto bg-[#6A1B9A] text-white border-0 hover:text-black  py-2.5 rounded-lg font-semibold transition-colors duration-300">
-                {partner.button_name}
-              </Button>
+                {/* Button */}
+                <Button className="w-full bg-[#6A1B9A] text-white border-0 hover:bg-[#5a1782] py-3 rounded-lg font-semibold transition-colors duration-300">
+                  {partner.button_name}
+                </Button>
+              </div>
             </div>
           ))}
         </div>
@@ -96,4 +99,4 @@ const EducationCards = () => {
   );
 };
 
-export default EducationCards;
+export default EducationCards;  
