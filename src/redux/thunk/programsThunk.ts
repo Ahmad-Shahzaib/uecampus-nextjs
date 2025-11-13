@@ -3,35 +3,63 @@ import { getAxiosInstance } from "@/lib/axios";
 
 const api = getAxiosInstance();
 
-export interface ProgramCategory {
+export interface ProgramType {
   id: number;
-  program_id: string;
   name: string;
 }
 
-export interface Program {
+export interface University {
   id: number;
   name: string;
-  slug: string;
-  categories: ProgramCategory[];
 }
 
-interface ProgramsApiResponse {
+export interface Level {
+  id: number;
+  name: string;
+}
+
+interface ProgramsFiltersApiResponse {
   success: boolean;
-  programs: Program[];
+  program_types?: ProgramType[];
+  universities?: University[];
+  levels?: Level[];
+}
+
+export interface ProgramsFiltersData {
+  programTypes: ProgramType[];
+  universities: University[];
+  levels: Level[];
 }
 
 export const fetchProgramsData = createAsyncThunk(
   "programs/fetchProgramsData",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get<ProgramsApiResponse>("/courses/programs");
+      const response = await api.get<ProgramsFiltersApiResponse>(
+        "/filters"
+      );
 
-      if (response.data?.success && Array.isArray(response.data.programs)) {
-        return response.data.programs;
+      if (response.data?.success) {
+        const {
+          program_types: programTypes = [],
+          universities = [],
+          levels = [],
+        } = response.data;
+
+        if (
+          Array.isArray(programTypes) &&
+          Array.isArray(universities) &&
+          Array.isArray(levels)
+        ) {
+          return {
+            programTypes,
+            universities,
+            levels,
+          } satisfies ProgramsFiltersData;
+        }
       }
 
-      return rejectWithValue("Invalid programs response from server");
+      return rejectWithValue("Invalid programs filters response from server");
     } catch (error: unknown) {
       const err = error as {
         response?: { data?: { message?: string } };

@@ -5,28 +5,10 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import type { Course } from "@/redux/slices/courses";
 
 interface CourseCardProps {
-  course: {
-    id: number;
-    name: string;
-    slug: string;
-    program_id: string;
-    cat_id: string;
-    status: string;
-    content: string;
-    charge_payment :string;
-    section_3_title_4?: string;
-    section_3_title_5_content?: string;
-    small_description: string;
-    meta_tags: string;
-    meta_description: string;
-    page: string;
-    image_path: string;
-    video: string;
-    created_at: string;
-    updated_at: string;
-  };
+  course: Course;
 }
 
 export default function CourseCard({ course }: CourseCardProps) {
@@ -58,7 +40,7 @@ export default function CourseCard({ course }: CourseCardProps) {
           {/* Header */}
           <div>
             <h3 className="text-xl md:text-2xl font-semibold text-[#3E3E63] mb-3">
-              {course.name}
+              {course.title || course.name || "Course"}
             </h3>
 
             {/* Tags */}
@@ -73,15 +55,15 @@ export default function CourseCard({ course }: CourseCardProps) {
                   Duration {course.section_3_title_5_content}
                 </span>
               )}
-              <span className="text-xs bg-[#F0F8FF] rounded text-gray-700 px-3 py-1">
-                Tuition {course.charge_payment ? `£${course.charge_payment}` : 'N/A'}
-              </span>
+                <span className="text-xs bg-[#F0F8FF] rounded text-gray-700 px-3 py-1">
+                  Tuition {course.charge_payment ? course.charge_payment : "N/A"}
+                </span>
              
             </div>
 
             {/* Description */}
             <p className="text-sm text-muted-foreground leading-relaxed">
-              {course.small_description}
+              {course.small_description ?? course.detail ?? ""}
             </p>
           </div>
 

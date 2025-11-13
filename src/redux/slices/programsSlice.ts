@@ -1,8 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchProgramsData, Program } from "../thunk/programsThunk";
+import {
+  fetchProgramsData,
+  ProgramsFiltersData,
+} from "../thunk/programsThunk";
 
 interface ProgramsState {
-  data: Program[] | null;
+  data: ProgramsFiltersData | null;
   isLoading: boolean;
   error: string | null;
 }
@@ -27,7 +30,7 @@ const programsSlice = createSlice({
       })
       .addCase(
         fetchProgramsData.fulfilled,
-        (state, action: PayloadAction<Program[]>) => {
+        (state, action: PayloadAction<ProgramsFiltersData>) => {
           state.isLoading = false;
           state.data = action.payload;
         }

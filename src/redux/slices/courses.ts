@@ -3,17 +3,25 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchCoursesData } from "../thunk/courses";
 
 // This Course type reflects the transformed shape returned by fetchCoursesData
-interface Course {
+export interface Course {
     id: number;
     name: string;
     slug: string;
-    small_description: string | undefined;
-    charge_payment:string;
-    section_3_title_4: string;
-    section_3_title_5_content: string;
+    title?: string;
+    detail?: string;
+    small_description?: string;
+    program_type_id?: string | number;
+    program_type_name?: string;
+    university_id?: string | number;
+    level_id?: string | number;
+    charge_payment?: string;
+    currency?: string;
+    section_3_title_4?: string;
+    section_3_title_5_content?: string;
     image_path: string;
-    created_at: string;
-    updated_at: string;
+    video?: string;
+    created_at?: string;
+    updated_at?: string;
 }
 
 interface CoursesState {

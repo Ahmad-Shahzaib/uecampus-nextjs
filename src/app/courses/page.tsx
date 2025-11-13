@@ -8,55 +8,43 @@ import FilterSidebar from "@/component/Courses/filter-sidebar";
 import PaginationComponent from "@/component/Courses/pagination";
 import { Input } from "@/components/ui/input";
 import { useDispatch, useSelector } from "@/redux/store";
-import { fetchCoursesData } from "@/redux/thunk/courses";
+import { fetchCoursesData, FetchCourseParams } from "@/redux/thunk/courses";
 import { RootState } from "@/redux/rootReducer";
 import { useSearchParams } from "next/navigation";
-
-type CourseForCard = {
-    id: number;
-    name: string;
-    slug: string;
-    image_path: string;
-    charge_payment: string;
-    section_3_title_4?: string;
-    section_3_title_5_content?: string;
-    small_description: string;
-    created_at: string;
-    updated_at: string;
-};
-
-type FullCourseProp = {
-    id: number;
-    name: string;
-    slug: string;
-    program_id: string;
-    cat_id: string;
-    status: string;
-    content: string;
-    small_description: string;
-    meta_tags: string;
-    meta_description: string;
-    page: string;
-    image_path: string;
-    charge_payment:string;
-    section_3_title_4?: string;
-    section_3_title_5_content?: string;
-    video: string;
-    created_at: string;
-    updated_at: string;
-};
+import type { Course } from "@/redux/slices/courses";
 
 function CoursesPageContent() {
     const dispatch = useDispatch();
-    const { data: courses, isLoading, error } = useSelector((state: RootState) => state.courses);
+    const { data: courses = [], isLoading, error } = useSelector((state: RootState) => state.courses);
     const [currentPage, setCurrentPage] = useState(1);
     const coursesPerPage = 6;
     const searchParams = useSearchParams();
+    const paramsKey = searchParams.toString();
 
     useEffect(() => {
-        const catIds = searchParams.get("cat_ids") || undefined;
-        dispatch(fetchCoursesData(catIds ? { cat_ids: catIds } : {}));
-    }, [dispatch, searchParams]);
+        setCurrentPage(1);
+    }, [paramsKey]);
+
+    useEffect(() => {
+        const filters: FetchCourseParams = {};
+        const params = new URLSearchParams(paramsKey);
+
+        const programTypeIds = params.get("program_type_ids");
+        const universityIds = params.get("university_ids");
+        const levelIds = params.get("level_ids");
+
+        if (programTypeIds) {
+            filters.program_type_ids = programTypeIds;
+        }
+        if (universityIds) {
+            filters.university_ids = universityIds;
+        }
+        if (levelIds) {
+            filters.level_ids = levelIds;
+        }
+
+        dispatch(fetchCoursesData(filters));
+    }, [dispatch, paramsKey]);
 
     if (isLoading) {
         return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
@@ -66,10 +54,10 @@ function CoursesPageContent() {
         return <div className="flex justify-center items-center min-h-screen text-red-500">{error}</div>;
     }
 
-    const totalPages = Math.ceil((courses?.length || 0) / coursesPerPage);
+    const totalPages = Math.ceil(courses.length / coursesPerPage);
     const startIndex = (currentPage - 1) * coursesPerPage;
     const endIndex = startIndex + coursesPerPage;
-    const displayedCourses = courses?.slice(startIndex, endIndex) || [];
+    const displayedCourses = courses.slice(startIndex, endIndex);
 
     return (
         <div className="flex flex-col min-h-screen bg-background">
@@ -99,28 +87,8 @@ function CoursesPageContent() {
                         </div>
                     </header>
                     <div className="space-y-6">
-                        {(displayedCourses as unknown as CourseForCard[]).map((course) => {
-                            const fullCourse: FullCourseProp = {
-                                id: course.id,
-                                name: course.name,
-                                slug: course.slug,
-                                program_id: "",
-                                cat_id: "",
-                                status: "",
-                                content: "",
-                                small_description: course.small_description,
-                                meta_tags: "",
-                                meta_description: "",
-                                page: "",
-                                image_path: course.image_path,
-                                video: "",
-                                charge_payment: course.charge_payment || "",
-                                section_3_title_4: course.section_3_title_4,
-                                section_3_title_5_content: course.section_3_title_5_content,
-                                created_at: course.created_at,
-                                updated_at: course.updated_at,
-                            };
-                            return <CourseCard key={course.id} course={fullCourse} />;
+                        {displayedCourses.map((course: Course) => {
+                            return <CourseCard key={course.id} course={course} />;
                         })}
                     </div>
 

@@ -5,14 +5,12 @@ import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useDispatch, useSelector } from "@/redux/store";
 import { RootState } from "@/redux/rootReducer";
-import { fetchProgramsData, Program } from "@/redux/thunk/programsThunk";
+import { fetchProgramsData } from "@/redux/thunk/programsThunk";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function FilterSidebar() {
   const dispatch = useDispatch();
-  const { data, isLoading, error } = useSelector(
-    (state: RootState) => state.programs
-  );
+  const { data, isLoading, error } = useSelector((state: RootState) => state.programs);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -23,33 +21,64 @@ export default function FilterSidebar() {
     }
   }, [data, dispatch]);
 
-  const handleCategoryChange = (categoryId: number) => {
-    const catIdsParam = searchParams.get("cat_ids");
+  const handleFilterChange = (paramKey: string, filterId: number) => {
+    const paramValue = searchParams.get(paramKey);
     const currentIds = new Set<number>(
-      catIdsParam
-        ? catIdsParam
+      paramValue
+        ? paramValue
             .split(",")
             .map((v) => parseInt(v.trim(), 10))
             .filter((n) => !Number.isNaN(n))
         : []
     );
 
-    if (currentIds.has(categoryId)) {
-      currentIds.delete(categoryId);
+    if (currentIds.has(filterId)) {
+      currentIds.delete(filterId);
     } else {
-      currentIds.add(categoryId);
+      currentIds.add(filterId);
     }
 
     const selectedIds = Array.from(currentIds).sort((a, b) => a - b);
     const params = new URLSearchParams(searchParams.toString());
     if (selectedIds.length > 0) {
-      params.set("cat_ids", selectedIds.join(","));
+      params.set(paramKey, selectedIds.join(","));
     } else {
-      params.delete("cat_ids");
+      params.delete(paramKey);
     }
 
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    const search = params.toString();
+    router.push(search ? `${pathname}?${search}` : pathname, { scroll: false });
   };
+
+  const isFilterSelected = (paramKey: string, filterId: number) => {
+    const paramValue = searchParams.get(paramKey);
+    if (!paramValue) return false;
+    return paramValue
+      .split(",")
+      .map((v) => parseInt(v.trim(), 10))
+      .filter((n) => !Number.isNaN(n))
+      .includes(filterId);
+  };
+
+  const filterConfigs = [
+    {
+      title: "Program Types",
+      paramKey: "program_type_ids",
+      items: data?.programTypes ?? [],
+    },
+    {
+      title: "Universities",
+      paramKey: "university_ids",
+      items: data?.universities ?? [],
+    },
+    {
+      title: "Levels",
+      paramKey: "level_ids",
+      items: data?.levels ?? [],
+    },
+  ].filter((config) => config.items.length > 0);
+
+  const hasFilters = filterConfigs.length > 0;
 
   return (
     <aside className="sm:w-56 flex-full shrink-0">
@@ -68,40 +97,29 @@ export default function FilterSidebar() {
           </div>
         )}
 
-        {!isLoading && !error && data?.length === 0 && (
-          <div className="text-sm text-gray-600">No programs available.</div>
+        {!isLoading && !error && data && !hasFilters && (
+          <div className="text-sm text-gray-600">No filters available.</div>
         )}
 
-        {!isLoading &&
-          !error &&
-          data?.map((program: Program) => (
-            <div key={program.id} className="mb-8 last:mb-0">
-              <h3 className="font-semibold text-purple-800 mb-3">
-                {program.name}
-              </h3>
+        {!isLoading && !error && hasFilters &&
+          filterConfigs.map(({ title, items, paramKey }) => (
+            <div key={paramKey} className="mb-8 last:mb-0">
+              <h3 className="font-semibold text-purple-800 mb-3">{title}</h3>
               <div className="space-y-3">
-                {program.categories.map((category: Program["categories"][number]) => (
-                  <div key={category.id} className="flex items-center gap-2">
+                {items.map((item) => (
+                  <div key={item.id} className="flex items-center gap-2">
                     <Checkbox
-                      id={`category-${category.id}`}
-                      checked={(() => {
-                        const catIdsParam = searchParams.get("cat_ids");
-                        if (!catIdsParam) return false;
-                        const ids = catIdsParam
-                          .split(",")
-                          .map((v) => parseInt(v.trim(), 10))
-                          .filter((n) => !Number.isNaN(n));
-                        return ids.includes(category.id);
-                      })()}
+                      id={`${paramKey}-${item.id}`}
+                      checked={isFilterSelected(paramKey, item.id)}
                       onCheckedChange={() =>
-                        handleCategoryChange(category.id)
+                        handleFilterChange(paramKey, item.id)
                       }
                     />
                     <label
-                      htmlFor={`category-${category.id}`}
+                      htmlFor={`${paramKey}-${item.id}`}
                       className="text-sm text-foreground cursor-pointer"
                     >
-                      {category.name}
+                      {item.name}
                     </label>
                   </div>
                 ))}

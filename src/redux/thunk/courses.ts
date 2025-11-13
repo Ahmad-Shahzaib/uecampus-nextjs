@@ -4,22 +4,27 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const coursesApis = getAxiosInstance();
 
-interface FetchCourseParams {
-  cat_ids?: string; // comma-separated ids, e.g. "3,1"
+export interface FetchCourseParams {
+  program_type_ids?: string;
+  university_ids?: string;
+  level_ids?: string;
 }
 
 export const fetchCoursesData = createAsyncThunk(
   "courses/fetchAll",
   async (params: FetchCourseParams, { rejectWithValue }) => {
     try {
-      let response;
-      if (params?.cat_ids) {
-        response = await coursesApis.get("/courses/programs", {
-          params: { cat_ids: params.cat_ids },
-        });
-      } else {
-        response = await coursesApis.get("/courses");
-      }
+      const filterParams = Object.fromEntries(
+        Object.entries(params ?? {}).filter(
+          ([, value]) => value !== undefined && value !== ""
+        )
+      ) as Record<string, string>;
+      const hasFilters = Object.keys(filterParams).length > 0;
+
+      const response = await coursesApis.get(
+        hasFilters ? "/courses/filter" : "/courses",
+        hasFilters ? { params: filterParams } : undefined
+      );
 
       const coursesArray =
         response?.data?.courses ?? response?.data?.data ?? []; // Extract the courses array for either endpoint
@@ -30,12 +35,18 @@ export const fetchCoursesData = createAsyncThunk(
           id: number;
           name: string;
           slug: string;
-          program_type_name :string;
+          program_type_id?: string | number;
+          program_type_name?: string;
+          university_id?: string | number;
+          level_id?: string | number;
           small_description?: string;
           charge_payment?: string;
           full_payment?: {
+            payment_description?: string;
+            currency?: string;
             charge_payment?: string;
           };
+          video?: string;
           course_structures?: Array<{
             section_3_title_4?: string;
             section_3_title_5_content?: string;
@@ -54,14 +65,23 @@ export const fetchCoursesData = createAsyncThunk(
           id: c.id,
           name: c.name,
           slug: c.slug,
-          program_type_name:c.program_type_name,
+          program_type_id: c.program_type_id,
+          program_type_name: c.program_type_name,
+          university_id: c.university_id,
+          level_id: c.level_id,
           small_description: c.small_description,
-          charge_payment: c.full_payment?.charge_payment || c.charge_payment || "",
+          charge_payment:
+            c.full_payment?.payment_description ||
+            c.full_payment?.charge_payment ||
+            c.charge_payment ||
+            "",
           section_3_title_4: courseStructure?.section_3_title_4 || "",
           section_3_title_5_content: courseStructure?.section_3_title_5_content || "",
           image_path: c.image_path,
           created_at: c.created_at,
           updated_at: c.updated_at,
+          video: c.video,
+          currency: c.full_payment?.currency ?? "",
         };
       });
 
