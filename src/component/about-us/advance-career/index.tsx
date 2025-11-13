@@ -45,12 +45,8 @@ export default function AdvanceCareer({ mainClass = "min-h-screen", cardsData }:
         </h1>
 
         {/* Responsive grid using minmax */}
-        <div
-          className="grid gap-8"
-          style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-          }}
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
           {cardsData?.map((card:any, index:any) => {
             // Get the appropriate icon based on the card title
             const Icon = iconMap[card.title] || BookOpen;

@@ -55,15 +55,18 @@ export default function Home() {
     dispatch(fetchAboutSectionData());
   }, [dispatch, courses]);
 
-  const cardData = {
-    backgroundClass: "text-[#6a1b9a]",
-    backgroundImage:
-      "https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.png",
-    about: {
-      secondCardTitle: about?.secondCardTitle,
-      secondCardDescription: about?.secondCardDescription,
-    },
-  };
+const cardData = {
+  title: "About UE Campus",
+  description: "Learn more about our mission and vision.",
+  backgroundClass: "text-[#6a1b9a]",
+  backgroundImage:
+    "https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.png",
+  about: {
+    secondCardTitle: about?.secondCardTitle,
+    secondCardDescription: about?.secondCardDescription,
+  },
+};
+
 
   const cardData1 = {
     backgroundClass: "text-[#6a1b9a]",
@@ -105,9 +108,9 @@ export default function Home() {
       <div>
         <CouresSection />
       </div>
-     <div className="min-h-screen bg-gray-800 py-8 px-8">
-  <div
-    className="
+      <div className="min-h-screen bg-gray-800 py-8 px-8">
+        <div
+          className="
       grid 
       gap-6 
       mx-auto 
@@ -116,19 +119,19 @@ export default function Home() {
       min-h-[600px] 
       md:min-h-[700px] 
     "
-  >
-    <AboutSection
-      about={about}
-      isLoading={aboutLoading}
-      error={aboutError}
-    />
-    <EducationSection
-      cardData1={cardData}
-      cardData2={cardData1}
-      link={true}
-    />
-  </div>
-</div>
+        >
+          <AboutSection
+            about={about}
+            isLoading={aboutLoading}
+            error={aboutError}
+          />
+          <EducationSection
+            cardData1={cardData}
+            cardData2={cardData1}
+            link={true}
+          />
+        </div>
+      </div>
 
       <div>
         <div>
