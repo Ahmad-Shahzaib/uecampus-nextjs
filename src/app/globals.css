@@ -160,3 +160,12 @@
     -webkit-text-stroke: 1px #1b232a;
   }
 }
+@layer utilities {
+  @keyframes spin-slow {
+    from { transform: rotate(360deg); }
+    to   { transform: rotate(0deg); }
+  }
+  .animate-spin-slow {
+    animation: spin-slow 30s linear infinite;   /* 30s = one full turn */
+  }
+}

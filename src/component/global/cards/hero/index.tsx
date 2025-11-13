@@ -59,12 +59,12 @@ export function HeroCard() {
 
   return (
     <Card
-      className="relative overflow-hidden bg-[#6A1B9A] border-0 p-8 md:p-12 text-white shadow-2xl rounded-3xl"
+      className="relative overflow-hidden bg-[#6A1B9A] border-0 p-8 md:p-14 text-white shadow-2xl rounded-3xl"
     >
       
 
       <div className="relative z-10 flex flex-col gap-6">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-balance">{data.section_title}</h1>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium leading-tight text-balance">{data.section_title}</h1>
         <p className="text-base md:text-lg leading-relaxed text-purple-100 max-w-2xl text-pretty">{data.section_description}</p>
       </div>
     </Card>

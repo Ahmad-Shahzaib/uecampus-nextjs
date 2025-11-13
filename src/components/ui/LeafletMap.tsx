@@ -5,8 +5,7 @@ import { useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Fix default marker icons in Next.js
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+/* ----------  Leaflet icon fix (unchanged) ---------- */
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
@@ -19,47 +18,54 @@ type LocationPoint = { lat: number; lng: number; name: string; color: string };
 
 export default function LeafletMap() {
   const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<ReturnType<typeof L.map> | null>(null);
+  const map = useRef<L.Map | null>(null);
 
   useEffect(() => {
     if (!mapContainer.current) return;
 
-    // Create map (standard Web Mercator) - we will mask it into a circle to emulate a globe
+    /* ----------  Map init (centered for globe view) ---------- */
     const globe = L.map(mapContainer.current, {
-      center: [45, 10],
-      zoom: 2,
+      center: [20, 0],
+      zoom: 1.5,
       minZoom: 1,
       maxZoom: 5,
-      worldCopyJump: true,
       zoomControl: false,
       attributionControl: false,
+      worldCopyJump: true,
     });
 
-    // Dark basemap without API keys
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      tileSize: 256,
-      maxZoom: 5,
-      className: "globe-tiles",
-    }).addTo(globe);
+    /* ----------  COLORFUL GLOBE TILE LAYER (Black oceans, white land) ---------- */
+    L.tileLayer(
+      "https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2VucGFpcmF2c3UiLCJhIjoiY21lZTR3Y2huMGRtbjJrczhvNGg0ZzNyYiJ9.ZchdhqEpNCsznsNVjBVswg",
+      {
+        tileSize: 512,
+        zoomOffset: -1,
+        attribution:
+          '&copy; <a href="https://www.mapbox.com/">Mapbox</a> &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
+      }
+    ).addTo(globe);
 
-    // Custom background color to match screenshot tone
+    /* ----------  Force black oceans & white land (override any gray) ---------- */
     const style = document.createElement("style");
-    style.innerHTML = `.leaflet-container{background:#A5B4FC !important;}`;
+    style.innerHTML = `
+      .leaflet-container { 
+        background: #000 !important; 
+      }
+      .leaflet-tile-pane img {
+        filter: brightness(1.8) contrast(1.4) !important;
+      }
+    `;
     document.head.appendChild(style);
 
-    // Markers
+    /* ----------  MARKERS (exact colors from your image) ---------- */
     const locations: LocationPoint[] = [
-      // Yellow – Germany (Berlin area)
-      { lat: 52.52, lng: 13.405, name: "Germany", color: "#FBBF24" },
-
-      // Purple chain (Spain → India)
-      { lat: 40.42, lng: -3.70, name: "Spain", color: "#6D28D9" },
-      { lat: 41.89, lng: 12.49, name: "Italy", color: "#6D28D9" },
-      { lat: 39.93, lng: 32.86, name: "Turkey", color: "#6D28D9" },
-      { lat: 35.68, lng: 51.39, name: "Iran", color: "#6D28D9" },
-      { lat: 33.68, lng: 73.05, name: "Pakistan", color: "#6D28D9" },
-      { lat: 28.61, lng: 77.20, name: "India", color: "#6D28D9" },
+      { lat: 51.5074, lng: -0.1278, name: "London", color: "#FBBF24" }, // Yellow
+      { lat: 48.8566, lng: 2.3522, name: "Paris", color: "#A855F7" },
+      { lat: 41.9028, lng: 12.4964, name: "Rome", color: "#A855F7" },
+      { lat: 40.4168, lng: -3.7038, name: "Madrid", color: "#A855F7" },
+      { lat: 37.9838, lng: 23.7275, name: "Athens", color: "#A855F7" },
+      { lat: 30.0444, lng: 31.2357, name: "Cairo", color: "#A855F7" },
+      { lat: -25.7461, lng: 28.1881, name: "Pretoria", color: "#A855F7" },
     ];
 
     locations.forEach((loc) => {
@@ -69,13 +75,12 @@ export default function LeafletMap() {
         color: "#fff",
         weight: 2,
         opacity: 1,
-        fillOpacity: 0.8,
+        fillOpacity: 1,
       })
         .addTo(globe)
         .bindPopup(`<b>${loc.name}</b>`);
     });
 
-    // Keep reference for cleanup
     map.current = globe;
 
     return () => {
@@ -86,13 +91,19 @@ export default function LeafletMap() {
 
   return (
     <div className="relative mx-auto w-full max-w-5xl">
-      {/* Circular masked map container to emulate globe */}
-      <div className="relative mx-auto aspect-square w-full max-w-[540px] rounded-full overflow-hidden ring-2 ring-slate-600/40 shadow-2xl">
+      {/* -----------  SPINNING COLORFUL GLOBE ----------- */}
+      <div className="relative mx-auto aspect-square w-full max-w-[540px] rounded-full overflow-hidden ring-2 ring-slate-600/40 shadow-2xl animate-spin-slow">
         <div ref={mapContainer} className="absolute inset-0" />
-        {/* Diagonal pattern overlay */}
-        <svg className="pointer-events-none absolute inset-0 opacity-20 mix-blend-multiply">
+        {/* Optional: remove overlay if you want pure map */}
+        <svg className="pointer-events-none absolute inset-0 opacity-10 mix-blend-multiply">
           <defs>
-            <pattern id="diag" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <pattern
+              id="diag"
+              width="12"
+              height="12"
+              patternUnits="userSpaceOnUse"
+              patternTransform="rotate(45)"
+            >
               <rect width="6" height="14" fill="#6366F1" />
             </pattern>
           </defs>
