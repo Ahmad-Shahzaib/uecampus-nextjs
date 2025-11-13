@@ -9,7 +9,7 @@ export interface Course {
   image?: string;
   duration?: string;
   level?: string;
-  program_type_name?: string; // ✅ make it optional
+  program_type_name?: string; 
 
 }
 // Featured course from constants
