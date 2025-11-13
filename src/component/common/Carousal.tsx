@@ -213,30 +213,32 @@ const TestimonialCarousel = memo(
                   }`}
                   style={{ transform: `translateX(-${currentIndex * 100}%)` }}
                 >
-                  {memoizedTestimonials.map((testimonial, index) => (
-                    <div
-                      key={testimonial.id}
-                      className="w-full flex-shrink-0 p-6 sm:p-8"
-                    >
-                      <div className="flex flex-col md:flex-row items-center md:items-start gap-6 sm:gap-8">
-                        <div className="relative h-56 w-44 sm:h-64 sm:w-52 md:h-56 md:w-60 lg:h-72 lg:w-56 flex-shrink-0">
-                          <LazyImage
-                            src={testimonial.image}
-                            alt={testimonial.name}
-                            className="h-full w-full object-cover rounded-xl shadow-md"
-                          />
-                        </div>
-                        <div className="text-center md:text-left flex-1">
-                          <h3 className="text-lg sm:text-xl font-semibold text-gray-900">
-                            {testimonial.name} {testimonial.description}
-                          </h3>
-                          <p className="mt-3 text-gray-600 text-sm sm:text-sm italic leading-relaxed">
-                            {testimonial.text}
-                          </p>
+                  {memoizedTestimonials.map(
+                    (testimonial: Testimonial, index: number) => (
+                      <div
+                        key={testimonial.id}
+                        className="w-full flex-shrink-0 p-6 sm:p-8"
+                      >
+                        <div className="flex flex-col md:flex-row items-center md:items-start gap-6 sm:gap-8">
+                          <div className="relative h-56 w-44 sm:h-64 sm:w-52 md:h-56 md:w-60 lg:h-72 lg:w-56 flex-shrink-0">
+                            <LazyImage
+                              src={testimonial.image}
+                              alt={testimonial.name}
+                              className="h-full w-full object-cover rounded-xl shadow-md"
+                            />
+                          </div>
+                          <div className="text-center md:text-left flex-1">
+                            <h3 className="text-lg sm:text-xl font-semibold text-gray-900">
+                              {testimonial.name} {testimonial.description}
+                            </h3>
+                            <p className="mt-3 text-gray-600 text-sm sm:text-sm italic leading-relaxed">
+                              {testimonial.text}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  )}
                 </div>
               </div>
 
@@ -263,7 +265,7 @@ const TestimonialCarousel = memo(
               {/* Dots */}
               {showDots && memoizedTestimonials.length > 1 && (
                 <div className="mt-6 flex justify-center gap-2">
-                  {memoizedTestimonials.map((_, index) => (
+                  {memoizedTestimonials.map((_: Testimonial, index :number) => (
                     <button
                       key={index}
                       onClick={() => setCurrentIndex(index)}
