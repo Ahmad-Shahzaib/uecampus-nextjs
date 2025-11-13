@@ -30,6 +30,7 @@ export const fetchCoursesData = createAsyncThunk(
           id: number;
           name: string;
           slug: string;
+          program_type_name :string;
           small_description?: string;
           charge_payment?: string;
           full_payment?: {
@@ -53,6 +54,7 @@ export const fetchCoursesData = createAsyncThunk(
           id: c.id,
           name: c.name,
           slug: c.slug,
+          program_type_name:c.program_type_name,
           small_description: c.small_description,
           charge_payment: c.full_payment?.charge_payment || c.charge_payment || "",
           section_3_title_4: courseStructure?.section_3_title_4 || "",

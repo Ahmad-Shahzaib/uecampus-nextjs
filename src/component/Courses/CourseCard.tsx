@@ -25,7 +25,7 @@ export const ProgramCard = React.memo<ProgramCardProps>(({ course }) => {
             variant="secondary"
             className="rounded-full bg-white px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-semibold text-[#6A1B9A] whitespace-normal break-words text-center"
           >
-            {course.name}
+            {course.program_type_name}
           </Badge>
         </div>
 
