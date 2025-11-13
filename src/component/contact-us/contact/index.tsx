@@ -121,25 +121,16 @@ export default function ContactPage() {
               Contact Us
             </h1>
 
-            {/* Dynamic HTML description with better styling */}
+            {/* Dynamic HTML description with proper spacing */}
             <div
-              className="prose prose-invert prose-lg max-w-none text-base lg:text-lg leading-relaxed"
+              className="space-y-2 text-base lg:text-base leading-relaxed"
               dangerouslySetInnerHTML={{ __html: data.contact_description }}
               style={{
-                /* Custom styles for better readability */
-                lineHeight: "1.6",
+                lineHeight: "1.7",
               }}
             />
 
-            {/* Optional: Add a call-to-action button */}
-            <div className="mt-8">
-              <a
-                href="#contact-form"
-                className="inline-block px-6 py-3 bg-white text-[#6A1B9A] font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-300"
-              >
-                Get Started
-              </a>
-            </div>
+            
           </div>
         </div>
       </div>
