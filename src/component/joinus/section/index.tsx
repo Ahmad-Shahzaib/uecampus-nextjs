@@ -4,7 +4,7 @@ import { HeroContent } from "../content";
 export function HeroSection() {
   return (
     <section
-      className="hero-pattern  min-h-screen flex items-center justify-center px-4 py-12 rounded-2xl"
+      className="hero-pattern  flex items-center justify-center px-4 py-12 rounded-2xl"
       style={{
         backgroundColor: '#6a1b9a',
         backgroundImage: `
@@ -18,7 +18,7 @@ export function HeroSection() {
         backgroundBlendMode: 'overlay, normal',
       }}
     >
-      <div className="w-full  mx-auto ">
+      <div className="w-full  mx-auto rounded ">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12   items-center">
           {/* Left Content */}
           <HeroContent />
