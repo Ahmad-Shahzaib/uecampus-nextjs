@@ -5,10 +5,12 @@ import React from "react";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { ProgramCardProps } from "./types";
-import { useRouter } from "next/navigation"; // ← Fixed import
+import { useRouter } from "next/navigation";
 
 export const ProgramCard = React.memo<ProgramCardProps>(({ course }) => {
   const router = useRouter();
+
+  const programTypeLabel = course.program_type_name ?? "Program";
 
   const navigateToCourseDetail = () => {
     router.push(`/course/${course.slug}`);
@@ -25,7 +27,8 @@ export const ProgramCard = React.memo<ProgramCardProps>(({ course }) => {
             variant="secondary"
             className="rounded-full bg-white px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-semibold text-[#6A1B9A] whitespace-normal break-words text-center"
           >
-            {course.program_type_name}
+            {/* Now program_type_name is properly typed */}
+            {programTypeLabel}
           </Badge>
         </div>
 

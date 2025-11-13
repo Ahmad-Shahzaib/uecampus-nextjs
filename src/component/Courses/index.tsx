@@ -115,9 +115,14 @@ const CourseSection: React.FC = () => {
             {error}
           </div>
         ) : coursesToShow.length > 0 ? (
-          coursesToShow.map((course: Course) => (
+          coursesToShow.map((course: Course, index) => (
             <ProgramCard
-              key={(course.id ?? course._id ?? course.slug ?? course.program_type_name) as React.Key}
+              key={
+                course.id ??
+                course._id ??
+                course.slug ??
+                `${course.program_type_name ?? "course"}-${index}`
+              }
               course={course}
             />
           ))
