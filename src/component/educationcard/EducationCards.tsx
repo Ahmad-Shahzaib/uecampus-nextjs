@@ -13,10 +13,9 @@ const EducationCards = () => {
   );
 
   useEffect(() => {
-    if (!data) {
-      dispatch(fetchEducationCardsData());
-    }
-  }, [dispatch, data]);
+    // Always fetch to ensure we have fresh data
+    dispatch(fetchEducationCardsData());
+  }, [dispatch]);
 
   if (isLoading)
     return (
@@ -34,10 +33,12 @@ const EducationCards = () => {
 
   if (!data || data.length === 0)
     return (
-      <div className="flex justify-center items-center ">
+      <div className="flex justify-center items-center min-h-screen">
         <div className="text-xl text-white">No partners found.</div>
       </div>
     );
+
+  console.log("Rendering partners:", data.length, data);
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-12 bg-gray-50">
@@ -54,14 +55,14 @@ const EducationCards = () => {
           </p>
         </div>
         
-        {/* Updated card grid to match image layout */}
+        {/* Card grid - shows all partners */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-          {data.map((partner: any) => (
+          {data.map((partner) => (
             <div
               key={partner.id}
               className="bg-[#181818] py-4 px-6 text-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col h-full"
             >
-              {/* Logo container - centered with proper spacing */}
+              {/* Logo container */}
               <div className="flex justify-center pt-8 pb-4">
                 <img
                   src={partner.logo}
@@ -70,12 +71,11 @@ const EducationCards = () => {
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.style.display = "none";
-                  
                   }}
                 />
               </div>
 
-              {/* Content container with proper spacing */}
+              {/* Content container */}
               <div className="flex flex-col flex-grow px-6 pb-6 text-center">
                 {/* Title */}
                 <h3 className="text-xl font-bold mb-3">{partner.title}</h3>
@@ -99,4 +99,4 @@ const EducationCards = () => {
   );
 };
 
-export default EducationCards;  
+export default EducationCards;
