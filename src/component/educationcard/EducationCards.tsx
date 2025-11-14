@@ -44,7 +44,7 @@ const EducationCards = () => {
     <div className="px-4 sm:px-6 lg:px-8 py-12 ">
       <div className="w-full mx-auto">
         <div className="flex flex-col items-center justify-center space-y-4 px-4 py-8 text-center md:px-6 lg:px-8">
-          <h1 className="font-medium text-[#6a1b9a] text-2xl sm:text-3xl md:text-4xl lg:text-7xl leading-tight">
+          <h1 className="font-medium text-[#6a1b9a] text-2xl sm:text-3xl md:text-4xl lg:text-[90px] lg:font-normal">
             Our Academic Partners
           </h1>
           <p className="text-sm sm:text-base md:text-base lg:text-base text-gray-700  mx-auto leading-relaxed">
