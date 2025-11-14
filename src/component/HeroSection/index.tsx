@@ -38,10 +38,10 @@ const HeroSection = () => {
 
   return (
     <div className="bg-black w-full flex justify-center rounded-lg">
-      <div className="relative w-[calc(100%-24px)] h-[500px] flex items-center justify-center mx-auto overflow-hidden rounded-lg">
+      <div className="relative w-[calc(100%-24px)] h-[550px] flex items-center justify-center mx-auto overflow-hidden rounded-lg">
         {/* Dynamic Video */}
         <video
-          className="absolute inset-0 w-full h-full object-fill"
+          className="absolute inset-0 w-full h-full object-cover"
           src={hero.video}
           autoPlay
           loop
@@ -51,8 +51,8 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-black/40" />
 
         <div className="relative z-10 text-center px-2 sm:px-8 sm:max-w-4xl w-full mx-auto">
-          <div className="sm:w-1/2 w-full mx-auto">
-            <h1 className="text-2xl font-semibold sm:text-3xl lg:text-4xl text-white whitespace-pre-line">
+          <div className="sm:w-2xl w-full mx-auto">
+            <h1 className="text-2xl font-medium sm:text-3xl lg:text-6xl text-white whitespace-pre-line">
               {hero.title}
             </h1>
           </div>
@@ -64,7 +64,7 @@ const HeroSection = () => {
           {/* Search Bar */}
           <div className="mt-8 flex flex-col sm:flex-row gap-3 items-center justify-center w-full">
             <Input
-              className="w-full py-6 sm:w-[600px] rounded-[0px] bg-white/90 backdrop-blur-sm border-white/20"
+              className="w-full py-6 sm:w-[600px]  bg-white/90 backdrop-blur-sm border-white/20"
               placeholder="Search courses..."
             />
             <Button

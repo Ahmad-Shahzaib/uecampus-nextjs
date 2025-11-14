@@ -190,11 +190,13 @@ const TestimonialCarousel = memo(
         </div>
 
         {/* ✅ Responsive layout fixed here */}
-<div className="relative z-10 mx-auto sm:px-6 flex flex-col md:flex-col lg:flex-row 
-lg:items-center lg:justify-between gap-8 lg:gap-12 min-h-[90vh]">
+        <div
+          className="relative z-10 mx-auto sm:px-6 flex flex-col md:flex-col lg:flex-row 
+lg:items-center lg:justify-between gap-8 lg:gap-12 min-h-[90vh]"
+        >
           {/* Left Side: Title */}
           <div className="w-full lg:w-[45%] text-center lg:text-left">
-            <h2 className="text-3xl sm:text-4xl md:text-6xl xl:text-8xl font-normal text-[#6A1B9A] leading-30">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl xl:text-[100px]  text-[#6A1B9A] ">
               What Our <br className="hidden sm:block" /> Students Say
             </h2>
             <p className="mt-4 sm:mt-6 text-gray-700 text-sm sm:text-base md:text-base leading-relaxed max-w-lg mx-auto lg:mx-0">
@@ -220,7 +222,7 @@ lg:items-center lg:justify-between gap-8 lg:gap-12 min-h-[90vh]">
                         key={testimonial.id}
                         className="w-full flex-shrink-0 p-6 sm:p-8"
                       >
-                        <div className="flex flex-col md:flex-row items-center md:items-start gap-6 sm:gap-8">
+                        <div className="flex flex-col md:flex-row items-center md:items-center gap-6 sm:gap-8">
                           <div className="relative h-56 w-44 sm:h-64 sm:w-52 md:h-56 md:w-60 lg:h-72 lg:w-56 flex-shrink-0">
                             <LazyImage
                               src={testimonial.image}

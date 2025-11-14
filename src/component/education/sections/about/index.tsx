@@ -75,7 +75,7 @@ export function AboutSection({ about, isLoading, error }: any) {
       <div className="relative z-10 space-y-6">
         {/* Label */}
         <div className="inline-block">
-          <span className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-medium leading-tight tracking-tight text-white">
+          <span className="text-2xl sm:text-3xl md:text-3xl lg:text-5xl leading-tight tracking-tight text-white">
             {title}
           </span>
         </div>
@@ -86,13 +86,13 @@ export function AboutSection({ about, isLoading, error }: any) {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
           viewport={{ once: true }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-medium leading-relaxed tracking-tight text-white"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-[96px] leading-tight tracking-normal text-white"
         >
           {title2}
         </motion.h2>
 
         {/* Description */}
-        <p className="text-sm sm:text-base md:text-base lg:text-base text-white/90 leading-relaxed max-w-lg">
+        <p className="text-sm sm:text-base md:text-base lg:text-[16px] text-white/90 leading-relaxed max-w-lg">
           {description}
         </p>
       </div>
