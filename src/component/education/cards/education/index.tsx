@@ -51,7 +51,7 @@ export function EducationCard({
         }}
       >
         <h2
-          className={`text-xl lg:text-2xl font-bold leading-tight mb-6 ${
+          className={`text-2xl lg:text-4xl font-medium tex leading-relaxed mb-3 ${
             isDarkMode ? "text-white" : "text-[#6A1B9A]"
           } ${bgStyles}`}
         >
@@ -59,7 +59,7 @@ export function EducationCard({
         </h2>
 
         <p
-          className={`text-base lg:text-lg leading-relaxed ${
+          className={`text-base ${
             isDarkMode ? "text-white" : "text-gray-700"
           } ${bgStyles}`}
         >

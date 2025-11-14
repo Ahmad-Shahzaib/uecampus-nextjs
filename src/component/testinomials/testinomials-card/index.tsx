@@ -57,7 +57,7 @@ export function FeatureCard({ section, index }: FeatureCardProps) {
       className={`${styles.container} border-0 rounded-2xl p-4 sm:p-5 md:p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 w-full`}
     >
       <div className="space-y-3 sm:space-y-4">
-        <h2 className={`${styles.title} text-xl sm:text-2xl md:text-3xl font-semibold leading-tight text-balance`}>
+        <h2 className={`${styles.title} text-xl sm:text-2xl md:text-3xl font-medium leading-tight text-balance`}>
           {section.title}
         </h2>
         <p className={`${styles.description} text-sm sm:text-base md:text-base leading-relaxed`}>

@@ -20,7 +20,7 @@ const HeaderSection = () => {
 
   return (
     <header
-      className={`fixed top-0 z-50 bg-white transition-all duration-300 py-8 
+      className={`fixed top-0 z-50 bg-white transition-all duration-300 py-7 
         ${isScrolled ? "left-4 right-4 top-2 rounded-2xl shadow-md py-3" : "w-full shadow-sm py-4"}
       `}
     >

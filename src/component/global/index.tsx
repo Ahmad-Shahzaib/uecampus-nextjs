@@ -41,8 +41,9 @@ export function GlobalCampusSection({
         </div>
 
         {/* Globe Section */}
-        <div className="flex items-center justify-center w-full">
-          <div className="w-full aspect-square lg:aspect-auto lg:h-96 xl:h-full">
+        <div className="flex items-center justify-center">
+          <div className="w-96 aspect-square lg:aspect-auto 
+          ">
             <LeafletMap />
           </div>
         </div>

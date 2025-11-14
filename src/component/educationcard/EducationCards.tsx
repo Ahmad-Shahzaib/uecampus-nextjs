@@ -41,15 +41,15 @@ const EducationCards = () => {
   console.log("Rendering partners:", data.length, data);
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-12 bg-gray-50">
+    <div className="px-4 sm:px-6 lg:px-8 py-12 ">
       <div className="w-full mx-auto">
         <div className="flex flex-col items-center justify-center space-y-4 px-4 py-8 text-center md:px-6 lg:px-8">
-          <h1 className="font-semibold text-[#6a1b9a] text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight">
+          <h1 className="font-medium text-[#6a1b9a] text-2xl sm:text-3xl md:text-4xl lg:text-7xl leading-tight">
             Our Academic Partners
           </h1>
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base md:text-base lg:text-base text-gray-700  mx-auto leading-relaxed">
             Our partners are at the heart of UeCampus's commitment to delivering
-            quality education. We collaborate with reputable universities and
+            quality education. We collaborate with reputable universities and <br />
             educational institutions worldwide to co-create and validate our
             programs, ensuring they meet the highest academic standards.
           </p>
@@ -60,14 +60,14 @@ const EducationCards = () => {
           {data.map((partner) => (
             <div
               key={partner.id}
-              className="bg-[#181818] py-4 px-6 text-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col h-full"
+              className="bg-[#181818] py-4  px-4 text-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col h-full"
             >
               {/* Logo container */}
-              <div className="flex justify-center pt-8 pb-4">
+              <div className="flex justify-center pt-5 pb-8">
                 <img
                   src={partner.logo}
                   alt={partner.title}
-                  className="h-24 w-auto object-contain"
+                  className="h-32 w-auto object-contain"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.style.display = "none";
@@ -76,18 +76,18 @@ const EducationCards = () => {
               </div>
 
               {/* Content container */}
-              <div className="flex flex-col flex-grow px-6 pb-6 text-center">
+              <div className="flex text-left flex-col flex-grow px-6 pb-6 text-center">
                 {/* Title */}
-                <h3 className="text-xl font-bold mb-3">{partner.title}</h3>
+                <h3 className="text-xl font-semibold mb-3">{partner.title}</h3>
 
                 {/* Description */}
                 <div
-                  className="text-sm text-gray-300 mb-6 leading-relaxed flex-grow"
+                  className=" text-white font-normal text-base mb-6 leading-relaxed flex-grow"
                   dangerouslySetInnerHTML={{ __html: partner.content }}
                 />
 
                 {/* Button */}
-                <Button className="w-full bg-[#6A1B9A] text-white border-0 hover:bg-[#5a1782] py-3 rounded-lg font-semibold transition-colors duration-300">
+                <Button className="w-full bg-[#6A1B9A] text-white border-0 hover:bg-white hover:text-[#5a1782] py-3 rounded-lg font-semibold transition-colors duration-300">
                   {partner.button_name}
                 </Button>
               </div>

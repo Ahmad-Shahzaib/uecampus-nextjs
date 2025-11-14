@@ -33,7 +33,7 @@ export function AboutSection({ about, isLoading, error }: any) {
   const gradient = "linear-gradient(#6A1B9A)";
 
   const buttonStyles =
-    "border-white rounded-md text-white hover:bg-white/10 bg-transparent transition-all duration-200";
+    "border-white rounded-md text-white  hover:bg-white/10 bg-transparent transition-all duration-200 px-7 py-6 ";
 
   return (
     <section
@@ -75,7 +75,7 @@ export function AboutSection({ about, isLoading, error }: any) {
       <div className="relative z-10 space-y-6">
         {/* Label */}
         <div className="inline-block">
-          <span className="text-2xl sm:text-3xl md:text-3xl lg:text-3xl font-semibold leading-tight tracking-tight text-white">
+          <span className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-medium leading-tight tracking-tight text-white">
             {title}
           </span>
         </div>
@@ -86,13 +86,13 @@ export function AboutSection({ about, isLoading, error }: any) {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
           viewport={{ once: true }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-white"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-medium leading-relaxed tracking-tight text-white"
         >
           {title2}
         </motion.h2>
 
         {/* Description */}
-        <p className="text-sm sm:text-base md:text-lg lg:text-lg text-white/90 leading-relaxed max-w-lg">
+        <p className="text-sm sm:text-base md:text-base lg:text-base text-white/90 leading-relaxed max-w-lg">
           {description}
         </p>
       </div>
@@ -100,7 +100,7 @@ export function AboutSection({ about, isLoading, error }: any) {
       {/* CTA Button */}
       <div className="relative z-10 mt-8">
         <Link href={buttonLink ?? "#"}>
-          <Button className={buttonStyles}>{buttonText}</Button>
+          <Button className={buttonStyles} >{buttonText}</Button>
         </Link>
       </div>
     </section>

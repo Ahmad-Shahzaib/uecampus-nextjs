@@ -83,7 +83,7 @@ export default function AboutUsStats() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <main className="min-h-screen bg-white">
-        <div className="m-5 rounded-2xl">
+        <div className="m-5 rounded-2xl pt-3">
           <Aboutbanner imageUrl={aboutData.section2ImageUrl} title={aboutData.pageTitle} />
         </div>
         <section className="px-6 py-12">

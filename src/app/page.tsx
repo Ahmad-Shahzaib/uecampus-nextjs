@@ -81,8 +81,8 @@ const cardData = {
   };
 
   return (
-    <div>
-      <div className="py-6 bg-gray-800 flex flex-col space-y-8">
+    <div className="mt-3">
+      <div className="py-6 bg-gray-800 flex flex-col space-y-8 ">
         <div className="sm:px-10 px-4">
           <HeroSection />
         </div>

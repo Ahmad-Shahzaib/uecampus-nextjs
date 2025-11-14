@@ -41,7 +41,7 @@ const HeroSection = () => {
       <div className="relative w-[calc(100%-24px)] h-[500px] flex items-center justify-center mx-auto overflow-hidden rounded-lg">
         {/* Dynamic Video */}
         <video
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-fill"
           src={hero.video}
           autoPlay
           loop

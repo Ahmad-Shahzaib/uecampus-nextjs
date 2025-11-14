@@ -55,12 +55,12 @@ export default function Faqs() {
     >
       <div className="absolute inset-0 bg-black/40 pointer-events-none" />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <div className="relative z-10 mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           {/* LEFT – Headline */}
           <div className="flex flex-col justify-center text-center lg:text-left lg:items-start  lg:min-h-screen">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl leading-[1.6] font-medium">
-              {faqContent?.title || "Everything you need to know about UeCampus"}
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl leading-[1.6] font-normal">
+              {faqContent?.title || ""}
             </h1>
             <p className="mt-6 text-lg text-gray-300 max-w-lg">
               {faqContent?.description || "Frequently Asked Questions"}

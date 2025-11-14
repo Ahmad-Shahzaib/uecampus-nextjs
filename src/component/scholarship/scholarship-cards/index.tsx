@@ -51,12 +51,12 @@ const ScholarshipCards: React.FC = () => {
         {/* Content */}
         <div className="pr-16 sm:pr-20 lg:pr-24">
           {/* Title */}
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white leading-tight mb-4 sm:mb-6 max-w-[90%]">
+          <h2 className="text-3xl  font-medium text-white leading-tight mb-4 sm:mb-6 ">
             {data.scholarship1Title || "Academic Excellence Scholarship"}
           </h2>
           
           {/* Description */}
-          <p className="text-sm sm:text-base lg:text-lg text-white leading-relaxed">
+          <p className="text-sm sm:text-base lg:text-base text-white leading-relaxed">
             {data.scholarship1Description || "This scholarship is awarded to outstanding students who demonstrate exceptional academic achievement. Whether you're a high-performing high school graduate or a top-ranking university student, UeCampus recognizes your hard work and dedication. Eligible applicants may receive partial or full tuition support based on their academic performance and qualifications."}
           </p>
         </div>
@@ -70,12 +70,12 @@ const ScholarshipCards: React.FC = () => {
         {/* Content */}
         <div className="pr-16 sm:pr-20 lg:pr-24">
           {/* Title */}
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white leading-tight mb-4 sm:mb-6 max-w-[90%]">
+          <h2 className="text-3xl  font-medium text-white leading-tight mb-4 sm:mb-6 ">
             {data.scholarship2Title || "Scholarships for Residents of Developing Countries"}
           </h2>
           
           {/* Description */}
-          <p className="text-sm sm:text-base lg:text-lg text-white leading-relaxed">
+          <p className="text-sm sm:text-base lg:text-base text-white leading-relaxed ">
             {data.scholarship2Description || "We are committed to creating global learning opportunities, especially for students from regions with limited access to higher education. This scholarship is specifically designed to support residents of developing countries by offering substantial tuition reductions. It aims to empower talented individuals who are eager to advance their education and make a positive impact in their communities."}
           </p>
         </div>

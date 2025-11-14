@@ -36,7 +36,7 @@ const { data, isLoading, error } = useSelector((state: RootState) => state.howTo
     <div className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl max-w-md w-full">
       {/* Header */}
       <div className="mb-6">
-        <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-purple-900 text-center">
+        <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-purple-900 text-center">
           {data?.sectionTitle2}
         </h2>
       </div>
@@ -50,7 +50,7 @@ const { data, isLoading, error } = useSelector((state: RootState) => state.howTo
       <div className="space-y-4">
         {data.buttonName && (
           <Button
-            className="w-full bg-black border-0 hover:bg-gray-900 text-white font-semibold py-5 sm:py-6 text-base rounded-xl transition-colors"
+            className="w-full bg-black border-0 hover:bg-gray-900 text-white font-semibold py-5 sm:py-6 text-base rounded transition-colors"
             onClick={() => window.open(data.buttonLink || "#", "_blank")}
           >
             {data.buttonName}
@@ -60,7 +60,7 @@ const { data, isLoading, error } = useSelector((state: RootState) => state.howTo
         {data.buttonName2 && (
           <Button
             variant="outline"
-            className="w-full border-2 border-gray-900 text-gray-900 hover:bg-gray-100 font-semibold py-5 sm:py-6 text-base rounded-xl transition-colors bg-transparent"
+            className="w-full border-2 border-gray-900 text-gray-900 hover:bg-gray-100 font-semibold py-5 sm:py-6 text-base rounded transition-colors bg-transparent"
             onClick={() => window.open(data.buttonLink2 || "#", "_blank")}
           >
             {data.buttonName2}

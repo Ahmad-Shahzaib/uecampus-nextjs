@@ -4,11 +4,13 @@ import { HeroContent } from "../content";
 export function HeroSection() {
   return (
     <section
-      className="relative flex items-center justify-center px-4 py-12 rounded-2xl overflow-hidden"
-      style={{
-        // Optional fallback colour – you can delete if you don’t need it
-        // backgroundColor: '#6A1B9A',
-      }}
+      className="relative flex items-center justify-center px-4 py-12  overflow-hidden"
+      style={
+        {
+          // Optional fallback colour – you can delete if you don’t need it
+          // backgroundColor: '#6A1B9A',
+        }
+      }
     >
       {/* Pseudo‑element background (grid line) */}
       <div
@@ -24,12 +26,14 @@ export function HeroSection() {
       />
 
       <div className="relative w-full mx-auto rounded z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 items-center">
           {/* Left Content */}
-          <HeroContent />
+          <div className="lg:col-span-2">
+            <HeroContent />
+          </div>
 
           {/* Right CTA Card */}
-          <div className="flex justify-center md:justify-end">
+          <div className="lg:col-span-1 flex justify-center md:justify-end">
             <CTACard />
           </div>
         </div>

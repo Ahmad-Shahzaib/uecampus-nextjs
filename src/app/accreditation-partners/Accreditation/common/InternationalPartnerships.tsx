@@ -37,10 +37,10 @@ const InternationalPartnerships = ({
       <div className="max-w-5xl mx-auto">
         {/* Header Section */}
         <div className="mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#6a1b9a] mb-4">
+          <h2 className="text-3xl md:text-6xl leading-tight font-medium text-[#6a1b9a] mb-4">
             {title}
           </h2>
-          <p className="text-gray-700 text-lg">{description}</p>
+          <p className="text-gray-700 text-base">{description}</p>
         </div>
 
         {/* Features Section */}

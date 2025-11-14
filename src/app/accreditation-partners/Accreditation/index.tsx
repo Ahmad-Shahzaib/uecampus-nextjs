@@ -64,7 +64,7 @@ const AccreditationImage = () => {
   ] : [];
 
   return (
-    <div>
+    <div className="mt-8">
       <div className="m-5 rounded-2xl">
         <AccreditationBanner
           imageUrl={accreditationData?.hero_image || undefined}

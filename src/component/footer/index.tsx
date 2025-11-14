@@ -21,16 +21,16 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-[#101820] text-[#E0E0E0] m-4 sm:m-6 rounded-2xl min-h-[500px] overflow-hidden relative">
+    <footer className="bg-[#101820] text-[#E0E0E0] m-4 py-16 sm:m-6 rounded-2xl min-h-[500px] overflow-hidden relative">
       {/* Main Footer Content */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12 sm:py-16 lg:px-8 rounded-2xl">
+      <div className="mx-auto max-w-8xl px-4 sm:px-6 py-12 sm:py-16 lg:px-8 rounded-2xl">
         <div className="flex flex-col lg:flex-row flex-wrap justify-between gap-10 sm:gap-12">
           {/* Brand Section */}
           <div className="flex-1 lg:flex-[3] min-w-[250px] max-w-[600px] text-center sm:text-left">
             <div className="mb-6 flex justify-center sm:justify-start">
               <img
                 alt="Logo"
-                className="h-16 sm:h-20 w-auto"
+                className="h-16 sm:h-32 w-auto"
                 src="https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/uecampus-logo.png"
               />
             </div>
