@@ -88,8 +88,8 @@ export default function GlobeMap() {
   }, []);
 
   return (
-    <div className="relative mx-auto w-full max-w-5xl">
-      <div className="relative mx-auto aspect-square w-full max-w-[540px] rounded-full overflow-hidden ring-2 ring-slate-600/40 shadow-2xl animate-spin-slow">
+    <div className="relative mx-auto w-full max-w-full overflow-hidden px-4 sm:px-0">
+      <div className="relative mx-auto aspect-square w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-[540px] rounded-full overflow-hidden ring-2 ring-slate-600/40 shadow-2xl md:animate-spin-slow">
         <div ref={mapContainer} className="absolute inset-0" />
         <svg className="pointer-events-none absolute inset-0 opacity-10 mix-blend-multiply">
           <defs>

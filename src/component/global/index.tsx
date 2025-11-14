@@ -42,12 +42,11 @@ export function GlobalCampusSection({
 
         {/* Globe Section */}
         <div className="flex items-center justify-center">
-          <div className="w-96 aspect-square lg:aspect-auto 
-          ">
+          <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl aspect-square">
             <LeafletMap />
           </div>
         </div>
       </div>
     </section>
-  );
+  );  
 }
