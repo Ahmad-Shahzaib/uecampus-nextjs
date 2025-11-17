@@ -1,12 +1,13 @@
 // src/app/course/[slug]/page.tsx
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 // import { useDispatch, useSelector } from "react-redux";
 import { useDispatch, useSelector } from "@/redux/store";
 import { useParams } from "next/navigation";
 import { RootState } from "@/redux/rootReducer";
 import { fetchDetailCourseData } from "@/redux/thunk/detailCourseThunk";
+import { resetDetailCourseState } from "@/redux/slices/detailCourseSlice";
 
 import ContactUsSection from '@/component/contact-us/contact/ContactUsSection';
 import CoursesFeaturesCards from '@/component/Courses/slug/courseFeatures';
@@ -17,19 +18,24 @@ import JoinUs from '@/component/joinus';
 const DetailPage = () => {
   const dispatch = useDispatch();
   const params = useParams();
+  const previousSlugRef = useRef<string | null>(null);
   
   const slug = params?.slug as string;
   const { data, isLoading, error } = useSelector(
     (state: RootState) => state.detailCourse
   );
 
-  // Fetch course data by slug on mount
+  // Fetch course data by slug and reset stale state when slug changes
   useEffect(() => {
-    if (slug && !data) {
-      console.log("Fetching course data for slug:", slug);
-      dispatch(fetchDetailCourseData(slug));
+    if (!slug) return;
+
+    if (previousSlugRef.current !== slug) {
+      dispatch(resetDetailCourseState());
+      previousSlugRef.current = slug;
     }
-  }, [dispatch, slug, data]);
+
+    dispatch(fetchDetailCourseData(slug));
+  }, [dispatch, slug]);
 
   // ---------- LOADING ----------
   if (isLoading) {
@@ -49,11 +55,15 @@ const DetailPage = () => {
     );
   }
 
-  // ---------- NO DATA ----------
-  if (!data) {
+  const hasDataForSlug = data?.course?.slug === slug;
+
+  // ---------- NO DATA OR STALE DATA ----------
+  if (!data || !hasDataForSlug) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl">Course not found.</div>
+        <div className="text-xl">
+          {isLoading ? "Loading course details..." : "Course not found."}
+        </div>
       </div>
     );
   }

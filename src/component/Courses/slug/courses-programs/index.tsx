@@ -29,12 +29,12 @@ export default function ProgramPage() {
     "Affordable and Accessible",
   ];
 
-  const courses = [
-    { id: 1, category: "Health & Social Care", title: "Level 7 Diploma" },
-    { id: 2, category: "Business Management", title: "MBA Programme" },
-    { id: 3, category: "Education", title: "PGCE Certificate" },
-    { id: 4, category: "IT & Computing", title: "Cyber Security" },
-  ];
+  // const courses = [
+  //   { id: 1, category: "Health & Social Care", title: "Level 7 Diploma" },
+  //   { id: 2, category: "Business Management", title: "MBA Programme" },
+  //   { id: 3, category: "Education", title: "PGCE Certificate" },
+  //   { id: 4, category: "IT & Computing", title: "Cyber Security" },
+  // ];
 
   // Tab content based on active tab
   const renderTabContent = () => {
@@ -95,7 +95,7 @@ export default function ProgramPage() {
             </div>
 
             {/* View Other Courses Section */}
-            <div className="space-y-6">
+            <div className="">
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
                 View Other Courses
               </h2>
@@ -104,36 +104,8 @@ export default function ProgramPage() {
                 career
               </p>
 
-              {/* Course Cards Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {courses.map((course) => (
-                  <Card
-                    key={course.id}
-                    className="bg-gray-900 border-0 rounded-xl overflow-hidden hover:shadow-lg transition-shadow"
-                  >
-                    <div className="p-6 space-y-4">
-                      {/* Badge */}
-                      <Badge className="bg-white text-[#6a1b9a] hover:bg-white/90 w-fit rounded-full text-xs sm:text-sm">
-                        {course.category}
-                      </Badge>
-
-                      {/* Title */}
-                      <h3 className="text-lg sm:text-xl font-semibold text-white">
-                        {course.title}
-                      </h3>
-
-                      {/* Course Image */}
-                      <div className="mt-4 rounded-lg overflow-hidden h-40">
-                        <img
-                          src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80"
-                          alt="Course preview"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    </div>
-                  </Card>
-                ))}
-              </div>
+          
+         
             </div>
           </div>
         );

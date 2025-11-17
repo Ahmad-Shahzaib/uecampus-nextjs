@@ -1,6 +1,52 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchDetailCourseData } from "../thunk/detailCourseThunk";
 
+export interface CourseStructure {
+  id: number;
+  course_id: string;
+  title: string;
+  description: string;
+  content: string;
+  url: string | null;
+  video_frame: string | null;
+  section_3_title_1: string | null;
+  section_3_title_1_content: string | null;
+  section_3_title_2: string | null;
+  section_3_title_2_content: string | null;
+  section_3_title_3: string | null;
+  section_3_title_3_content: string | null;
+  section_3_title_4: string | null;
+  section_3_title_4_content: string | null;
+  section_3_title_5: string | null;
+  section_3_title_5_content: string | null;
+  payment_content: string | null;
+  created_at: string;
+  updated_at: string;
+  section5_title?: string | null;
+  section5_description?: string | null;
+  section6_title?: string | null;
+  section6_description?: string | null;
+  section5_title_1?: string | null;
+  section5_title_1_content?: string | null;
+  section5_title_2?: string | null;
+  section5_title_2_content?: string | null;
+  section5_title_3?: string | null;
+  section5_title_3_content?: string | null;
+  section5_title_4?: string | null;
+  section5_title_4_content?: string | null;
+  section5_title_2_alt?: string | null;
+  section5_description_2?: string | null;
+}
+
+export interface CourseTable {
+  id: number;
+  course_id: string;
+  title: string;
+  content: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface CourseData {
   id: number;
   name: string;
@@ -10,13 +56,16 @@ export interface CourseData {
   status: string;
   content: string;
   small_description: string;
-  meta_tags: any;
-  meta_description: any;
-  page: any;
+  credits?: string;
+  meta_tags: string | Record<string, unknown> | null;
+  meta_description: string | null;
+  page: string | number | null;
   image_path: string;
   video: string;
   created_at: string;
   updated_at: string;
+  course_structures?: CourseStructure[];
+  course_table?: CourseTable[];
 }
 
 export interface PaymentData {

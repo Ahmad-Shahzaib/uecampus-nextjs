@@ -1,15 +1,20 @@
+"use client"
+
+import { useMemo } from "react"
 import { Card, CardContent } from "@/components/ui/card"
+import { useSelector } from "@/redux/store"
+import { RootState } from "@/redux/rootReducer"
 
 interface FeatureCard {
   title: string
   description: string
 }
 
-const features: FeatureCard[] = [
+const fallbackFeatures: FeatureCard[] = [
   {
     title: "Accredited Diploma",
     description:
-      "Awarded by Quali, a leading UK-based awarding body and regulated by Ofqual, this internationally recognised qualification provides a strong academic and practical foundation for senior roles in health and social care sectors.",
+      "Awarded by Qualifi, a UK-based awarding body regulated by Ofqual, this internationally recognised qualification provides a strong academic and practical foundation for senior roles.",
   },
   {
     title: "8 Months to Complete",
@@ -29,6 +34,45 @@ const features: FeatureCard[] = [
 ]
 
 export default function CoursesFeaturesCards() {
+  const { data } = useSelector((state: RootState) => state.detailCourse)
+  const highlightedStructure = data?.course?.course_structures?.find((structure) => {
+    return (
+      structure.section_3_title_1 ||
+      structure.section_3_title_2 ||
+      structure.section_3_title_3 ||
+      structure.section_3_title_4 ||
+      structure.section_3_title_5
+    )
+  })
+
+  const features = useMemo<FeatureCard[]>(() => {
+    if (!highlightedStructure) {
+      return fallbackFeatures
+    }
+
+    const dynamicFeatures: FeatureCard[] = [
+      {
+        title: highlightedStructure.section_3_title_1 ?? "",
+        description: highlightedStructure.section_3_title_2 ?? "",
+      },
+      {
+        title: highlightedStructure.section_3_title_1_content?? "",
+        description: highlightedStructure.section_3_title_2_content ?? "",
+      },
+      {
+        title: highlightedStructure.section_3_title_3 ?? "",
+        description: highlightedStructure.section_3_title_4 ?? "",
+      },
+      {
+        title: highlightedStructure.section_3_title_3_content ?? "",
+        description: highlightedStructure.section_3_title_4_content ?? "",
+      },
+      
+    ].filter((feature) => feature.title && feature.description)
+
+    return dynamicFeatures.length ? dynamicFeatures : fallbackFeatures
+  }, [highlightedStructure])
+
   return (
     <main className="h-full bg-background p-4">
       <div className="mx-auto w-full">

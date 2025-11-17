@@ -25,6 +25,7 @@ export const fetchDetailCourseData = createAsyncThunk(
           status: apiData.course.status,
           content: apiData.course.content,
           small_description: apiData.course.small_description,
+          credits: apiData.course.credits,
           meta_tags: apiData.course.meta_tags,
           meta_description: apiData.course.meta_description,
           page: apiData.course.page,
@@ -32,6 +33,8 @@ export const fetchDetailCourseData = createAsyncThunk(
           video: apiData.course.video,
           created_at: apiData.course.created_at,
           updated_at: apiData.course.updated_at,
+          course_structures: apiData.course.course_structures ?? [],
+          course_table: apiData.course.course_table ?? [],
         },
         payment: {
           id: apiData.payment.id,
@@ -57,10 +60,14 @@ export const fetchDetailCourseData = createAsyncThunk(
 
       console.log("Transformed Course Data:", transformedData);
       return transformedData;
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error fetching course data:", error);
+      type ApiError = {
+        response?: { data?: { message?: string } };
+      };
+      const apiError = error as ApiError;
       const errorMessage =
-        error?.response?.data?.message || "Failed to fetch course data";
+        apiError.response?.data?.message || "Failed to fetch course data";
       return rejectWithValue(errorMessage);
     }
   }
