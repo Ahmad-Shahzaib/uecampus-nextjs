@@ -55,6 +55,51 @@ export default function ProgramPage() {
     );
   }, [data?.course?.course_structures]);
 
+  function autoEmbedHTML(content: string | null | undefined) {
+    if (!content) return "";
+
+    let updated = content;
+
+    // --- Image URLs ---
+    updated = updated.replace(
+      /(https?:\/\/[^\s"']+\.(png|jpg|jpeg|gif|webp))/gi,
+      `<img src="$1" class="w-full rounded-lg my-4" />`
+    );
+
+    // --- Video URLs ---
+    updated = updated.replace(
+      /(https?:\/\/[^\s"']+\.(mp4|mov|webm|ogg))/gi,
+      `<video src="$1" controls class="w-full rounded-lg my-4"></video>`
+    );
+
+    // --- YouTube link ---
+    updated = updated.replace(
+      /(https?:\/\/(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[^\s"']+)/gi,
+      (url) => {
+        let videoId = "";
+
+        // youtube.com/watch?v=xxxx
+        if (url.includes("watch?v=")) {
+          videoId = url.split("watch?v=")[1].split("&")[0];
+        }
+        // youtu.be/xxxx
+        else if (url.includes("youtu.be/")) {
+          videoId = url.split("youtu.be/")[1].split("?")[0];
+        }
+
+        return `
+        <iframe
+          class="w-full h-64 rounded-lg my-4"
+          src="https://www.youtube.com/embed/${videoId}"
+          allowfullscreen
+        ></iframe>
+      `;
+      }
+    );
+
+    return updated;
+  }
+
   return (
     <div className="bg-white min-h-screen">
       {/* Navigation Bar - Horizontal on large screens, scrollable on mobile */}
@@ -89,8 +134,10 @@ export default function ProgramPage() {
           <div className="lg:col-span-2 order-2 lg:order-1">
             {tabs.length ? (
               <article
-                className="prose lg:prose-lg max-w-none text-gray-700"
-                dangerouslySetInnerHTML={{ __html: activeTabContent ?? "" }}
+                className="prose lg:prose-lg max-w-none  text-gray-700"
+                dangerouslySetInnerHTML={{
+                  __html: autoEmbedHTML(activeTabContent ?? ""),
+                }}
               />
             ) : (
               <div className="space-y-4">
@@ -98,8 +145,9 @@ export default function ProgramPage() {
                   Programme information coming soon
                 </h2>
                 <p className="text-gray-600 text-base sm:text-lg">
-                  We&apos;re preparing detailed course content. Please check back soon for
-                  the latest overview, admissions, and curriculum information.
+                  We&apos;re preparing detailed course content. Please check
+                  back soon for the latest overview, admissions, and curriculum
+                  information.
                 </p>
               </div>
             )}
@@ -119,7 +167,9 @@ export default function ProgramPage() {
                     <p className="text-white font-medium text-lg sm:text-xl mb-2">
                       Programme Highlight
                     </p>
-                    <h3 className="text-2xl sm:text-3xl font-bold">Key Benefits</h3>
+                    <h3 className="text-2xl sm:text-3xl font-bold">
+                      Key Benefits
+                    </h3>
                   </div>
 
                   <ul className="space-y-3">
