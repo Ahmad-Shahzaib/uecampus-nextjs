@@ -13,18 +13,18 @@ const CourseDetailHeader: React.FC<CourseDetailHeaderProps> = ({ name, bgImage }
       style={{ backgroundImage: `url(${bgImage})` }}
     >
       {/* Add an overlay for better text readability */}
-      <div className="absolute inset-0  bg-opacity-40 rounded-2xl"></div>
+      <div className="absolute inset-0 bg-opacity-40 rounded-2xl"></div>
       
       <div className="flex flex-col lg:flex-row w-full relative items-center lg:items-start z-10">
         {/* Left section - title (semi-transparent card on mobile) */}
-        <div className="w-full lg:flex-1 lg:pr-20  bg-opacity-50 lg:bg-transparent rounded-2xl lg:rounded-none p-8 lg:p-0 shadow-lg lg:shadow-none">
-          <h1 className="text-4xl sm:text-5xl lg:text-5xl font-semibold text-white leading-tight text-balance text-center lg:text-left">
+        <div className="w-full lg:flex-1 lg:pr-20 bg-opacity-50 lg:bg-transparent rounded-2xl lg:rounded-none p-8 lg:p-0 shadow-lg lg:shadow-none lg:max-w-[calc(100%-25rem)]">
+          <h1 className="text-4xl sm:text-5xl lg:text-5xl font-semibold text-white leading-tight text-balance text-center lg:text-left break-words">
             {name}
           </h1>
         </div>
 
         {/* Right section - purple card */}
-        <div className="lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 lg:z-10 w-full lg:w-[28rem] mt-8 lg:mt-0">
+        <div className="lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 lg:z-10 w-full lg:w-[28rem] lg:flex-shrink-0 mt-8 lg:mt-0">
           <div className="bg-[#6A1B9A] w-full rounded-2xl px-6 sm:px-8 py-10 sm:py-14 text-center flex flex-col justify-center gap-6 sm:gap-8 shadow-2xl">
             {/* Heading */}
             <div>
