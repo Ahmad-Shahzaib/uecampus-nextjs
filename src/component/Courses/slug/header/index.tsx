@@ -1,4 +1,6 @@
+"use client"; // << important!
 import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/navigation';
 import React from 'react'
 
 interface CourseDetailHeaderProps {
@@ -7,6 +9,11 @@ interface CourseDetailHeaderProps {
 }
 
 const CourseDetailHeader: React.FC<CourseDetailHeaderProps> = ({ name, bgImage }) => {
+   const router = useRouter();
+
+  const enqureNavigation = () => {
+    router.push("/enquire-now"); // navigate to /about page
+  };
   return (
     <div 
       className="h-auto min-h-[400px] lg:h-[70vh] lg:max-h-[500px] flex items-center justify-center bg-[#999999] p-4 sm:p-6 m-3 rounded-2xl lg:p-16 bg-cover bg-center relative "
@@ -42,7 +49,10 @@ const CourseDetailHeader: React.FC<CourseDetailHeaderProps> = ({ name, bgImage }
 
             {/* Buttons */}
             <div className="flex flex-col gap-2 sm:gap-2.5 max-w-xs mx-auto w-full">
-              <Button className="w-full border-0 bg-white cursor-pointer text-purple-700 hover:bg-gray-100 font-medium py-3 sm:py-4 md:py-5 rounded-lg text-xs sm:text-sm">
+              <Button
+              onClick={enqureNavigation}
+              
+              className="w-full border-0 bg-white cursor-pointer text-purple-700 hover:bg-gray-100 font-medium py-3 sm:py-4 md:py-5 rounded-lg text-xs sm:text-sm">
                 Enquire Now
               </Button>
 

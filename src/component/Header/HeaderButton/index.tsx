@@ -4,7 +4,11 @@ import React from "react";
 import { useRouter } from "next/navigation";
 
 const ButtonSection = () => {
-  const router = useRouter();
+   const router = useRouter();
+
+  const enqureNavigation = () => {
+    router.push("/enquire-now"); // navigate to /about page
+  };
   
   return (
     <div className="flex gap-3">
@@ -16,7 +20,7 @@ const ButtonSection = () => {
         Student Portal
       </Button>
       <Button 
-        onClick={() => router.push("/enquire-now")}
+        onClick={enqureNavigation}
         className="bg-[#6a1b9a] border-0 cursor-pointer hover:bg-purple-800 text-white px-8 py-6"
       >
         Enquire Now

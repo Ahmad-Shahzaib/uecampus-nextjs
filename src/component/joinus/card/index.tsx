@@ -51,7 +51,7 @@ const { data, isLoading, error } = useSelector((state: RootState) => state.howTo
         {data.buttonName && (
           <Button
             className="w-full bg-black border-0 hover:bg-gray-900 text-white font-semibold py-5 sm:py-6 text-base rounded transition-colors"
-            onClick={() => window.open(data.buttonLink || "#", "_blank")}
+            onClick={() => window.open(data.buttonLink || "#",)}
           >
             {data.buttonName}
           </Button>
@@ -61,7 +61,7 @@ const { data, isLoading, error } = useSelector((state: RootState) => state.howTo
           <Button
             variant="outline"
             className="w-full border-2 border-gray-900 text-gray-900 hover:bg-gray-100 font-semibold py-5 sm:py-6 text-base rounded transition-colors bg-transparent"
-            onClick={() => window.open(data.buttonLink2 || "#", "_blank")}
+            onClick={() => window.open(data.buttonLink2 || "#")}
           >
             {data.buttonName2}
           </Button>

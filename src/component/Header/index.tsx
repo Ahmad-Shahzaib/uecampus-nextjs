@@ -10,7 +10,11 @@ import { useRouter } from "next/navigation";
 const HeaderSection = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const router = useRouter();
+   const router = useRouter();
+  
+    const enqureNavigation = () => {
+      router.push("/enquire-now"); // navigate to /about page
+    };
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -67,10 +71,7 @@ const HeaderSection = () => {
                 Student Portal
               </button>
               <button 
-                onClick={() => {
-                  router.push("/enquire-now");
-                  setMenuOpen(false);
-                }}
+               onClick={enqureNavigation}
                 className="w-full bg-[#4C136F] text-white font-semibold py-2.5 rounded-full"
               >
                 Enquire Now
