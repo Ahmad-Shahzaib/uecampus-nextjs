@@ -134,7 +134,7 @@ export default function ProgramPage() {
           <div className="lg:col-span-2 order-2 lg:order-1">
             {tabs.length ? (
               <article
-                className="prose lg:prose-lg max-w-none  text-gray-700"
+                className="prose ... lg:prose-lg max-w-none  text-gray-700"
                 dangerouslySetInnerHTML={{
                   __html: autoEmbedHTML(activeTabContent ?? ""),
                 }}
