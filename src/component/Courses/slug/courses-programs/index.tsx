@@ -1,5 +1,6 @@
 "use client";
 import { Card } from "@/components/ui/card";
+import type { CourseTable } from "@/redux/slices/detailCourseSlice";
 import { RootState } from "@/redux/rootReducer";
 import { useSelector } from "@/redux/store";
 import { useMemo, useState } from "react";
@@ -21,12 +22,20 @@ export default function ProgramPage() {
     [data?.course?.course_table]
   );
 
+  type TabItem = {
+    id: string;
+    title: string;
+    content: string;
+    feeFaqs: NonNullable<CourseTable["fee_faqs"]>;
+  };
+
   const tabs = useMemo(
     () =>
-      courseTables.map((table) => ({
+      courseTables.map<TabItem>((table) => ({
         id: String(table.id),
         title: table.title,
         content: table.content,
+        feeFaqs: table.fee_faqs ?? [],
       })),
     [courseTables]
   );
@@ -45,7 +54,16 @@ export default function ProgramPage() {
     return tabs[0].id;
   }, [tabs, selectedTabId]);
 
-  const activeTabContent = tabs.find((tab) => tab.id === activeTabId)?.content;
+  const activeTab = useMemo(
+    () => tabs.find((tab) => tab.id === activeTabId),
+    [tabs, activeTabId]
+  );
+
+  const activeTabContent = activeTab?.content;
+  const activeTabFeeFaqs = activeTab?.feeFaqs ?? [];
+  const showFeeFaqs =
+    activeTab?.title?.trim().toLowerCase() === "tuition & financing" &&
+    activeTabFeeFaqs.length > 0;
 
   const paymentContent = useMemo(() => {
     return (
@@ -133,12 +151,55 @@ export default function ProgramPage() {
           {/* Left Column - Main Content (full width on mobile) */}
           <div className="lg:col-span-2 order-2 lg:order-1">
             {tabs.length ? (
-              <article
-                className="prose ... lg:prose-lg max-w-none  text-gray-700"
-                dangerouslySetInnerHTML={{
-                  __html: autoEmbedHTML(activeTabContent ?? ""),
-                }}
-              />
+              <div className="space-y-2">
+                <article
+                  className="prose ... lg:prose-lg max-w-none text-gray-700"
+                  dangerouslySetInnerHTML={{
+                    __html: autoEmbedHTML(activeTabContent ?? ""),
+                  }}
+                />
+
+                {showFeeFaqs && (
+                  <section className="space-y-4">
+                    <div className="space-y-6">
+                      {activeTabFeeFaqs.map((faq) => (
+                        <details
+                          key={faq.id}
+                          className="space-y-3 group rounded-xl border border-gray-200 bg-white shadow-sm"
+                        >
+                          <summary className="cursor-pointer list-none px-4 py-3 text-base font-semibold text-gray-900 flex justify-between items-center">
+                            <span>{faq.title}</span>
+
+                            {/* Arrow Icon */}
+                            <svg
+                              className="h-5 w-5 text-gray-500 transition-transform duration-300 group-open:rotate-180"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M19 9l-7 7-7-7"
+                              />
+                            </svg>
+                          </summary>
+
+                          {faq.description && (
+                            <div
+                              className="prose max-w-none px-4 pb-4 text-gray-600"
+                              dangerouslySetInnerHTML={{
+                                __html: faq.description,
+                              }}
+                            />
+                          )}
+                        </details>
+                      ))}
+                    </div>
+                  </section>
+                )}
+              </div>
             ) : (
               <div className="space-y-4">
                 <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">

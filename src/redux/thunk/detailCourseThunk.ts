@@ -1,6 +1,7 @@
 // src/redux/thunk/detailCourseThunk.ts
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getAxiosInstance } from "@/lib/axios";
+import type { CourseTable } from "@/redux/slices/detailCourseSlice";
 
 const api = getAxiosInstance();
 
@@ -34,7 +35,11 @@ export const fetchDetailCourseData = createAsyncThunk(
           created_at: apiData.course.created_at,
           updated_at: apiData.course.updated_at,
           course_structures: apiData.course.course_structures ?? [],
-          course_table: apiData.course.course_table ?? [],
+          course_table:
+            apiData.course.course_table?.map((table: CourseTable) => ({
+              ...table,
+              fee_faqs: table.fee_faqs ?? [],
+            })) ?? [],
         },
         payment: {
           id: apiData.payment.id,

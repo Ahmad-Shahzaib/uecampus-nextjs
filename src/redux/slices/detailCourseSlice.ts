@@ -38,6 +38,15 @@ export interface CourseStructure {
   section5_description_2?: string | null;
 }
 
+export interface FeeFaq {
+  id: number;
+  meta_id: string;
+  title: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface CourseTable {
   id: number;
   course_id: string;
@@ -45,6 +54,7 @@ export interface CourseTable {
   content: string;
   created_at: string;
   updated_at: string;
+  fee_faqs?: FeeFaq[];
 }
 
 export interface CourseData {
