@@ -22,6 +22,7 @@ import detailCourseReducer from "./slices/detailCourseSlice";
 import heroSectionReducer from "./slices/heroSectionSlice"; // Add this import
 import missionReducer from "./slices/missionSlice";
 import programsReducer from "./slices/programsSlice";
+import randomCoursesReducer from "./slices/randomCoursesSlice";
 
 type GenericPersistConfig = PersistConfig<any>;
 
@@ -173,6 +174,12 @@ const programsPersistConfig: GenericPersistConfig = {
   keyPrefix: "redux-",
   whitelist: ["data"],
 };
+const randomCoursesPersistConfig: GenericPersistConfig = {
+  key: "randomCourses",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: ["data"],
+};
 const appReducer = combineReducers({
   courses: persistReducer(coursesPersistConfig, coursesReducer),
   faqs: persistReducer(faqsPersistConfig, faqsReducer),
@@ -196,6 +203,10 @@ const appReducer = combineReducers({
   heroSection: persistReducer(heroSectionPersistConfig, heroSectionReducer), // Add this line
   mission: persistReducer(missionPersistConfig, missionReducer),
   programs: persistReducer(programsPersistConfig, programsReducer),
+  randomCourses: persistReducer(
+    randomCoursesPersistConfig,
+    randomCoursesReducer
+  ),
 });
 
 type AppState = ReturnType<typeof appReducer>;

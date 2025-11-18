@@ -9,11 +9,12 @@ import { RootState } from "@/redux/rootReducer";
 import { fetchDetailCourseData } from "@/redux/thunk/detailCourseThunk";
 import { resetDetailCourseState } from "@/redux/slices/detailCourseSlice";
 
-import ContactUsSection from '@/component/contact-us/contact/ContactUsSection';
-import CoursesFeaturesCards from '@/component/Courses/slug/courseFeatures';
-import ProgramPage from '@/component/Courses/slug/courses-programs';
-import CourseDetailHeader from '@/component/Courses/slug/header';
-import JoinUs from '@/component/joinus';
+import ContactUsSection from "@/component/contact-us/contact/ContactUsSection";
+import CoursesFeaturesCards from "@/component/Courses/slug/courseFeatures";
+import ProgramPage from "@/component/Courses/slug/courses-programs";
+import CourseDetailHeader from "@/component/Courses/slug/header";
+import JoinUs from "@/component/joinus";
+import RandomCourses from "@/component/Courses/random/RandomCourses";
 
 const DetailPage = () => {
   const dispatch = useDispatch();
@@ -82,6 +83,7 @@ const DetailPage = () => {
       {/* Other components (no props for now - you can add later) */}
       <CoursesFeaturesCards />
       <ProgramPage />
+      <RandomCourses />
       <ContactUsSection />
       <JoinUs />
     </div>
