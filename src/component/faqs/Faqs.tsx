@@ -66,9 +66,9 @@ export default function Faqs() {
             <h1 className="text-4xl sm:text-6xl lg:text-[80px]">
               {faqContent?.title || ""}
             </h1>
-            <p className="mt-6 text-lg text-gray-300 max-w-lg">
+            {/* <p className="mt-6 text-lg text-gray-300 max-w-lg">
               {faqContent?.description || "Frequently Asked Questions"}
-            </p>
+            </p> */}
           </div>
 
           {/* RIGHT – FAQ Accordion */}

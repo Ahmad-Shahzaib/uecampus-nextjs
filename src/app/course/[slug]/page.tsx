@@ -2,7 +2,6 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-// import { useDispatch, useSelector } from "react-redux";
 import { useDispatch, useSelector } from "@/redux/store";
 import { useParams } from "next/navigation";
 import { RootState } from "@/redux/rootReducer";
@@ -20,7 +19,7 @@ const DetailPage = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const previousSlugRef = useRef<string | null>(null);
-  
+
   const slug = params?.slug as string;
   const { data, isLoading, error } = useSelector(
     (state: RootState) => state.detailCourse
@@ -71,16 +70,24 @@ const DetailPage = () => {
 
   // ---------- SUCCESS ----------
   const { course } = data;
+  const courseStructure = course.course_structures?.[0];
 
   return (
     <div className="space-y-4">
-      {/* Pass ONLY name + image_path to Header */}
-      <CourseDetailHeader 
-        name={course.name} 
+      {/* Pass all content through props */}
+      <CourseDetailHeader
+        name={course.name}
         bgImage={course.image_path}
+        courseStructure={courseStructure}
+        heroDescription={courseStructure?.section_3_title_1 || undefined}
+        button1Text={courseStructure?.hero_button_1_name || undefined}
+        button1Link={courseStructure?.hero_button_1_link || undefined}
+        button2Text={courseStructure?.hero_button_2_name || undefined}
+        button2Link={courseStructure?.hero_button_2_link || undefined}
+        courseId={course.id}  // ← Add this line!
       />
-      
-      {/* Other components (no props for now - you can add later) */}
+
+      {/* Other components */}
       <CoursesFeaturesCards />
       <ProgramPage />
       <RandomCourses />

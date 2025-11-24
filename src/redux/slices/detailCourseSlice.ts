@@ -36,6 +36,10 @@ export interface CourseStructure {
   section5_title_4_content?: string | null;
   section5_title_2_alt?: string | null;
   section5_description_2?: string | null;
+  hero_button_1_name?: string | null;
+  hero_button_1_link?: string | null;
+  hero_button_2_name?: string | null;
+  hero_button_2_link?: string | null;
 }
 
 export interface FeeFaq {
@@ -157,7 +161,7 @@ const detailCourseSlice = createSlice({
   },
 });
 
-export const { 
+export const {
   resetDetailCourseState,
   // Export the new actions
   fetchCourseDetailStart,

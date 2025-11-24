@@ -14,45 +14,63 @@ interface LogoCarouselProps {
 }
 
 export function LogoCarousel({ logos }: LogoCarouselProps) {
+  if (logos.length === 0) return null
+
+  const isScrollable = logos.length > 4
+
   return (
-    <section className="w-full py-8 hidden lg:block">
-      <div className="overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2">
-        <div className="flex gap-3 sm:gap-5 md:gap-7 items-center">
-          {logos.map((logo) => (
-            <div
-              key={logo.id}
-              className="flex-shrink-0 w-24 sm:w-28 md:w-32 lg:w-40 xl:w-48 h-16 sm:h-20 md:h-24 lg:h-32 xl:h-32 flex items-center justify-center rounded-xl transition-all duration-300 snap-center"
-            >
-              <div className="relative w-20 sm:w-28 md:w-32 lg:w-36 xl:w-40 h-12 sm:h-16 md:h-24 lg:h-28 xl:h-32">
-                <Image
-                  src={logo.src || "/placeholder.svg"}
-                  alt={logo.alt}
-                  fill
-                  className="object-contain filter hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-                  sizes="(max-width: 640px) 70px, (max-width: 768px) 85px, (max-width: 1024px) 135px, (max-width: 1280px) 170px"
-                  loading="lazy"
-                />
+    <section className="w-full py-12 hidden lg:block bg-gray-900">
+      <div className="max-w-screen-2xl mx-auto px-6">
+        {/* Scroll Container */}
+        <div className={`overflow-x-auto ${isScrollable ? 'scrollbar-custom' : ''}`}>
+          <div
+            className={`
+              flex items-center
+              ${isScrollable
+                ? 'justify-start min-w-max gap-12 lg:gap-16 xl:gap-20'
+                : 'justify-center gap-10 md:gap-14 lg:gap-20'
+              }
+            `}
+          >
+            {logos.map((logo) => (
+              <div
+                key={logo.id}
+                className="flex-shrink-0 flex items-center justify-center w-48 h-32 md:w-56 md:h-36 lg:w-64 lg:h-40 transition-all duration-300 hover:scale-105"
+              >
+                <div className="relative w-full h-28 md:h-32 lg:h-36">
+                  <Image
+                    src={logo.src || "/placeholder.svg"}
+                    alt={logo.alt}
+                    fill
+                    className="object-contain drop-shadow-md"
+                    sizes="(max-width: 768px) 160px, (max-width: 1024px) 200px, 240px"
+                    loading="lazy"
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
-      <style jsx>{`
-        div::-webkit-scrollbar {
-          height: 6px;
-        }
-        div::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        div::-webkit-scrollbar-thumb {
-          background: rgba(148, 163, 184, 0.4);
-          border-radius: 3px;
-        }
-        div::-webkit-scrollbar-thumb:hover {
-          background: rgba(148, 163, 184, 0.6);
-        }
-      `}</style>
+      {/* Custom Scrollbar - Sirf tab dikhe jab scroll ho */}
+      {isScrollable && (
+        <style jsx>{`
+          .scrollbar-custom::-webkit-scrollbar {
+            height: 8px;
+          }
+          .scrollbar-custom::-webkit-scrollbar-track {
+            background: transparent;
+          }
+          .scrollbar-custom::-webkit-scrollbar-thumb {
+            background: rgba(100, 116, 139, 0.5);
+            border-radius: 4px;
+          }
+          .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+            background: rgba(100, 116, 139, 0.8);
+          }
+        `}</style>
+      )}
     </section>
   )
 }

@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState, ChangeEvent, FormEvent, JSX } from "react";
+import React, { useState, ChangeEvent, FormEvent, JSX, useEffect } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/redux/store";
+import { useDispatch } from "@/redux/store";
+import { fetchProgramsData, ProgramType, University, AcademicYear } from "@/redux/thunk/programsThunk";
+import { sendEnquiry } from "@/redux/thunk/enquiryThunk";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { Facebook, Mail } from "lucide-react";
 
 interface FormData {
   fullName: string;
@@ -14,50 +15,53 @@ interface FormData {
   email: string;
   phone: string;
   dob: string;
-  program: string[];
-  specializations: string[];
-  university: string[];
-  academicYear: string;
+  program: number | null;
+  programType: number | null;
+  university: number | null;
+  // store academic year id when selected from dropdown
+  academicYear: number | null;
   additionalInfo: string;
 }
 
 export function ScholarshipForm(): JSX.Element {
-  const [formData, setFormData] = useState<FormData>({
+  const dispatch = useDispatch();
+  const programsData = useSelector((state: RootState) => state.programs.data);
+
+  // Define initial form data
+  const initialFormData: FormData = {
     fullName: "",
     lastName: "",
     email: "",
     phone: "",
     dob: "",
-    program: [],
-    specializations: [],
-    university: [],
-    academicYear: "",
+    program: null,
+    programType: null,
+    university: null,
+    academicYear: null,
     additionalInfo: "",
-  });
+  };
 
-  // Options
-  const programOptions: string[] = ["Diploma", "BBA", "MBA", "DBA", "PhD"];
-  const specializationOptions: string[] = [
-    "Marketing",
-    "International Business",
-    "Human Resource",
-    "Accounting & Finance",
-    "Information Technology",
-    "Cyber Security",
-    "Data Analytics",
-  ];
-  const universityOptions: string[] = [
-    "Qualifi Diplomas",
-    "PPA Business School",
-    "Walsh College",
-  ];
-  const academicYearOptions: string[] = [
-    "March 2025",
-    "September 2025",
-    "January 2026",
-    "March 2026",
-    "September 2026",
-  ];
+  const [formData, setFormData] = useState<FormData>(initialFormData);
+
+  useEffect(() => {
+    // If there's no programs data OR academicYears is empty/missing,
+    // re-fetch so the select can populate. Persisted store may have
+    // an older shape without academicYears, so check the array too.
+    const needsFetch =
+      !programsData || !(Array.isArray(programsData.academicYears) && programsData.academicYears.length > 0);
+    if (needsFetch) dispatch(fetchProgramsData());
+
+    // Debug: show what arrived from the store in the browser console
+    // (remove this once verified)
+    // eslint-disable-next-line no-console
+    console.log("programsData (enquire-now):", programsData);
+  }, [dispatch, programsData]);
+
+  // Options from store (fallback to empty arrays)
+  const programOptions: ProgramType[] = programsData?.programTypes ?? [];
+  const specializationOptions: ProgramType[] = programsData?.programTypes ?? [];
+  const universityOptions: University[] = programsData?.universities ?? [];
+  const academicyearOptions: AcademicYear[] = programsData?.academicYears ?? [];
 
   // Handlers
   const handleInputChange = (
@@ -67,23 +71,40 @@ export function ScholarshipForm(): JSX.Element {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleCheckboxChange = (field: keyof FormData, value: string): void => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: (prev[field] as string[]).includes(value)
-        ? (prev[field] as string[]).filter((item) => item !== value)
-        : [...(prev[field] as string[]), value],
-    }));
+  const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>): void => {
+    const nameKey = e.target.name as keyof FormData;
+    const parsed = e.target.value ? Number(e.target.value) : null;
+    setFormData((prev) => ({ ...prev, [nameKey]: parsed } as unknown as FormData));
   };
 
-  const handleRadioChange = (value: string): void => {
-    setFormData((prev) => ({ ...prev, academicYear: value }));
-  };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Add API call here
+
+    const payload = {
+      full_name: formData.fullName,
+      last_name: formData.lastName,
+      email: formData.email,
+      number: formData.phone,
+      dob: formData.dob,
+      program_id: formData.program,
+      program_type_id: formData.programType,
+      university_id: formData.university,
+      // send the academic year name (string) — fallback to id string if name not found
+      joining_academic_year: formData.academicYear
+        ? (academicyearOptions.find((y) => y.id === formData.academicYear)?.name || String(formData.academicYear))
+        : "",
+      Info: formData.additionalInfo,
+    };
+
+    try {
+      const result = await dispatch(sendEnquiry(payload));
+      console.log("Enquiry result:", result);
+
+      // Reset form after successful submission
+      setFormData(initialFormData);
+    } catch (err) {
+      console.error("Failed to send enquiry", err);
+    }
   };
 
   return (
@@ -103,7 +124,7 @@ export function ScholarshipForm(): JSX.Element {
 
           {/* Right Side - Form */}
           {/* Modified: removed height constraints and overflow on mobile */}
-          <div className="bg-gradient-to-b from-[#6A1B9A] to-purple-800 p-6 md:p-8 lg:overflow-y-auto lg:h-full">
+          <div className="bg-linear-to-b from-[#6A1B9A] to-purple-800 p-6 md:p-8 lg:overflow-y-auto lg:h-full">
             <div>
               <div className="mb-6">
                 <h1 className="text-white lg:text-4xl md:text-2xl font-semibold leading-tight">
@@ -191,107 +212,88 @@ export function ScholarshipForm(): JSX.Element {
                   />
                 </div>
 
-                {/* Program Interested */}
+                {/* Program Interested (select from API) */}
                 <div>
                   <label className="block text-white font-bold mb-2">
                     Program Interested
                   </label>
-                  <div className="bg-purple-900/50 backdrop-blur-sm rounded-lg p-3 space-y-2 max-h-32 overflow-y-auto border border-purple-400/30 scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-purple-900">
-                    {programOptions.map((prog) => (
-                      <div key={prog} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={`prog-${prog}`}
-                          checked={formData.program.includes(prog)}
-                          onCheckedChange={() =>
-                            handleCheckboxChange("program", prog)
-                          }
-                        />
-                        <label
-                          htmlFor={`prog-${prog}`}
-                          className="text-white text-xs md:text-sm cursor-pointer"
-                        >
-                          {prog}
-                        </label>
-                      </div>
+                  <select
+                    name="program"
+                    aria-label="Program Interested"
+                    value={formData.program ?? ""}
+                    onChange={handleSelectChange}
+                    className={`w-full rounded-md p-2 text-sm ${formData.program ? 'text-white ' : 'text-gray-900 bg-white'}`}
+                  >
+                    <option value="" className="text-gray-900">Select program</option>
+                    {programOptions.map((prog: ProgramType) => (
+                      <option key={prog.id} value={prog.id} className="text-gray-900">
+                        {prog.name}
+                      </option>
                     ))}
-                  </div>
+                  </select>
                 </div>
 
-                {/* Specializations */}
+                {/* Specializations / Program Type (select) */}
                 <div>
                   <label className="block text-white font-bold mb-2">
                     Specializations
                   </label>
-                  <div className="bg-purple-900/50 backdrop-blur-sm rounded-lg p-3 space-y-2 max-h-40 overflow-y-auto border border-purple-400/30 scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-purple-900">
-                    {specializationOptions.map((spec) => (
-                      <div key={spec} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={`spec-${spec}`}
-                          checked={formData.specializations.includes(spec)}
-                          onCheckedChange={() =>
-                            handleCheckboxChange("specializations", spec)
-                          }
-                        />
-                        <label
-                          htmlFor={`spec-${spec}`}
-                          className="text-white text-xs md:text-sm cursor-pointer"
-                        >
-                          {spec}
-                        </label>
-                      </div>
+                  <select
+                    name="programType"
+                    aria-label="Specializations"
+                    value={formData.programType ?? ""}
+                    onChange={handleSelectChange}
+                    className={`w-full rounded-md p-2 text-sm ${formData.programType ? 'text-white ' : 'text-gray-900 bg-white'}`}
+                  >
+                    <option value="" className="text-gray-900">Select specialization</option>
+                    {specializationOptions.map((spec: ProgramType) => (
+                      <option key={spec.id} value={spec.id} className="text-gray-900">
+                        {spec.name}
+                      </option>
                     ))}
-                  </div>
+                  </select>
                 </div>
 
-                {/* University Interested */}
+                {/* University Interested In (select) */}
                 <div>
                   <label className="block text-white font-bold mb-2">
                     University Interested In
                   </label>
-                  <div className="bg-purple-900/50 backdrop-blur-sm rounded-lg p-3 space-y-2 max-h-32 overflow-y-auto border border-purple-400/30 scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-purple-900">
-                    {universityOptions.map((uni) => (
-                      <div key={uni} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={`uni-${uni}`}
-                          checked={formData.university.includes(uni)}
-                          onCheckedChange={() =>
-                            handleCheckboxChange("university", uni)
-                          }
-                        />
-                        <label
-                          htmlFor={`uni-${uni}`}
-                          className="text-white text-xs md:text-sm cursor-pointer"
-                        >
-                          {uni}
-                        </label>
-                      </div>
+                  <select
+                    name="university"
+                    aria-label="University Interested In"
+                    value={formData.university ?? ""}
+                    onChange={handleSelectChange}
+                    className={`w-full rounded-md p-2 text-sm ${formData.university ? 'text-white ' : 'text-gray-900 bg-white'}`}
+                  >
+                    <option value="" className="text-gray-900">Select university</option>
+                    {universityOptions.map((uni: University) => (
+                      <option key={uni.id} value={uni.id} className="text-gray-900">
+                        {uni.name}
+                      </option>
                     ))}
-                  </div>
+                  </select>
                 </div>
 
-                {/* Academic Year */}
+                {/* Academic Year (select from dynamic API) */}
                 <div>
                   <label className="block text-white font-bold mb-2">
                     Joining Academic Year
                   </label>
-                  <RadioGroup
-                    value={formData.academicYear}
-                    onValueChange={handleRadioChange}
+                  <select
+                    name="academicYear"
+                    aria-label="Joining Academic Year"
+                    value={formData.academicYear ?? ""}
+                    onChange={handleSelectChange}
+                    className={`w-full rounded-md p-2 text-sm ${formData.academicYear ? 'text-white ' : 'text-gray-900 bg-white'}`}
                   >
-                    <div className="bg-purple-900/50 backdrop-blur-sm rounded-lg p-3 space-y-2 max-h-40 overflow-y-auto border border-purple-400/30 scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-purple-900">
-                      {academicYearOptions.map((year) => (
-                        <div key={year} className="flex items-center space-x-2">
-                          <RadioGroupItem value={year} id={`year-${year}`} />
-                          <Label
-                            htmlFor={`year-${year}`}
-                            className="text-white text-xs md:text-sm cursor-pointer"
-                          >
-                            {year}
-                          </Label>
-                        </div>
-                      ))}
-                    </div>
-                  </RadioGroup>
+                    <option value="" className="text-gray-900">Select academic year</option>
+                    {academicyearOptions.map((year: AcademicYear) => (
+                      <option key={year.id} value={year.id} className="text-gray-900">
+                        {year.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 {/* Additional Info */}
@@ -311,7 +313,7 @@ export function ScholarshipForm(): JSX.Element {
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="w-full bg-white text-purple-700 hover:bg-gray-100 font-bold h-11 text-sm md:text-base mt-4 shadow-lg"
+                  className="w-full bg-white text-purple-700 hover:bg-gray-100 font-semibold h-11 text-sm md:text-base mt-4 shadow-lg"
                 >
                   Submit Enquiry
                 </Button>
