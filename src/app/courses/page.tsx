@@ -12,18 +12,25 @@ import { fetchCoursesData, FetchCourseParams } from "@/redux/thunk/courses";
 import { RootState } from "@/redux/rootReducer";
 import { useSearchParams } from "next/navigation";
 import type { Course } from "@/redux/slices/courses";
+import { fetchSearchResults } from "@/redux/thunk/searchCourses";
+import { resetSearchState } from "@/redux/slices/searchSlice";
+import Link from "next/link";
 
 function CoursesPageContent() {
     const dispatch = useDispatch();
     const { data: courses = [], isLoading, error } = useSelector((state: RootState) => state.courses);
+    const searchState = useSelector((state: RootState) => state.search);
     const [currentPage, setCurrentPage] = useState(1);
     const coursesPerPage = 6;
+    const [searchKeyword, setSearchKeyword] = useState("");
     const searchParams = useSearchParams();
     const paramsKey = searchParams.toString();
 
     useEffect(() => {
-        setCurrentPage(1);
-    }, [paramsKey]);
+        if (currentPage !== 1) {
+            setCurrentPage(1);
+        }
+    }, [paramsKey, currentPage]);
 
     useEffect(() => {
         const filters: FetchCourseParams = {};
@@ -45,6 +52,21 @@ function CoursesPageContent() {
 
         dispatch(fetchCoursesData(filters));
     }, [dispatch, paramsKey]);
+
+    // Debounce search input and call search API
+    useEffect(() => {
+        const trimmed = searchKeyword.trim();
+        if (trimmed.length < 2) {
+            dispatch(resetSearchState());
+            return;
+        }
+
+        const handler = setTimeout(() => {
+            dispatch(fetchSearchResults(trimmed));
+        }, 400);
+
+        return () => clearTimeout(handler);
+    }, [searchKeyword, dispatch]);
 
     if (isLoading) {
         return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
@@ -77,6 +99,16 @@ function CoursesPageContent() {
                                     <Input
                                         type="search"
                                         placeholder="Find your course"
+                                        value={searchKeyword}
+                                        onChange={(e) => setSearchKeyword((e.target as HTMLInputElement).value)}
+                                        onKeyDown={(e) => {
+                                            if ((e as React.KeyboardEvent).key === "Enter") {
+                                                const trimmed = searchKeyword.trim();
+                                                if (trimmed.length >= 1) {
+                                                    dispatch(fetchSearchResults(trimmed));
+                                                }
+                                            }
+                                        }}
                                         className="h-10 pl-10 pr-3 bg-transparent border-0 rounded-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-muted-foreground text-sm sm:text-base"
                                     />
                                 </div>
@@ -86,11 +118,39 @@ function CoursesPageContent() {
                             </div>
                         </div>
                     </header>
-                    <div className="space-y-6">
-                        {displayedCourses.map((course: Course) => {
-                            return <CourseCard key={course.id} course={course} />;
-                        })}
-                    </div>
+                    {/* Search results (shows when user types) */}
+                    {searchKeyword.trim().length > 0 ? (
+                        <div className="space-y-4 mt-4">
+                            {searchState.isLoading ? (
+                                <div className="text-center py-6">Searching...</div>
+                            ) : searchState.error ? (
+                                <div className="text-red-500 text-center py-6">{searchState.error}</div>
+                            ) : searchState.data.length > 0 ? (
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    {searchState.data.map((item) => (
+                                        <Link
+                                            key={item.id}
+                                            href={`/course/${item.slug}`}
+                                            className="block p-4 border border-border rounded-md bg-white hover:shadow"
+                                        >
+                                            <div className="text-sm font-medium text-foreground">{item.name}</div>
+                                            {item.small_description && (
+                                                <div className="text-xs text-muted-foreground mt-1">{item.small_description}</div>
+                                            )}
+                                        </Link>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="text-center py-6">No results found</div>
+                            )}
+                        </div>
+                    ) : (
+                        <div className="space-y-6">
+                            {displayedCourses.map((course: Course) => {
+                                return <CourseCard key={course.id} course={course} />;
+                            })}
+                        </div>
+                    )}
 
                     {/* Pagination */}
                     <div className="mt-8 flex justify-center">

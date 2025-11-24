@@ -30,6 +30,8 @@ interface ProgramsFiltersApiResponse {
   levels?: Level[];
   academic_years?: AcademicYear[];
   academicYears?: AcademicYear[];
+  data?: unknown;
+  programs?: ProgramType[];
 }
 
 export interface ProgramsFiltersData {
@@ -37,6 +39,8 @@ export interface ProgramsFiltersData {
   universities: University[];
   levels: Level[];
   academicYears: AcademicYear[];
+  // optional list of actual programs (id + name) returned by /programs endpoint
+  programs?: ProgramType[];
 }
 
 export const fetchProgramsData = createAsyncThunk(
@@ -73,7 +77,10 @@ export const fetchProgramsData = createAsyncThunk(
           (nested['academic_years'] as AcademicYear[] | undefined) ||
           (nested['academicYears'] as AcademicYear[] | undefined) || [];
 
-        // If academicYears are empty, try the /programs endpoint (some APIs return them there)
+        // We'll also try to fetch `/programs` to obtain a list of actual programs
+        // (id + name). Some backends expose program names there rather than under
+        // the filters endpoint.
+        let programs: ProgramType[] = [];
         if (!Array.isArray(academicYears) || academicYears.length === 0) {
           try {
             const resp2 = await api.get<Record<string, unknown>>("/programs");
@@ -88,8 +95,26 @@ export const fetchProgramsData = createAsyncThunk(
             if (Array.isArray(altAcademicYears) && altAcademicYears.length > 0) {
               academicYears = altAcademicYears;
             }
+
+            // extract programs list if present under various keys
+            const maybePrograms =
+              (p2['data'] as ProgramType[] | undefined) ||
+              (p2['programs'] as ProgramType[] | undefined) ||
+              (nested2['programs'] as ProgramType[] | undefined) || [];
+
+            if (Array.isArray(maybePrograms) && maybePrograms.length > 0) {
+              programs = maybePrograms;
+            }
           } catch {
             // ignore errors from fallback fetch
+          }
+        } else {
+          // even when academicYears came from /filters, try to read `data` for programs
+          const maybePrograms =
+            (payload['data'] as ProgramType[] | undefined) ||
+            (payload['programs'] as ProgramType[] | undefined) || [];
+          if (Array.isArray(maybePrograms) && maybePrograms.length > 0) {
+            programs = maybePrograms;
           }
         }
 
@@ -99,12 +124,16 @@ export const fetchProgramsData = createAsyncThunk(
           Array.isArray(levels) &&
           Array.isArray(academicYears)
         ) {
-          return {
+          // include programs when available (fallbacks above may have set it)
+          const result = {
             programTypes,
             universities,
             levels,
             academicYears,
-          } satisfies ProgramsFiltersData;
+            programs: (typeof programs !== 'undefined' ? programs : undefined),
+          } as ProgramsFiltersData;
+
+          return result;
         }
       }
 

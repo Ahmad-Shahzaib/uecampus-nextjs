@@ -58,7 +58,9 @@ export function ScholarshipForm(): JSX.Element {
   }, [dispatch, programsData]);
 
   // Options from store (fallback to empty arrays)
-  const programOptions: ProgramType[] = programsData?.programTypes ?? [];
+  // prefer actual `programs` (id + name) from `/programs` if available;
+  // otherwise fall back to `programTypes` returned from filters
+  const programOptions: ProgramType[] = programsData?.programs ?? programsData?.programTypes ?? [];
   const specializationOptions: ProgramType[] = programsData?.programTypes ?? [];
   const universityOptions: University[] = programsData?.universities ?? [];
   const academicyearOptions: AcademicYear[] = programsData?.academicYears ?? [];
