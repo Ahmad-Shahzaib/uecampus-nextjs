@@ -126,7 +126,39 @@ export function ScholarshipForm(): JSX.Element {
 
           {/* Right Side - Form */}
           {/* Modified: removed height constraints and overflow on mobile */}
-          <div className="bg-linear-to-b from-[#6A1B9A] to-purple-800 p-6 md:p-8 lg:overflow-y-auto lg:h-full">
+          <div
+            className="bg-gradient-to-b from-[#6A1B9A] to-purple-800 p-6 md:p-8 overflow-y-auto lg:h-full pr-4" // added pr-4 for space
+            style={{
+              scrollbarWidth: "thin",
+              scrollbarColor: "#9CA3AF transparent",
+            } as React.CSSProperties}
+          >
+            {/* Force scrollbar to appear on the right edge */}
+            <style jsx>{`
+    div::-webkit-scrollbar {
+      width: 6px;
+      position: absolute;
+      right: 0;
+    }
+    div::-webkit-scrollbar-track {
+      background: transparent;
+      margin: 8px 0;
+    }
+    div::-webkit-scrollbar-thumb {
+      background: #9CA3AF;
+      border-radius: 9999px;
+      border: 2px solid transparent;
+      background-clip: content-box;
+    }
+    div::-webkit-scrollbar-thumb:hover {
+      background: #6B7280;
+      background-clip: content-box;
+    }
+    /* Ensures scrollbar stays pinned to the right even when content is short */
+    div {
+      scrollbar-gutter: stable;
+    }
+  `}</style>
             <div>
               <div className="mb-6">
                 <h1 className="text-white lg:text-4xl md:text-2xl font-semibold leading-tight">
