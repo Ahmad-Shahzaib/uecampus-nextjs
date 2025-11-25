@@ -13,7 +13,7 @@ import { Course, FeaturedCourse } from "./types";
 const CourseSection: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { data: courses, isLoading, error } = useSelector((state: RootState) => state.courses);
-  
+
   const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
@@ -24,16 +24,26 @@ const CourseSection: React.FC = () => {
   }, [dispatch, courses]);
 
   // Get featured course names from constants (filtering out undefined entries)
-  const featuredCourseNames = useMemo(() => 
+  const featuredCourseNames = useMemo(() =>
     CoursesSection_ue
       .filter((course): course is FeaturedCourse => course != null)
       .map(course => course.name),
     []
   );
-  
+
+  // Prioritized course IDs (bring these courses to the front)
+  const prioritizedCourseIds = useMemo(() => ["67", "58", "13", "82"], []);
+
+  // Ordered prioritized courses (keeps the order defined in prioritizedCourseIds)
+  const prioritizedCourses = useMemo(() => {
+    return prioritizedCourseIds
+      .map((id) => courses.find((c) => String(c.id) === String(id)))
+      .filter(Boolean) as Course[]; // Fixed: Replaced type predicate with type assertion
+  }, [courses, prioritizedCourseIds]);
+
   // Filter featured courses by matching names
-  const featuredCourses = useMemo(() => 
-    courses.filter((course) => 
+  const featuredCourses = useMemo(() =>
+    courses.filter((course) =>
       featuredCourseNames.includes(course.name)
     ),
     [courses, featuredCourseNames]
@@ -42,12 +52,26 @@ const CourseSection: React.FC = () => {
   // Decide which courses to display
   const coursesToShow = useMemo(() => {
     if (showAll) {
-      return courses;
+      // When showing all, put prioritized courses first, then the rest
+      return [
+        ...prioritizedCourses,
+        ...courses.filter((c) => !prioritizedCourses.some((p) => p.id === c.id)),
+      ];
     }
-    return featuredCourses.length > 0 
-      ? featuredCourses.slice(0, 4) 
-      : courses.slice(0, 4);
-  }, [showAll, courses, featuredCourses]);
+
+    // Not showing all: prefer featured courses if available, otherwise all courses
+    const source = featuredCourses.length > 0 ? featuredCourses : courses;
+
+    // Bring prioritized courses (that exist in the source) to the front, then fill
+    const prioritizedInSource = prioritizedCourses.filter((p) =>
+      source.some((s) => s.id === p.id)
+    );
+    const others = source.filter(
+      (s) => !prioritizedInSource.some((p) => p.id === s.id)
+    );
+
+    return [...prioritizedInSource, ...others].slice(0, 4);
+  }, [showAll, courses, featuredCourses, prioritizedCourses]);
 
   const hasMore = useMemo(() => {
     if (showAll) return false;
@@ -97,8 +121,8 @@ const CourseSection: React.FC = () => {
         {isLoading ? (
           // Loading skeletons with better accessibility
           Array.from({ length: 3 }, (_, i) => (
-            <div 
-              key={`skeleton-${i}`} 
+            <div
+              key={`skeleton-${i}`}
               className="animate-pulse"
               role="status"
               aria-label="Loading course"
@@ -107,7 +131,7 @@ const CourseSection: React.FC = () => {
             </div>
           ))
         ) : error ? (
-          <div 
+          <div
             className="col-span-full text-center text-red-500 py-8"
             role="alert"
             aria-live="polite"
@@ -127,7 +151,7 @@ const CourseSection: React.FC = () => {
             />
           ))
         ) : (
-          <div 
+          <div
             className="col-span-full text-center text-gray-500 py-8"
             role="status"
             aria-live="polite"
