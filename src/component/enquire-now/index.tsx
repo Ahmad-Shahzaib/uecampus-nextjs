@@ -113,7 +113,7 @@ export function ScholarshipForm(): JSX.Element {
     <main className="bg-gradient-to-br from-purple-50 to-indigo-100 flex p-4 md:p-8">
       <div className="w-full">
         {/* Modified grid container: removed fixed height on mobile */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden shadow-2xl bg-white lg:h-[680px]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden shadow-2xl bg-white min-h-screen">
           {/* Left Side - Image */}
           <div className="relative h-64 lg:h-full">
             <img
