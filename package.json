@@ -48,6 +48,7 @@
     "react-dom": "19.2.0",
     "react-globe.gl": "^2.36.0",
     "react-hook-form": "^7.65.0",
+    "react-phone-number-input": "^3.4.14",
     "react-redux": "^9.2.0",
     "react-resizable-panels": "^3.0.6",
     "redux": "^5.0.1",

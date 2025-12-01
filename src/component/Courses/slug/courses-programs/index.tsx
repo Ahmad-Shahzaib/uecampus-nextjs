@@ -62,7 +62,7 @@ export default function ProgramPage() {
   const activeTabContent = activeTab?.content;
   const activeTabFeeFaqs = activeTab?.feeFaqs ?? [];
   const showFeeFaqs =
-    activeTab?.title?.trim().toLowerCase() === "tuition & financing" &&
+    activeTab?.title?.trim().toLocaleUpperCase() === "TUITION & FINANCING" &&
     activeTabFeeFaqs.length > 0;
 
   const paymentContent = useMemo(() => {
@@ -136,7 +136,7 @@ export default function ProgramPage() {
                         : "text-gray-700 hover:text-gray-900 border-transparent hover:border-gray-300"
                     }`}
                   >
-                    {tab.title}
+                    {tab.title.toUpperCase()}
                   </button>
                 ))}
               </div>

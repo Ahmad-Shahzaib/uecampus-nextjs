@@ -26,6 +26,7 @@ import randomCoursesReducer from "./slices/randomCoursesSlice";
 import settingsReducer from "./slices/settingsSlice";
 import searchReducer from "./slices/searchSlice";
 import enquiryReducer from "./slices/enquirySlice";
+import courseOrderReducer from "./slices/courseOrder";
 
 type GenericPersistConfig = PersistConfig<any>;
 
@@ -201,6 +202,12 @@ const enquiryPersistConfig: GenericPersistConfig = {
   keyPrefix: "redux-",
   whitelist: ["data"],
 };
+const courseOrderPersistConfig: GenericPersistConfig = {
+  key: "courseOrder",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: ["data"],
+};
 const appReducer = combineReducers({
   courses: persistReducer(coursesPersistConfig, coursesReducer),
   faqs: persistReducer(faqsPersistConfig, faqsReducer),
@@ -228,6 +235,7 @@ const appReducer = combineReducers({
     randomCoursesPersistConfig,
     randomCoursesReducer
   ),
+  courseOrder: persistReducer(courseOrderPersistConfig, courseOrderReducer),
   search: persistReducer(searchPersistConfig, searchReducer),
   settings: persistReducer(settingsPersistConfig, settingsReducer),
   enquiry: persistReducer(enquiryPersistConfig, enquiryReducer),

@@ -6,22 +6,23 @@ import { ProgramCard } from "./CourseCard";
 import { CoursesSection_ue } from "@/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/rootReducer";
-import { fetchCoursesData } from "@/redux/thunk/courses";
+import { fetchCourseOrder } from "@/redux/thunk/courseOrder";
 import { AppDispatch } from "@/redux/store";
 import { Course, FeaturedCourse } from "./types";
 
 const CourseSection: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { data: courses, isLoading, error } = useSelector((state: RootState) => state.courses);
+  const courseOrder = useSelector((state: RootState) => state.courseOrder?.data ?? []);
 
   const [showAll, setShowAll] = useState(false);
 
+  
+
+  // Fetch prioritized order (ids) from server once on mount
   useEffect(() => {
-    // Avoid refetch when data already cached via redux-persist
-    if (!courses || courses.length === 0) {
-      dispatch(fetchCoursesData({}));
-    }
-  }, [dispatch, courses]);
+    dispatch(fetchCourseOrder());
+  }, [dispatch]);
 
   // Get featured course names from constants (filtering out undefined entries)
   const featuredCourseNames = useMemo(() =>
@@ -31,14 +32,42 @@ const CourseSection: React.FC = () => {
     []
   );
 
-  // Prioritized course IDs (bring these courses to the front)
-  const prioritizedCourseIds = useMemo(() => ["67", "58", "13", "82"], []);
+  // Dynamic prioritized course IDs - using includes method to fetch records
+  const prioritizedCourseIds = useMemo(() => {
+    // If we have courses, prefer server-provided order (but only IDs present
+    // in the fetched `courses`). If none of the server IDs match, fall back
+    // to featured-course names. If no courses exist yet, use server order.
+    if (courses && courses.length > 0) {
+      if (courseOrder && courseOrder.length > 0) {
+        const presentServerIds = courseOrder.filter((id) =>
+          courses.some((c) => String(c.id) === String(id))
+        );
+        if (presentServerIds.length > 0) return presentServerIds;
+      }
+
+      // Fallback to featured names when server order doesn't match any fetched course
+      const fromFeatured = courses
+        .filter((course) => featuredCourseNames.includes(course.name))
+        .map((course) => String(course.id));
+      if (fromFeatured.length > 0) return fromFeatured;
+
+      return [];
+    }
+
+    // If no courses yet, but server provided an order, use it so the client
+    // can attempt to prioritize when courses arrive later.
+    if (courseOrder && courseOrder.length > 0) {
+      return courseOrder;
+    }
+
+    return [];
+  }, [courses, featuredCourseNames, courseOrder]);
 
   // Ordered prioritized courses (keeps the order defined in prioritizedCourseIds)
   const prioritizedCourses = useMemo(() => {
     return prioritizedCourseIds
       .map((id) => courses.find((c) => String(c.id) === String(id)))
-      .filter(Boolean) as Course[]; // Fixed: Replaced type predicate with type assertion
+      .filter(Boolean) as Course[];
   }, [courses, prioritizedCourseIds]);
 
   // Filter featured courses by matching names
