@@ -11,7 +11,7 @@ interface PaginationProps {
 
 export default function PaginationComponent({ currentPage, totalPages, onPageChange }: PaginationProps) {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 ">
       <Button
         variant="outline"
         size="sm"
