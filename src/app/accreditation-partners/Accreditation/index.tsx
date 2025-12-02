@@ -11,6 +11,7 @@ import { RootState } from "@/redux/rootReducer";
 import AccreditationBanner from "./AccreditationBanner";
 import EducationCards from "@/component/educationcard/EducationCards";
 import { AppDispatch } from "@/redux/store"; // Import AppDispatch type
+import Loader from "@/components/common/Loader";
 
 const AccreditationImage = () => {
   // Use the typed dispatch
@@ -30,9 +31,9 @@ const AccreditationImage = () => {
   // Handle loading states
   if (accreditationLoading || partnershipLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="text-xl">Loading data...</div>
-      </div>
+     <div className="min-h-screen flex items-center justify-center">
+                <Loader text="" />
+            </div>
     );
   }
 

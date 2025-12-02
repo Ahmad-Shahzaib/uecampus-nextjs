@@ -14,6 +14,7 @@ import ProgramPage from "@/component/Courses/slug/courses-programs";
 import CourseDetailHeader from "@/component/Courses/slug/header";
 import JoinUs from "@/component/joinus";
 import RandomCourses from "@/component/Courses/random/RandomCourses";
+import Loader from "@/components/common/Loader";
 
 const DetailPage = () => {
   const dispatch = useDispatch();
@@ -41,8 +42,8 @@ const DetailPage = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl">Loading course details...</div>
-      </div>
+                     <Loader text="" />
+                 </div> 
     );
   }
 
@@ -61,9 +62,7 @@ const DetailPage = () => {
   if (!data || !hasDataForSlug) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl">
-          {isLoading ? "Loading course details..." : "Course not found."}
-        </div>
+        <Loader text="" />
       </div>
     );
   }

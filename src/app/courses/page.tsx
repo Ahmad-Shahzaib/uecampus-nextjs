@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Loader from "@/components/common/Loader";
 import CourseCard from "@/component/Courses/courses-card";
 import FilterSidebar from "@/component/Courses/filter-sidebar";
 import PaginationComponent from "@/component/Courses/pagination";
@@ -68,7 +69,11 @@ function CoursesPageContent() {
     }, [searchKeyword, dispatch]);
 
     if (isLoading) {
-        return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <Loader text="" />
+            </div>  
+        );
     }
 
     if (error) {
@@ -121,7 +126,9 @@ function CoursesPageContent() {
                     {searchKeyword.trim().length > 0 ? (
                         <div className="space-y-4 mt-4">
                             {searchState.isLoading ? (
-                                <div className="text-center py-6">Searching...</div>
+                                <div className="flex justify-center py-6">
+                                    <Loader size={48} text="" />
+                                </div>
                             ) : searchState.error ? (
                                 <div className="text-red-500 text-center py-6">{searchState.error}</div>
                             ) : searchState.data.length > 0 ? (

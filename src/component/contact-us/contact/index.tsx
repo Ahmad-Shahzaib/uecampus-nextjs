@@ -6,6 +6,7 @@ import { RootState } from "@/redux/rootReducer";
 import { fetchContactUsData } from "@/redux/thunk/contactUsThunk";
 import { ContactUsData } from "@/redux/slices/contactUsSlice";
 import { useImageLoader } from "@/hooks/useImageLoader";
+import Loader from "@/components/common/Loader";
 
 export default function ContactPage() {
   const dispatch = useDispatch();
@@ -31,49 +32,27 @@ export default function ContactPage() {
   // ---------- LOADING ----------
   if (isLoading) {
     return (
-      <main className="min-h-screen flex items-center justify-center p-4">
-        <div className="flex flex-col items-center gap-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#6A1B9A]"></div>
-          <div className="text-xl text-gray-600">Loading contact information...</div>
-        </div>
-      </main>
+       <div className="min-h-screen flex items-center justify-center">
+                <Loader text="" />
+            </div> 
     );
   }
 
   // ---------- ERROR ----------
   if (error) {
     return (
-      <main className="min-h-screen flex items-center justify-center p-4">
-        <div className="text-center">
-          <div className="text-6xl mb-4">⚠️</div>
-          <div className="text-xl text-red-600 mb-2">Failed to load contact information</div>
-          <div className="text-gray-600 mb-4">{error}</div>
-          <button
-            onClick={() => dispatch(fetchContactUsData() as any)}
-            className="px-4 py-2 bg-[#6A1B9A] text-white rounded-lg hover:bg-[#5A1A7A] transition-colors"
-          >
-            Try Again
-          </button>
-        </div>
-      </main>
+      <div className="min-h-screen flex items-center justify-center">
+                <Loader text="" />
+            </div>
     );
   }
 
   // ---------- NO DATA ----------
   if (!data) {
     return (
-      <main className="min-h-screen flex items-center justify-center p-4">
-        <div className="text-center">
-          <div className="text-6xl mb-4">📭</div>
-          <div className="text-xl text-gray-600 mb-4">No contact data available.</div>
-          <button
-            onClick={() => dispatch(fetchContactUsData() as any)}
-            className="px-4 py-2 bg-[#6A1B9A] text-white rounded-lg hover:bg-[#5A1A7A] transition-colors"
-          >
-            Refresh
-          </button>
-        </div>
-      </main>
+     <div className="min-h-screen flex items-center justify-center">
+                <Loader text="" />
+            </div>
     );
   }
 

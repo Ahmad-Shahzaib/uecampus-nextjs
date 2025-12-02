@@ -6,6 +6,7 @@ import { fetchAboutData } from "@/redux/thunk/about";
 import { RootState } from "@/redux/rootReducer";
 import StatsCards from "@/component/common/StatsCards";
 import Aboutbanner from "../Banner/Aboutbanner";
+import Loader from "@/components/common/Loader";
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -62,9 +63,9 @@ export default function AboutUsStats() {
 
   if (isLoading)
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-xl">Loading about data...</div>
-      </div>
+    <div className="min-h-screen flex items-center justify-center">
+                <Loader text="" />
+            </div>
     );
 
   if (error)

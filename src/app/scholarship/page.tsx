@@ -18,6 +18,7 @@ import Banner from "@/component/about-us/Banner";
 import { StatCard } from "@/component/about-us/stats/card";
 import StatsCards from "@/component/common/StatsCards";
 import ScholarshipCards from "@/component/scholarship/scholarship-cards";
+import Loader from "@/components/common/Loader";
 
 export default function Page() {
   const dispatch = useDispatch();
@@ -86,7 +87,9 @@ export default function Page() {
       <div className="px-6">
         {scholarshipLoading ? (
           <div className="flex justify-center items-center h-32">
-            <div className="text-xl">Loading stats...</div>
+            <div className="min-h-screen flex items-center justify-center">
+                <Loader text="" />
+            </div> 
           </div>
         ) : scholarshipError ? (
           <div className="flex justify-center items-center h-32">

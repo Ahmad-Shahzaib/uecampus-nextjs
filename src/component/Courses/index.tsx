@@ -9,6 +9,7 @@ import { RootState } from "@/redux/rootReducer";
 import { fetchCourseOrder } from "@/redux/thunk/courseOrder";
 import { AppDispatch } from "@/redux/store";
 import { Course, FeaturedCourse } from "./types";
+import Loader from "@/components/common/Loader";
 
 const CourseSection: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -147,18 +148,10 @@ const CourseSection: React.FC = () => {
 
       {/* Courses Grid */}
       <div className="grid gap-4 sm:gap-6 grid-cols-[repeat(auto-fit,minmax(275px,1fr))]">
-        {isLoading ? (
-          // Loading skeletons with better accessibility
-          Array.from({ length: 3 }, (_, i) => (
-            <div
-              key={`skeleton-${i}`}
-              className="animate-pulse"
-              role="status"
-              aria-label="Loading course"
-            >
-              <div className="w-full h-80 bg-gray-300 dark:bg-gray-700 rounded-3xl"></div>
-            </div>
-          ))
+        {isLoading || courses == null ? (
+          <div className="col-span-full flex items-center justify-center py-8">
+            <Loader size={120} text={""} />
+          </div>
         ) : error ? (
           <div
             className="col-span-full text-center text-red-500 py-8"

@@ -2,6 +2,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Loader from "@/components/common/Loader";
 import { useDispatch, useSelector } from "@/redux/store";
 import { fetchHeroData } from "@/redux/thunk/hero";
 import { fetchSearchResults, CourseSearchItem } from "@/redux/thunk/searchCourses";
@@ -59,16 +60,17 @@ const HeroSection = () => {
   if (isLoading) {
     return (
       <div className="bg-black h-[500px] flex items-center justify-center rounded-lg">
-        <p className="text-white animate-pulse">Loading hero section...</p>
+        <Loader size={120} text={"Loading hero section..."} />
       </div>
     );
   }
 
   // Error
+  // Error or missing hero data — show loader image instead of plain text
   if (error || !hero) {
     return (
       <div className="bg-black h-[500px] flex items-center justify-center rounded-lg">
-        <p className="text-red-400">{error || "No hero data available"}</p>
+        <Loader size={120} text={error ? String(error) : ""} />
       </div>
     );
   }
