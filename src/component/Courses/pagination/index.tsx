@@ -15,36 +15,56 @@ export default function PaginationComponent({ currentPage, totalPages, onPageCha
       <Button
         variant="outline"
         size="sm"
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
+        onClick={() => onPageChange(Math.max(1, currentPage - 1))}
+        disabled={currentPage === 1 || totalPages <= 1}
         className="gap-1"
       >
         <ChevronLeft className="w-4 h-4" />
         Prev
       </Button>
 
-      {/* Page Numbers: only show 1, 2 and ellipsis when there are more pages */}
+      {/* Page Numbers: show first, a window around current, and last with ellipses */}
       {(() => {
-        const pages: number[] = []
-        if (totalPages >= 1) pages.push(1)
-        if (totalPages >= 2) pages.push(2)
+        if (totalPages <= 1) return null
+
+        const pages: (number | "...")[] = []
+
+        const left = Math.max(2, currentPage - 2)
+        const right = Math.min(totalPages - 1, currentPage + 2)
+
+        // Always show first
+        pages.push(1)
+
+        if (left > 2) {
+          pages.push("...")
+        }
+
+        for (let p = left; p <= right; p++) {
+          pages.push(p)
+        }
+
+        if (right < totalPages - 1) {
+          pages.push("...")
+        }
+
+        if (totalPages > 1) pages.push(totalPages)
 
         return (
           <>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                size="sm"
-                variant={currentPage === page ? "default" : "outline"}
-                onClick={() => onPageChange(page)}
-                className={currentPage === page ? "bg-purple-600 hover:bg-purple-700 text-white" : ""}
-              >
-                {page}
-              </Button>
-            ))}
-
-            {totalPages > pages.length && (
-              <span className="px-2 text-muted-foreground">…</span>
+            {pages.map((page, idx) =>
+              page === "..." ? (
+                <span key={`e-${idx}`} className="px-2 text-muted-foreground">…</span>
+              ) : (
+                <Button
+                  key={page}
+                  size="sm"
+                  variant={currentPage === page ? "default" : "outline"}
+                  onClick={() => onPageChange(Number(page))}
+                  className={currentPage === page ? "bg-purple-600 hover:bg-purple-700 text-white" : ""}
+                >
+                  {page}
+                </Button>
+              )
             )}
           </>
         )
@@ -53,8 +73,8 @@ export default function PaginationComponent({ currentPage, totalPages, onPageCha
       <Button
         variant="outline"
         size="sm"
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
+        onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
+        disabled={currentPage === totalPages || totalPages <= 1}
         className="gap-1"
       >
         Next

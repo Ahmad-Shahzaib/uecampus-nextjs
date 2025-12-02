@@ -27,10 +27,9 @@ function CoursesPageContent() {
     const paramsKey = searchParams.toString();
 
     useEffect(() => {
-        if (currentPage !== 1) {
-            setCurrentPage(1);
-        }
-    }, [paramsKey, currentPage]);
+        // Reset to first page only when search params change
+        setCurrentPage(1);
+    }, [paramsKey]);
 
     useEffect(() => {
         const filters: FetchCourseParams = {};
@@ -152,14 +151,16 @@ function CoursesPageContent() {
                         </div>
                     )}
 
-                    {/* Pagination */}
-                    <div className="mt-8 flex justify-center">
-                        <PaginationComponent
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                            onPageChange={setCurrentPage}
-                        />
-                    </div>
+                    {/* Pagination - show only when not searching */}
+                    {searchKeyword.trim().length === 0 && (
+                        <div className="mt-8 flex justify-center">
+                            <PaginationComponent
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                onPageChange={setCurrentPage}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
