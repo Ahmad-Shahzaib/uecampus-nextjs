@@ -101,8 +101,11 @@ const CourseDetailHeader: React.FC<CourseDetailHeaderProps> = ({
       className="h-auto min-h-[400px] flex items-center justify-center p-4 sm:p-6 m-3 rounded-2xl lg:p-16 bg-cover bg-center relative overflow-hidden"
       style={safeBg ? { backgroundImage: `url("${safeBg}")` } : undefined}
     >
-      {/* Add an overlay for better text readability. Use a dark background with opacity so it works even when no image present */}
-      <div className="absolute inset-0  bg-opacity-40 rounded-2xl" />
+      {/* Add an overlay for better text readability. Use an inline RGBA background so it works reliably without Tailwind bg color classes */}
+      <div
+        className="absolute inset-0 rounded-2xl"
+        style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
+      />
 
       <div className="flex flex-col lg:flex-row w-full relative z-10 gap-6 lg:gap-8 max-w-7xl mx-auto items-center">
         {/* Left section - title */}
