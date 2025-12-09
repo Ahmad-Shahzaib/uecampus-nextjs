@@ -4,6 +4,7 @@ import AboutUsStats from '@/component/about-us/stats'
 import { AboutSection } from '@/component/education/sections/about'
 import { EducationSection } from '@/component/education/sections/education'
 import JoinUs from '@/component/joinus'
+import Seo from '@/component/common/Seo'
 import { RootState, useDispatch, useSelector } from "@/redux/store";
 import { fetchAboutSectionData } from '@/redux/thunk/aboutSection';
 import { fetchOnlineDegreeCards } from '@/redux/thunk/onlineDegreeCards';
@@ -54,6 +55,7 @@ const Page = () => {
 
     return (
         <div>
+            <Seo pageKey="about-us" />
             <div>
                 <AboutUsStats />
             </div>

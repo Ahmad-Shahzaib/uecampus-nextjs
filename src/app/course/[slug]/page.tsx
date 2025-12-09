@@ -15,6 +15,7 @@ import CourseDetailHeader from "@/component/Courses/slug/header";
 import JoinUs from "@/component/joinus";
 import RandomCourses from "@/component/Courses/random/RandomCourses";
 import Loader from "@/components/common/Loader";
+import Seo from "@/component/common/Seo";
 
 const DetailPage = () => {
   const dispatch = useDispatch();
@@ -73,6 +74,8 @@ const DetailPage = () => {
 
   return (
     <div className="space-y-4">
+        <Seo pageKey="program" />
+
       {/* Pass all content through props */}
       <CourseDetailHeader
         name={course.name}

@@ -4,6 +4,7 @@ import "./globals.css";
 import { ReduxProvider } from "@/redux/Provider";
 import { Footer } from "@/component/footer";
 import HeaderSection from "@/component/Header";
+import Seo from "@/component/common/Seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReduxProvider>
+          <Seo />
           {/* ✅ Fixed Header */}
           
             <HeaderSection />

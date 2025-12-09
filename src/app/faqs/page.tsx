@@ -1,4 +1,5 @@
 import CircularImage from "@/component/about-us/Banner/CommonImage";
+import Seo from "@/component/common/Seo";
 import Faqs from "@/component/faqs/Faqs";
 import FrequentlyAskedQuestionHeader from "@/component/faqs/faqsQuestionHeader";
 import JoinUs from "@/component/joinus";
@@ -14,6 +15,8 @@ const Page = () => {
 
   return (
     <>
+         <Seo pageKey="faq" />
+
       <div className="p-5 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-8 mt-3">
         <div className="w-full md:w-1/2 lg:w-5/12">
           <CircularImage

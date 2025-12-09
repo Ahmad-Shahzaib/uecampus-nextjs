@@ -16,6 +16,7 @@ import type { Course } from "@/redux/slices/courses";
 import { fetchSearchResults } from "@/redux/thunk/searchCourses";
 import { resetSearchState } from "@/redux/slices/searchSlice";
 import Link from "next/link";
+import Seo from "@/component/common/Seo";
 
 function CoursesPageContent() {
     const dispatch = useDispatch();
@@ -72,7 +73,7 @@ function CoursesPageContent() {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <Loader text="" />
-            </div>  
+            </div>
         );
     }
 
@@ -87,6 +88,8 @@ function CoursesPageContent() {
 
     return (
         <div className="flex flex-col min-h-screen bg-background">
+            <Seo pageKey="program" />
+
             <div className="flex sm:flex-row flex-col w-full gap-8 p-8">
                 <FilterSidebar />
                 <div className="flex-1">

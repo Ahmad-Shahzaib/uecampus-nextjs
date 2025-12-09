@@ -19,6 +19,7 @@ import { StatCard } from "@/component/about-us/stats/card";
 import StatsCards from "@/component/common/StatsCards";
 import ScholarshipCards from "@/component/scholarship/scholarship-cards";
 import Loader from "@/components/common/Loader";
+import Seo from "@/component/common/Seo";
 
 export default function Page() {
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ export default function Page() {
     title: "Quality Education That's Affordable — Because Your Future Matters",
     description: "This scholarship is awarded to outstanding students who demonstrate exceptional academic achievement. Whether you're a high-performing high school graduate or a top-ranking university student, UeCampus recognizes your hard work and dedication. Eligible applicants may receive partial or full tuition support based on their academic performance and qualifications.",
     backgroundImage: "",
-     about: {
+    about: {
       secondCardTitle: about?.secondCardTitle,
       secondCardDescription: about?.secondCardDescription,
     }
@@ -81,6 +82,8 @@ export default function Page() {
 
   return (
     <div>
+      <Seo pageKey="scholarship" />
+
       <div className="rounded-2xl overflow-hidden px-6 py-8">
         <Banner />
       </div>
@@ -88,8 +91,8 @@ export default function Page() {
         {scholarshipLoading ? (
           <div className="flex justify-center items-center h-32">
             <div className="min-h-screen flex items-center justify-center">
-                <Loader text="" />
-            </div> 
+              <Loader text="" />
+            </div>
           </div>
         ) : scholarshipError ? (
           <div className="flex justify-center items-center h-32">
@@ -103,7 +106,7 @@ export default function Page() {
       <div className="min-h-screen py-8 px-6">
         <div className="grid gap-6 mx-auto grid-cols-1 md:grid-cols-[minmax(300px,1fr)_minmax(300px,1fr)]">
           <AboutSection
-             about={about}
+            about={about}
             isLoading={aboutLoading}
             error={aboutError}
           />

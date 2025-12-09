@@ -1,10 +1,13 @@
 import React from "react";
 import AccreditationImage from "./Accreditation";
+import Seo from "@/component/common/Seo";
 
 const Page = () => {
   return (
     <div>
-       <AccreditationImage />
+      <Seo pageKey="accreditation-partners" />
+
+      <AccreditationImage />
     </div>
   );
 };

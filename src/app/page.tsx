@@ -17,6 +17,7 @@ import { fetchFeatureCardsData } from "@/redux/thunk/featureCards";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { fetchAboutSectionData } from "@/redux/thunk/aboutSection";
+import Seo from "@/component/common/Seo";
 
 export default function Home() {
   const router = useRouter();
@@ -82,6 +83,7 @@ const cardData = {
 
   return (
     <div className="mt-3">
+       <Seo pageKey="home" />
       <div className="py-6 bg-gray-800 flex flex-col space-y-8 ">
         <div className="sm:px-10 px-4">
           <HeroSection />
