@@ -8,8 +8,7 @@ import JoinUs from '@/component/joinus';
 const page = () => {
     return (
         <>
-                 <Seo pageKey="contact" />
-
+            <Seo pageKey="contact" />
             <ContactPage />
             <div>
                 <JoinUs />
