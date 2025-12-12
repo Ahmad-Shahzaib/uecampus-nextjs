@@ -87,9 +87,22 @@ const EducationCards = () => {
                 />
 
                 {/* Button */}
-                <Button className="w-full bg-[#6A1B9A] text-white border-0 hover:bg-white hover:text-[#5a1782] py-3 rounded-lg font-semibold transition-colors duration-300">
-                  {partner.button_name}
-                </Button>
+                {partner.link ? (
+                  <a
+                    href={partner.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full"
+                  >
+                    <Button className="w-full bg-[#6A1B9A] text-white border-0 hover:bg-white hover:text-[#5a1782] py-3 rounded-lg font-semibold transition-colors duration-300">
+                      {partner.button_name}
+                    </Button>
+                  </a>
+                ) : (
+                  <Button className="w-full bg-[#6A1B9A] text-white border-0 hover:bg-white hover:text-[#5a1782] py-3 rounded-lg font-semibold transition-colors duration-300">
+                    {partner.button_name}
+                  </Button>
+                )}
               </div>
             </div>
           ))}
