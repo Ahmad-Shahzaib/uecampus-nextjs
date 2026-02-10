@@ -20,10 +20,9 @@ import Seo from "@/component/common/Seo";
 
 function CoursesPageContent() {
     const dispatch = useDispatch();
-    const { data: courses = [], isLoading, error } = useSelector((state: RootState) => state.courses);
+    const { data: courses = [], isLoading, error, pagination } = useSelector((state: RootState) => state.courses);
     const searchState = useSelector((state: RootState) => state.search);
     const [currentPage, setCurrentPage] = useState(1);
-    const coursesPerPage = 6;
     const [searchKeyword, setSearchKeyword] = useState("");
     const searchParams = useSearchParams();
     const paramsKey = searchParams.toString();
@@ -51,8 +50,19 @@ function CoursesPageContent() {
             filters.level_ids = levelIds;
         }
 
+        // Use server-side pagination by sending the page param
+        filters.page = currentPage;
+
         dispatch(fetchCoursesData(filters));
-    }, [dispatch, paramsKey]);
+    }, [dispatch, paramsKey, currentPage]);
+
+    // Keep local currentPage in sync with server response (in case server corrects it)
+    useEffect(() => {
+        if (pagination && pagination.current_page && pagination.current_page !== currentPage) {
+            setCurrentPage(pagination.current_page);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pagination?.current_page]);
 
     // Debounce search input and call search API
     useEffect(() => {
@@ -81,10 +91,7 @@ function CoursesPageContent() {
         return <div className="flex justify-center items-center min-h-screen text-red-500">{error}</div>;
     }
 
-    const totalPages = Math.ceil(courses.length / coursesPerPage);
-    const startIndex = (currentPage - 1) * coursesPerPage;
-    const endIndex = startIndex + coursesPerPage;
-    const displayedCourses = courses.slice(startIndex, endIndex);
+    const totalPages = pagination?.last_page ?? 1;
 
     return (
         <div className="flex flex-col min-h-screen bg-background">
@@ -155,7 +162,7 @@ function CoursesPageContent() {
                         </div>
                     ) : (
                         <div className="space-y-6">
-                            {displayedCourses.map((course: Course) => {
+                            {courses.map((course: Course) => {
                                 return <CourseCard key={course.id} course={course} />;
                             })}
                         </div>

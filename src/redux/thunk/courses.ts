@@ -1,6 +1,7 @@
 // src/redux/thunk/courses.ts
 import { getAxiosInstance } from "@/lib/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import type { Course } from "@/redux/slices/courses";
 
 const coursesApis = getAxiosInstance();
 
@@ -8,6 +9,17 @@ export interface FetchCourseParams {
   program_type_ids?: string;
   university_ids?: string;
   level_ids?: string;
+  page?: string | number;
+  per_page?: string | number;
+}
+
+export interface Pagination {
+  total: number;
+  per_page: number;
+  current_page: number;
+  last_page: number;
+  from?: number | null;
+  to?: number | null;
 }
 
 export const fetchCoursesData = createAsyncThunk(
@@ -18,7 +30,7 @@ export const fetchCoursesData = createAsyncThunk(
         Object.entries(params ?? {}).filter(
           ([, value]) => value !== undefined && value !== ""
         )
-      ) as Record<string, string>;
+      ) as Record<string, string | number>;
       const hasFilters = Object.keys(filterParams).length > 0;
 
       const response = await coursesApis.get(
@@ -27,7 +39,7 @@ export const fetchCoursesData = createAsyncThunk(
       );
 
       const coursesArray =
-        response?.data?.courses ?? response?.data?.data ?? []; // Extract the courses array for either endpoint
+        response?.data?.courses ?? response?.data?.data ?? response?.data ?? [];
 
       // Transform the API data to match our interface
       const transformedCourses = (coursesArray as unknown[]).map((course) => {
@@ -55,12 +67,9 @@ export const fetchCoursesData = createAsyncThunk(
           created_at: string;
           updated_at: string;
         };
-        
-        // Extract section_3 fields from course_structures (first structure if available)
-        const courseStructure = c.course_structures && c.course_structures.length > 0 
-          ? c.course_structures[0] 
-          : null;
-        
+
+        const courseStructure = c.course_structures && c.course_structures.length > 0 ? c.course_structures[0] : null;
+
         return {
           id: c.id,
           name: c.name,
@@ -82,15 +91,17 @@ export const fetchCoursesData = createAsyncThunk(
           updated_at: c.updated_at,
           video: c.video,
           currency: c.full_payment?.currency ?? "",
-        };
+        } as Course;
       });
 
-      return transformedCourses;
+      const pagination = response?.data?.pagination ?? null;
+
+      return { courses: transformedCourses, pagination };
     } catch (error: unknown) {
       const err = error as { response?: { data?: { message?: string } } };
-      const errorMessage =
-        err?.response?.data?.message || "Failed to fetch course data";
+      const errorMessage = err?.response?.data?.message || "Failed to fetch course data";
       return rejectWithValue(errorMessage);
     }
   }
 );
+

@@ -98,6 +98,11 @@ export default function FilterSidebar() {
       paramKey: "level_ids",
       items: data?.levels ?? [],
     },
+    {
+      title: "Academic Years",
+      paramKey: "academic_year_ids",
+      items: data?.academicYears ?? [],
+    },
   ].filter((config) => config.items.length > 0);
 
   const hasFilters = filterConfigs.length > 0;

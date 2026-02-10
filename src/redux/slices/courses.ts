@@ -24,16 +24,36 @@ export interface Course {
     updated_at?: string;
 }
 
+interface Pagination {
+    total: number;
+    per_page: number;
+    current_page: number;
+    last_page: number;
+    from?: number | null;
+    to?: number | null;
+}
+
 interface CoursesState {
     isLoading: boolean;
     error: string | null;
     data: Course[];
+    pagination: Pagination;
 }
+
+const defaultPagination: Pagination = {
+    total: 0,
+    per_page: 0,
+    current_page: 1,
+    last_page: 1,
+    from: 0,
+    to: 0,
+};
 
 const defaultState: CoursesState = {
     isLoading: false,
     error: null,
     data: [],
+    pagination: defaultPagination,
 };
 
 const coursesSlice = createSlice({
@@ -48,11 +68,15 @@ const coursesSlice = createSlice({
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(fetchCoursesData.fulfilled, (state, action: PayloadAction<Course[]>) => {
-                state.isLoading = false;
-                state.error = null;
-                state.data = action.payload;
-            })
+            .addCase(
+                fetchCoursesData.fulfilled,
+                (state, action: PayloadAction<{ courses: Course[]; pagination?: Pagination | null }>) => {
+                    state.isLoading = false;
+                    state.error = null;
+                    state.data = action.payload.courses;
+                    state.pagination = action.payload.pagination ?? defaultPagination;
+                }
+            )
             .addCase(fetchCoursesData.rejected, (state, action) => {
                 state.isLoading = false;
                 // Prefer payload from rejectWithValue; fallback to generic error.message

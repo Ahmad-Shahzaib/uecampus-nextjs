@@ -9,6 +9,7 @@ import { fetchLatestBlogs } from '@/redux/thunk/blogsThunk';
 import { sendContact } from '@/redux/thunk/contactThunk';
 import Loader from '@/components/common/Loader';
 import { getBlogImageUrl } from '@/lib/utils';
+import Seo from '@/component/common/Seo';
 
 // Main Blog Page Component - All in One
 const BlogsPage = () => {
@@ -22,7 +23,7 @@ const BlogsPage = () => {
 
   const [activeCategory, setActiveCategory] = useState('General Management');
 
- 
+
 
   // Bottom section blogs
 
@@ -45,7 +46,7 @@ const BlogsPage = () => {
         message: formData.message,
       })).unwrap();
       // reset form on success
-      setFormData({ name: '', email: '', phone: '', country: '', message : '' });
+      setFormData({ name: '', email: '', phone: '', country: '', message: '' });
     } catch (err) {
       // error handled in slice; log for debugging
       console.error('Contact submit error:', err);
@@ -65,33 +66,31 @@ const BlogsPage = () => {
     const href = slug ? `/blogs/detail?slug=${slug}` : `/blogs/detail`;
     return (
       <Link href={href} className="block">
-        <div className={`group cursor-pointer overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-500 ${
-          darkMode ? 'bg-gray-900' : 'bg-white'
-        }`}>
+        <div className={`group cursor-pointer overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-500 ${darkMode ? 'bg-gray-900' : 'bg-white'
+          }`}>
           <div className="relative h-64 overflow-hidden">
             {/* Gradient Overlay */}
-            <div className={`absolute inset-0 z-10 transition-opacity duration-500 ${
-              darkMode 
-                ? 'bg-gradient-to-b from-transparent via-transparent to-gray-900 opacity-70 group-hover:opacity-90' 
+            <div className={`absolute inset-0 z-10 transition-opacity duration-500 ${darkMode
+                ? 'bg-gradient-to-b from-transparent via-transparent to-gray-900 opacity-70 group-hover:opacity-90'
                 : 'bg-gradient-to-b from-transparent via-transparent to-black opacity-60 group-hover:opacity-80'
-            }`} />
-            
+              }`} />
+
             {/* Image with gradient overlay */}
             <div className="relative w-full h-full bg-gradient-to-br from-purple-900 via-purple-700 to-purple-600">
-              <img src={getBlogImageUrl(image)}  alt={title} className="absolute  inset-0 w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" loading="lazy" />
+              <img src={getBlogImageUrl(image)} alt={title} className="absolute  inset-0 w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" loading="lazy" />
               {/* Decorative pattern */}
               <div className="absolute inset-0 opacity-20">
                 <div className="absolute inset-0 bg-gradient-to-br from-white to-transparent" />
               </div>
             </div>
-            
+
             {/* Category Badge */}
             <div className="absolute top-4 left-4 z-20">
               <span className="inline-block bg-purple-800 text-white px-4 py-1.5 text-xs font-semibold   rounded-full shadow-lg">
                 {category}
               </span>
             </div>
-            
+
             {/* Read More Icon */}
             <div className="absolute top-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <div className="bg-purple-800 text-white p-2 rounded-full shadow-lg">
@@ -100,12 +99,11 @@ const BlogsPage = () => {
                 </svg>
               </div>
             </div>
-            
+
             {/* Title */}
             <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
-              <h1 className={`text-lg 0 font-bold leading-tight transition-all duration-300 ${
-                darkMode ? 'text-white' : 'text-white'
-              }  `}>
+              <h1 className={`text-lg 0 font-bold leading-tight transition-all duration-300 ${darkMode ? 'text-white' : 'text-white'
+                }  `}>
                 {title}
               </h1>
             </div>
@@ -126,7 +124,9 @@ const BlogsPage = () => {
 
   return (
     <div className="min-h-screen bg-white">
-    <BlogHeroSection />
+      <Seo pageKey="blogs" />
+
+      <BlogHeroSection />
 
       {/* Featured / All Blogs Section (fetched) */}
       <BlogsList />
@@ -144,7 +144,7 @@ const BlogsPage = () => {
           </div>
 
           {/* Topic Tabs */}
-         
+
 
           {/* Topic Blogs Grid (shows latest posts from API) */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

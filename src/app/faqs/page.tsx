@@ -3,6 +3,7 @@ import Seo from "@/component/common/Seo";
 import Faqs from "@/component/faqs/Faqs";
 import FrequentlyAskedQuestionHeader from "@/component/faqs/faqsQuestionHeader";
 import JoinUs from "@/component/joinus";
+import faqs from "../../../public/assets/featured-course-thumbnail.jpg";
 
 const Page = () => {
   const faqData = {
@@ -20,7 +21,7 @@ const Page = () => {
       <div className="p-5 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-8 mt-3">
         <div className="w-full md:w-1/2 lg:w-5/12">
           <CircularImage
-            imageUrl="https://newwebsite.uecampus.com/wp-content/uploads/2025/08/featured-course-thumbnail.jpg"
+            imageUrl={faqs.src}
             imageStyles="w-full h-auto flex items-center justify-center"
             imageContainer=""
           />
