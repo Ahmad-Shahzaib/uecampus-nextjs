@@ -8,9 +8,9 @@ export const fetchInternationalPartnershipData = createAsyncThunk(
   "internationalPartnership/fetchData",
   async (_, { rejectWithValue }) => {
     try {
-      console.log("Fetching international partnership data...");
+      // console.log("Fetching international partnership data...");
       const response = await api.get("/home/international-partnership");
-      console.log("API Response:", response.data);
+      // console.log("API Response:", response.data);
 
       const apiData = response.data.data;
 
@@ -27,7 +27,7 @@ export const fetchInternationalPartnershipData = createAsyncThunk(
         feature3_description: apiData.feature3_description,
       };
 
-      console.log("Transformed Data:", transformedData);
+      // console.log("Transformed Data:", transformedData);
       return transformedData;
     } catch (error: any) {
       console.error("Error fetching partnership data:", error);

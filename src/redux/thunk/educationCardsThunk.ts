@@ -25,7 +25,7 @@ export const fetchEducationCardsData = createAsyncThunk<
   "educationCards/fetchData",
   async (_, { rejectWithValue }) => {
     try {
-      console.log("🚀 Fetching education cards (partners) data from /home/partners...");
+      // console.log("🚀 Fetching education cards (partners) data from /home/partners...");
       
       const response = await api.get<ApiResponse>("/home/partners");
       
@@ -42,7 +42,7 @@ export const fetchEducationCardsData = createAsyncThunk<
       }
 
       const apiData = response.data.data;
-      console.log(`📊 Processing ${apiData.length} partner records...`);
+      // console.log(`📊 Processing ${apiData.length} partner records...`);
 
       // Transform data - keeping it simple and direct
       const transformedData: Partner[] = apiData.map((item, index) => {

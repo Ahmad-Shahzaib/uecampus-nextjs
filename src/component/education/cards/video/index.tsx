@@ -68,7 +68,7 @@ export function VideoCard() {
           <div className="p-4 flex justify-between items-start">
             {/* Title */}
             <div className="text-white">
-              <h3 className="text-lg font-bold">Why study at UeCampus?</h3>
+              <h1 className="text-lg font-bold">Why study at UeCampus?</h1>
               <p className="text-sm opacity-80">Student Testimonial | Part 1</p>
             </div>
             

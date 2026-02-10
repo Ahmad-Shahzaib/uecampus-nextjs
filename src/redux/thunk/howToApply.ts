@@ -8,9 +8,9 @@ export const fetchHowToApplyData = createAsyncThunk(
   "howToApply/fetchData",
   async (_, { rejectWithValue }) => {
     try {
-      console.log("Fetching how to apply data...");
+      // console.log("Fetching how to apply data...");
       const response = await api.get("/home/how-to-apply");
-      console.log("How To Apply API Response:", response.data);
+      // console.log("How To Apply API Response:", response.data);
       
       const apiData = response.data.data;
       
@@ -30,7 +30,7 @@ export const fetchHowToApplyData = createAsyncThunk(
         updatedAt: apiData.updated_at,
       };
       
-      console.log("Transformed how to apply data:", transformedData);
+      // console.log("Transformed how to apply data:", transformedData);
       return transformedData;
     } catch (error: any) {
       console.error("Error fetching how to apply data:", error);

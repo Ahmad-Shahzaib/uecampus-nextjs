@@ -196,9 +196,9 @@ lg:items-center lg:justify-between gap-8 lg:gap-12 min-h-[90vh]"
         >
           {/* Left Side: Title */}
           <div className="w-full lg:w-[45%] text-center lg:text-left">
-            <h2 className="text-3xl sm:text-4xl md:text-6xl xl:text-[100px]  text-[#6A1B9A] ">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl xl:text-[100px]  text-[#6A1B9A] ">
               What Our <br className="hidden sm:block" /> Students Say
-            </h2>
+            </h1>
             <p className="mt-4 sm:mt-6 text-gray-700 text-sm sm:text-base md:text-base leading-relaxed max-w-lg mx-auto lg:mx-0">
               Hear directly from our students about their experiences, growth,
               and achievements at our university. Their stories reflect the
@@ -231,9 +231,9 @@ lg:items-center lg:justify-between gap-8 lg:gap-12 min-h-[90vh]"
                             />
                           </div>
                           <div className="text-center md:text-left flex-1">
-                            <h3 className="text-lg sm:text-xl font-semibold text-gray-900">
+                            <h1 className="text-lg sm:text-xl font-semibold text-gray-900">
                               {testimonial.name} {testimonial.description}
-                            </h3>
+                            </h1>
                             <p className="mt-3 text-gray-600 text-sm sm:text-sm italic leading-relaxed">
                               {testimonial.text}
                             </p>

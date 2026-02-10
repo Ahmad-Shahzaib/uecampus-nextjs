@@ -37,9 +37,9 @@ const InternationalPartnerships = ({
       <div className="max-w-5xl mx-auto">
         {/* Header Section */}
         <div className="mb-10">
-          <h2 className="text-3xl md:text-6xl leading-tight font-medium text-[#6a1b9a] mb-4">
+          <h1 className="text-3xl md:text-6xl leading-tight font-medium text-[#6a1b9a] mb-4">
             {title}
-          </h2>
+          </h1>
           <p className="text-gray-700 text-base">{description}</p>
         </div>
 
@@ -50,7 +50,7 @@ const InternationalPartnerships = ({
               <div className="w-16 h-16 mx-auto mb-4 bg-purple-100 rounded-full flex items-center justify-center">
                 {defaultIcons[index] || defaultIcons[0]}
               </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">{feature.title}</h3>
+              <h1 className="text-xl font-semibold text-gray-800 mb-2">{feature.title}</h1>
               <p className="text-gray-600">{feature.description}</p>
             </div>
           ))}

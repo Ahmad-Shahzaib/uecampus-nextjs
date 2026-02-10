@@ -39,9 +39,9 @@ export default function CourseCard({ course }: CourseCardProps) {
         <div className="flex-1 flex flex-col justify-between space-y-4">
           {/* Header */}
           <div>
-            <h3 className="text-xl md:text-2xl font-semibold text-[#3E3E63] mb-3">
+            <h1 className="text-xl md:text-2xl font-semibold text-[#3E3E63] mb-3">
               {course.title || course.name || "Course"}
-            </h3>
+            </h1>
 
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-3">

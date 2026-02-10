@@ -25,7 +25,7 @@ const ErrorState = ({ error, onRetry }: ErrorStateProps) => {
       
       <div className="relative z-10 text-center px-4">
         <div className="text-6xl mb-4">⚠️</div>
-        <h2 className="text-2xl font-semibold mb-4">Oops! Something went wrong</h2>
+        <h1 className="text-2xl font-semibold mb-4">Oops! Something went wrong</h1>
         <p className="text-red-400 mb-6 max-w-md mx-auto">
           {error || "Failed to load FAQs. Please try again."}
         </p>

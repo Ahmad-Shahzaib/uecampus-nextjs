@@ -8,9 +8,9 @@ export const fetchScholarshipData = createAsyncThunk(
   "scholarship/fetchData",
   async (_, { rejectWithValue }) => {
     try {
-      console.log("Fetching scholarship data...");
+      // console.log("Fetching scholarship data...");
       const response = await api.get("/home/scholarship");
-      console.log("Scholarship API Response:", response.data);
+      // console.log("Scholarship API Response:", response.data);
       
       const apiData = response.data.data;
       
@@ -37,7 +37,7 @@ export const fetchScholarshipData = createAsyncThunk(
         updatedAt: apiData.updated_at,
       };
       
-      console.log("Transformed scholarship data:", transformedData);
+      // console.log("Transformed scholarship data:", transformedData);
       return transformedData;
     } catch (error: any) {
       console.error("Error fetching scholarship data:", error);

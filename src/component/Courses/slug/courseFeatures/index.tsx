@@ -80,7 +80,7 @@ export default function CoursesFeaturesCards() {
           {features.map((feature, index) => (
             <Card key={index} className="border border-gray-300 bg-white">
               <CardContent className="p-6">
-                <h3 className="mb-4 text-3xl font-semibold text-[#6a1b9a]">{feature.title}</h3>
+                <h1 className="mb-4 text-3xl font-semibold text-[#6a1b9a]">{feature.title}</h1>
                 <p className="text-sm leading-relaxed text-gray-600">{feature.description}</p>
               </CardContent>
             </Card>

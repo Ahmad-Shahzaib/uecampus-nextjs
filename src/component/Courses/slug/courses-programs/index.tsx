@@ -202,9 +202,9 @@ export default function ProgramPage() {
               </div>
             ) : (
               <div className="space-y-4">
-                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
                   Programme information coming soon
-                </h2>
+                </h1>
                 <p className="text-gray-600 text-base sm:text-lg">
                   We&apos;re preparing detailed course content. Please check
                   back soon for the latest overview, admissions, and curriculum
@@ -228,9 +228,9 @@ export default function ProgramPage() {
                     <p className="text-white font-medium text-lg sm:text-xl mb-2">
                       Programme Highlight
                     </p>
-                    <h3 className="text-2xl sm:text-3xl font-bold">
+                    <h1 className="text-2xl sm:text-3xl font-bold">
                       Key Benefits
-                    </h3>
+                    </h1>
                   </div>
 
                   <ul className="space-y-3">

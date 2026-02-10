@@ -18,6 +18,7 @@ import accreditationReducer from "./slices/accreditationSlice";
 import internationalPartnershipReducer from "./slices/internationalPartnershipSlice";
 import educationCardsReducer from "./slices/educationCardsSlice";
 import contactUsReducer from "./slices/contactUsSlice";
+import contactReducer from "./slices/contactSlice";
 import detailCourseReducer from "./slices/detailCourseSlice";
 import heroSectionReducer from "./slices/heroSectionSlice"; // Add this import
 import missionReducer from "./slices/missionSlice";
@@ -28,6 +29,9 @@ import searchReducer from "./slices/searchSlice";
 import enquiryReducer from "./slices/enquirySlice";
 import courseOrderReducer from "./slices/courseOrder";
 import seoReducer from "./slices/seoSlice";
+import blogsReducer from "./slices/blogsSlice";
+import blogDetailReducer from "./slices/blogDetailSlice";
+import latestBlogsReducer from "./slices/latestBlogsSlice";
 
 type GenericPersistConfig = PersistConfig<any>;
 
@@ -215,6 +219,19 @@ const seoPersistConfig: GenericPersistConfig = {
   keyPrefix: "redux-",
   whitelist: ["data"],
 };
+const blogDetailPersistConfig: GenericPersistConfig = {
+  key: "blogDetail",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: ["item"],
+};
+
+const latestBlogsPersistConfig: GenericPersistConfig = {
+  key: "latestBlogs",
+  storage,
+  keyPrefix: "redux-",
+  whitelist: ["items"],
+};
 const appReducer = combineReducers({
   courses: persistReducer(coursesPersistConfig, coursesReducer),
   faqs: persistReducer(faqsPersistConfig, faqsReducer),
@@ -231,6 +248,8 @@ const appReducer = combineReducers({
   internationalPartnership: persistReducer(internationalPartnershipPersistConfig, internationalPartnershipReducer),
   educationCards: persistReducer(educationCardsPersistConfig, educationCardsReducer),
   contactUs: persistReducer(contactUsPersistConfig, contactUsReducer),
+  // Contact form submissions (non-persisted)
+  contact: contactReducer,
   detailCourse: persistReducer(
     detailCoursePersistConfig,
     detailCourseReducer
@@ -244,6 +263,9 @@ const appReducer = combineReducers({
   ),
   courseOrder: persistReducer(courseOrderPersistConfig, courseOrderReducer),
   seo: persistReducer(seoPersistConfig, seoReducer),
+  blogs: persistReducer(rootPersistConfig, blogsReducer),
+  blogDetail: persistReducer(blogDetailPersistConfig, blogDetailReducer),
+  latestBlogs: persistReducer(latestBlogsPersistConfig, latestBlogsReducer),
   search: persistReducer(searchPersistConfig, searchReducer),
   settings: persistReducer(settingsPersistConfig, settingsReducer),
   enquiry: persistReducer(enquiryPersistConfig, enquiryReducer),

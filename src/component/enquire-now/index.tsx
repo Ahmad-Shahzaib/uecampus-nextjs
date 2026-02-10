@@ -399,6 +399,7 @@ export function ScholarshipForm(): JSX.Element {
             <img
               src="https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/thumbnail-9.jpg"
               alt="Student with books"
+              loading="lazy" 
               className="w-full h-full object-cover"
             />
           </div>

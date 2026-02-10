@@ -8,12 +8,12 @@ export const fetchContactUsData = createAsyncThunk(
   "contactUs/fetchData",
   async (_, { rejectWithValue }) => {
     try {
-      console.log("Thunk: Fetching contact us data...");
-      console.log("API base URL:", api.defaults.baseURL);
+      // console.log("Thunk: Fetching contact us data...");
+      // console.log("API base URL:", api.defaults.baseURL);
       
       const response = await api.get("/home/contact-us");
-      console.log("API Response status:", response.status);
-      console.log("API Response data:", response.data);
+      // console.log("API Response status:", response.status);
+      // console.log("API Response data:", response.data);
 
       const apiData = response.data.data;
 
@@ -22,7 +22,7 @@ export const fetchContactUsData = createAsyncThunk(
         contact_description: apiData.contact_description,
       };
 
-      console.log("Transformed Data:", transformedData);
+      // console.log("Transformed Data:", transformedData);
       return transformedData;
     } catch (error: any) {
       console.error("Thunk: Error fetching contact data:", error);

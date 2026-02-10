@@ -74,7 +74,7 @@ export default function ContactPage() {
               <div className="w-full h-64 lg:h-full bg-gradient-to-br from-[#6A1B9A] to-[#8E24AA] flex items-center justify-center text-white">
                 <div className="text-center p-8">
                   <div className="text-6xl mb-4">📧</div>
-                  <h2 className="text-2xl font-bold mb-2">Contact Us</h2>
+                  <h1 className="text-2xl font-bold mb-2">Contact Us</h1>
                   <p className="text-lg opacity-90">Get in touch with our team</p>
                 </div>
               </div>

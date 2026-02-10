@@ -50,7 +50,7 @@ const NavigationSection: React.FC<Props> = ({ mobile = false }) => {
                 >
                   Accreditation &amp; Partners
                 </Link>
-              </li>
+              </li> 
               <li>
                 <Link
                   href="/faqs"
@@ -71,6 +71,11 @@ const NavigationSection: React.FC<Props> = ({ mobile = false }) => {
         <li className="border-b border-gray-100">
           <Link href="/scholarship" className="block py-2">
             Scholarship
+          </Link>
+        </li>
+        <li className="border-b border-gray-100">
+          <Link href="/blogs" className="block py-2">
+            Blogs 
           </Link>
         </li>
         <li className="border-b border-gray-100">
@@ -117,11 +122,19 @@ const NavigationSection: React.FC<Props> = ({ mobile = false }) => {
             </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
-
+        {/* scholarships */}
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
             <Link href="/scholarship" className="text-gray-800 hover:text-purple-600 font-medium py-2">
               Scholarship
+            </Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+
+        <NavigationMenuItem>
+          <NavigationMenuLink asChild>
+            <Link href="/blogs" className="text-gray-800 hover:text-purple-600 font-medium py-2">
+              Blogs 
             </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>

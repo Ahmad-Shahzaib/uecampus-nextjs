@@ -121,9 +121,9 @@ const CourseSection: React.FC = () => {
     >
       {/* Header Section */}
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-12 sm:mb-16">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[85px] font-semibold text-[#6A1B9A] leading-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[85px] font-semibold text-[#6A1B9A] leading-tight">
           Want to know more <br className="hidden sm:block" /> about our courses?
-        </h2>
+        </h1>
 
         <div className="flex gap-4">
           {!showAll && hasMore && (

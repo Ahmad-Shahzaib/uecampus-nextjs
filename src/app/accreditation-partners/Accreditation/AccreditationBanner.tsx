@@ -6,7 +6,7 @@ interface BannerProps {
 }
 
 const AccreditationBanner = ({ imageUrl, title }: BannerProps) => {
-  console.log("AccreditationBanner imageUrl:", imageUrl);
+  // console.log("AccreditationBanner imageUrl:", imageUrl);
 
   return (
     <div className="relative rounded-2xl w-full h-[40vh] flex items-center justify-start text-white overflow-hidden">
@@ -15,6 +15,7 @@ const AccreditationBanner = ({ imageUrl, title }: BannerProps) => {
           src={imageUrl} 
           alt={title}
           className="absolute inset-0 w-full h-full object-cover rounded-2xl"
+          loading="lazy"
         />
       ) : (
         <div className="absolute inset-0 w-full h-full rounded-2xl bg-gradient-to-r from-purple-700 to-purple-900" />

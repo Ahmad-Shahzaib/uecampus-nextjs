@@ -36,13 +36,13 @@ export function StatCard({ stat, title, description, variant = "light" }: StatCa
 
         {/* Text Content */}
         <div className="flex flex-col text-left">
-          <h2
+          <h1
             className={`font-semibold mb-1 sm:mb-2 text-base sm:text-base md:text-base lg:text-2xl ${
               isDark ? "text-white" : "text-[#1b232a]"
             }`}
           >
             {title}
-          </h2>
+          </h1>
           <p
             className={`text-sm sm:text-base md:text-base leading-relaxed ${
               isDark ? "text-gray-300" : "text-gray-600"

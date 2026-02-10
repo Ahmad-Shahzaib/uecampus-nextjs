@@ -51,9 +51,9 @@ const ScholarshipCards: React.FC = () => {
         {/* Content */}
         <div className="pr-16 sm:pr-20 lg:pr-24">
           {/* Title */}
-          <h2 className="text-3xl  font-medium text-white leading-tight mb-4 sm:mb-6 ">
+          <h1 className="text-3xl  font-medium text-white leading-tight mb-4 sm:mb-6 ">
             {data.scholarship1Title || "Academic Excellence Scholarship"}
-          </h2>
+          </h1>
           
           {/* Description */}
           <p className="text-sm sm:text-base lg:text-base text-white leading-relaxed">
@@ -70,9 +70,9 @@ const ScholarshipCards: React.FC = () => {
         {/* Content */}
         <div className="pr-16 sm:pr-20 lg:pr-24">
           {/* Title */}
-          <h2 className="text-3xl  font-medium text-white leading-tight mb-4 sm:mb-6 ">
+          <h1 className="text-3xl  font-medium text-white leading-tight mb-4 sm:mb-6 ">
             {data.scholarship2Title || "Scholarships for Residents of Developing Countries"}
-          </h2>
+          </h1>
           
           {/* Description */}
           <p className="text-sm sm:text-base lg:text-base text-white leading-relaxed ">

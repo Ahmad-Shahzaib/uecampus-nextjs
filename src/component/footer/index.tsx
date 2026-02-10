@@ -3,6 +3,7 @@
 import type React from "react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FOOTER_LINKS, SOCIAL_LINKS } from "@/constants";
@@ -15,6 +16,9 @@ export function Footer() {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const settings = useSelector((state: any) => state?.settings?.data);
+
+  const imgSrc = settings?.logo || "/default-logo.png";
+  const alt = settings?.company_name || "UeCampus Logo";
 
   useEffect(() => {
     if (!settings) {
@@ -39,10 +43,12 @@ export function Footer() {
           {/* Brand Section */}
           <div className="flex-1 lg:flex-[3] min-w-[250px] max-w-[600px] text-center sm:text-left">
             <div className="mb-6 flex justify-center sm:justify-start">
-              <img
-                alt="Logo"
+              <Image
+                src={imgSrc}
+                alt={alt}
+                width={128}
+                height={64}
                 className="h-16 sm:h-32 w-auto"
-                src="https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/uecampus-logo.png"
               />
             </div>
             <p className="mb-6 text-[14px] sm:text-[15px] leading-relaxed text-[#C0C0C0]">
@@ -103,9 +109,9 @@ export function Footer() {
 
           {/* Quick Links */}
           <div className="flex-1 min-w-[180px] text-center sm:text-left">
-            <h3 className="mb-4 sm:mb-6 text-lg font-semibold text-white">
+            <h1 className="mb-4 sm:mb-6 text-lg font-semibold text-white">
               Quick Links
-            </h3>
+            </h1>
             <ul className="space-y-2 sm:space-y-3">
               {FOOTER_LINKS.quickLinks.map((link) => (
                 <li key={link.name}>
@@ -122,9 +128,9 @@ export function Footer() {
 
           {/* Programs */}
           <div className="flex-1 min-w-[180px] text-center sm:text-left">
-            <h3 className="mb-4 sm:mb-6 text-lg font-semibold text-white">
+            <h1 className="mb-4 sm:mb-6 text-lg font-semibold text-white">
               Programs
-            </h3>
+            </h1>
             <ul className="space-y-2 sm:space-y-3">
               {FOOTER_LINKS.programs.map((link) => (
                 <li key={link.name}>
@@ -141,9 +147,9 @@ export function Footer() {
 
           {/* Newsletter */}
           <div className="flex-1 min-w-[230px] w-full sm:w-auto text-center sm:text-left">
-            <h3 className="mb-4 sm:mb-6 text-lg font-semibold text-white">
+            <h1 className="mb-4 sm:mb-6 text-lg font-semibold text-white">
               Stay Updated
-            </h3>
+            </h1>
             <form
               onSubmit={handleSubscribe}
               className="space-y-4 flex flex-col items-center sm:items-start w-full"

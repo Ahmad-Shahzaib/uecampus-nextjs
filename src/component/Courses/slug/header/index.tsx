@@ -61,7 +61,7 @@ const CourseDetailHeader: React.FC<CourseDetailHeaderProps> = ({
   // Helpful debug when running locally
   if (process.env.NODE_ENV === 'development') {
     // eslint-disable-next-line no-console
-    console.log('[CourseDetailHeader] bgImage:', bgImage, 'safeBg:', safeBg);
+    // console.log('[CourseDetailHeader] bgImage:', bgImage, 'safeBg:', safeBg);
   }
 
   const handleButtonClick = (link?: string | null) => {
@@ -128,9 +128,9 @@ const CourseDetailHeader: React.FC<CourseDetailHeaderProps> = ({
                   />
                 ) : description ? (
                   <>
-                    <h2 className="text-lg sm:text-xl md:text-2xl font-medium text-white mb-2 sm:mb-3 leading-tight">
+                    <h1 className="text-lg sm:text-xl md:text-2xl font-medium text-white mb-2 sm:mb-3 leading-tight">
                       {description}
-                    </h2>
+                    </h1>
                   </>
                 ) : null}
               </div>

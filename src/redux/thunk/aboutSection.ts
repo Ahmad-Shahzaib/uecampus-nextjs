@@ -8,9 +8,9 @@ export const fetchAboutSectionData = createAsyncThunk(
     "aboutSection/fetchData",
     async (_, { rejectWithValue }) => {
         try {
-            console.log("Fetching about section data...");
+            // console.log("Fetching about section data...");
             const response = await aboutApi.get("/home/section-2");
-            console.log("About Section API Response:", response.data);
+            // console.log("About Section API Response:", response.data);
             
             const apiData = response.data.data;
             
@@ -32,7 +32,7 @@ export const fetchAboutSectionData = createAsyncThunk(
                 section_2_long_description_1: apiData.section_2_long_description_1 || "",
             };
             
-            console.log("Transformed about section data:", transformedData);
+            // console.log("Transformed about section data:", transformedData);
             return transformedData;
         } catch (error: any) {
             console.error("Error fetching about section data:", error);

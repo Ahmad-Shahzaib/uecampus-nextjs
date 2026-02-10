@@ -13,9 +13,9 @@ const FrequentlyAskedQuestionHeader: React.FC<FrequentlyAskedQuestionHeaderProps
 }) => {
     return (
         <section className="px-4 md:px-5 lg:px-10 bg-white">
-            <h2 className="text-4xl md:text-4xl font-semibold text-[#6a1b9a] mb-2">
+            <h1 className="text-4xl md:text-4xl font-semibold text-[#6a1b9a] mb-2">
                 {title}
-            </h2>
+            </h1>
 
             <div className="space-y-6 text-gray-800 leading-relaxed w-full">
                 {description.map((text, index) => (

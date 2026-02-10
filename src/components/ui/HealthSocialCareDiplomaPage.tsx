@@ -30,7 +30,7 @@ const HealthSocialCareDiplomaPage: React.FC = () => {
             aria-expanded={isOpen}
             aria-controls="accordion-content"
           >
-            <h2 className="text-base font-normal text-blue-400 ">General Entry Criteria</h2>
+            <h1 className="text-base font-normal text-blue-400 ">General Entry Criteria</h1>
             <svg
               className={`w-6 h-6 text-purple-600 transition-transform duration-300 ${isOpen ? 'rotate-0' : '-rotate-90'}`}
               fill="none"

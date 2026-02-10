@@ -8,9 +8,9 @@ export const fetchFeatureCardsData = createAsyncThunk(
     "featureCards/fetchData",
     async (_, { rejectWithValue }) => {
         try {
-            console.log("Fetching feature cards data...");
+            // console.log("Fetching feature cards data...");
             const response = await featureCardsApi.get("/home/cards");
-            console.log("Feature Cards API Response:", response.data);
+            // console.log("Feature Cards API Response:", response.data);
             
             const apiData = response.data.data;
             
@@ -36,7 +36,7 @@ export const fetchFeatureCardsData = createAsyncThunk(
                 },
             ];
             
-            console.log("Transformed feature cards:", cards);
+            // console.log("Transformed feature cards:", cards);
             return cards;
         } catch (error: any) {
             console.error("Error fetching feature cards:", error);

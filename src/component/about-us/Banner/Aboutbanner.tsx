@@ -6,7 +6,7 @@ interface BannerProps {
 }
 
 const Banner = ({ imageUrl, title }: BannerProps) => {
-  console.log("Banner imageUrl:", imageUrl);
+  // console.log("Banner imageUrl:", imageUrl);
 
  // In Banner component
 return (

@@ -36,7 +36,7 @@ const TuitionFeesSection: React.FC = () => {
                 aria-expanded={openIndex === index}
                 aria-controls={`accordion-content-${index}`}
               >
-                <h2 className="text-xl font-normal ">{item.title}</h2>
+                <h1 className="text-xl font-normal ">{item.title}</h1>
                 <svg
                   className={`w-6 h-6  transition-transform duration-300 ${openIndex === index ? 'rotate-180' : 'rotate-0'}`}
                   fill="none"

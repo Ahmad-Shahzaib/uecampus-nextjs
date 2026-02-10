@@ -22,6 +22,28 @@ export default function FilterSidebar() {
   }, [data, dispatch]);
 
   const handleFilterChange = (paramKey: string, filterId: number) => {
+    // When clicking a program type checkbox, navigate to the program route
+    if (paramKey === "program_type_ids" || paramKey === "university_ids" || paramKey === "level_ids") {
+      const paramValue = searchParams.get(paramKey);
+      const currentIds = new Set<number>(
+        paramValue
+          ? paramValue
+              .split(",")
+              .map((v) => parseInt(v.trim(), 10))
+              .filter((n) => !Number.isNaN(n))
+          : []
+      );
+
+      // If this id is already selected (unchecking) go back to courses list
+      if (currentIds.has(filterId)) {
+        router.push(`/courses`, { scroll: false });
+      } else {
+        router.push(`/program/${filterId}`, { scroll: false });
+      }
+
+      return;
+    }
+
     const paramValue = searchParams.get(paramKey);
     const currentIds = new Set<number>(
       paramValue
@@ -83,9 +105,9 @@ export default function FilterSidebar() {
   return (
     <aside className="sm:w-56 flex-full shrink-0">
       <Card className="p-6 bg-white">
-        <h2 className="text-lg font-bold mb-6 text-purple-800">
+        <h1 className="text-lg font-bold mb-6 text-purple-800">
           Filter Courses
-        </h2>
+        </h1>
 
         {isLoading && (
           <div className="text-sm text-gray-600">Loading programs...</div>
@@ -104,7 +126,7 @@ export default function FilterSidebar() {
         {!isLoading && !error && hasFilters &&
           filterConfigs.map(({ title, items, paramKey }) => (
             <div key={paramKey} className="mb-8 last:mb-0">
-              <h3 className="font-semibold text-purple-800 mb-3">{title}</h3>
+              <h1 className="font-semibold text-purple-800 mb-3">{title}</h1>
               <div className="space-y-3">
                 {items.map((item) => (
                   <div key={item.id} className="flex items-center gap-2">

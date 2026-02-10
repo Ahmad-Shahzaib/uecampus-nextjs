@@ -79,7 +79,7 @@ export default function Seo({ pageKey }: SeoProps) {
 
     // Log applied meta tags to console for debugging (dev only)
     if (process.env.NODE_ENV !== "production") {
-      console.log("[Seo] attempted keys", { derivedKey, usedKey });
+      // console.log("[Seo] attempted keys", { derivedKey, usedKey });
       console.log("[Seo] applied for", usedKey ?? derivedKey, {
         title: document.title,
         description: document.querySelector("meta[name='description']")?.getAttribute("content"),

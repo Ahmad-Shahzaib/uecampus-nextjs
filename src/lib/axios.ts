@@ -4,7 +4,7 @@ import { getCookie } from "cookies-next";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-console.log("API BASE URL:", process.env.NEXT_PUBLIC_BASE_URL);
+// console.log("API BASE URL:", process.env.NEXT_PUBLIC_BASE_URL);
 
 export function getAxiosInstance() {
     const instance = axios.create({

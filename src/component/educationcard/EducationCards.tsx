@@ -38,7 +38,7 @@ const EducationCards = () => {
       </div>
     );
 
-  console.log("Rendering partners:", data.length, data);
+  // console.log("Rendering partners:", data.length, data);
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-12 ">
@@ -67,6 +67,7 @@ const EducationCards = () => {
                 <img
                   src={partner.logo}
                   alt={partner.title}
+                  loading="lazy" 
                   className="h-32 w-auto object-contain"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
@@ -78,7 +79,7 @@ const EducationCards = () => {
               {/* Content container */}
               <div className="flex text-left flex-col flex-grow px-6 pb-6 text-center">
                 {/* Title */}
-                <h3 className="text-xl font-semibold mb-3">{partner.title}</h3>
+                <h1 className="text-xl font-semibold mb-3">{partner.title}</h1>
 
                 {/* Description */}
                 <div
@@ -91,7 +92,7 @@ const EducationCards = () => {
                   <a
                     href={partner.link}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="canonical"
                     className="w-full"
                   >
                     <Button className="w-full bg-[#6A1B9A] text-white border-0 hover:bg-white hover:text-[#5a1782] py-3 rounded-lg font-semibold transition-colors duration-300">
