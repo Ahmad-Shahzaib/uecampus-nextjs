@@ -5,6 +5,7 @@ import { ReduxProvider } from "@/redux/Provider";
 import { Footer } from "@/component/footer";
 import HeaderSection from "@/component/Header";
 import Seo from "@/component/common/Seo";
+import Analytics from "@/component/common/Analytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,10 +29,56 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Organization and WebSite JSON-LD for structured data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "UECampus",
+              url: "https://www.uecampus.com",
+              logo: "https://www.uecampus.com/wp-content/uploads/2024/01/uecampus-logo.png",
+              contactPoint: [
+                {
+                  "@type": "ContactPoint",
+                  telephone: "+1-800-555-1234",
+                  contactType: "customer service",
+                  areaServed: "Worldwide",
+                },
+              ],
+              sameAs: [
+                "https://www.facebook.com/uecampus",
+                "https://twitter.com/uecampus",
+                "https://www.linkedin.com/company/uecampus",
+              ],
+            }),
+          }}
+        />
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "UECampus",
+              url: "https://www.uecampus.com",
+              potentialAction: {
+                "@type": "SearchAction",
+                target: "https://www.uecampus.com/search?q={search_term_string}",
+                "query-input": "required name=search_term_string",
+              },
+            }),
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReduxProvider>
+          <Analytics />
           <Seo />
           {/* ✅ Fixed Header */}
           

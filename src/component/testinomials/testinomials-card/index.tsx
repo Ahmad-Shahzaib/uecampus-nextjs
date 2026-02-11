@@ -1,4 +1,4 @@
-// src/components/FeatureCard.tsx
+ 
 "use client";
 
 import { Card } from "@/components/ui/card";
@@ -8,7 +8,7 @@ export interface FeatureCardProps {
     title: string;
     description?: string;
   };
-  /** index can be a variant name or a numeric index (1,2,3) */
+  
   index?: number | "primary" | "secondary" | "tertiary";
 }
 
@@ -33,7 +33,7 @@ export function FeatureCard({ section, index }: FeatureCardProps) {
     },
   };
 
-  // Normalize index: accept 1/2/3 or variant strings. Fallback to 'tertiary'.
+ 
   const normalizeIndex = (idx?: number | string): VariantType => {
     if (typeof idx === "number") {
       if (idx === 1) return "primary";

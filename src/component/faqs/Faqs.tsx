@@ -44,7 +44,29 @@ export default function Faqs() {
   if (isLoading) return <LoadingSkeleton />;
   if (error) return <ErrorState error={error} onRetry={handleRetry} />;
 
+  // Inject FAQPage JSON-LD when FAQs are available
+ const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f: any) => ({
+    "@type": "Question",
+    name: f.question || f.title || "",
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: (f.answer || f.description || "").replace(/<[^>]*>/g, ""),
+    },
+  })),
+};
+
+
   return (
+    <>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(faqSchema),
+      }}
+    />
     <section
       className="relative min-h-screen overflow-hidden text-white font-sans"
       style={{
@@ -89,5 +111,6 @@ export default function Faqs() {
         </div>
       </div>
     </section>
+    </>
   );
 }

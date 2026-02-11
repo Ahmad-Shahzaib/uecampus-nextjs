@@ -8,6 +8,15 @@ import { fetchCoursesData } from "@/redux/thunk/courses";import { fetchProgramsD
 import CourseCard from "@/component/Courses/courses-card";
 import PaginationComponent from "@/component/Courses/pagination";
 import Seo from "@/component/common/Seo";
+import JsonLdCourse from "@/component/common/JsonLdCourse";
+
+// Define a Course type based on your data structure
+type Course = {
+  id: string | number;
+  program_type_name?: string;
+  // Add other properties as needed for CourseCard and JsonLdCourse
+  [key: string]: any;
+};
 
 export default function ProgramPage() {
   const params = useParams();
@@ -151,9 +160,22 @@ export default function ProgramPage() {
         </div>
 
         <div className="space-y-6">
-          {displayedCourses.map((course) => (
-            <CourseCard key={course.id} course={course} />
-          ))}
+          {displayedCourses.map((course: Course) => {
+            // Ensure required properties exist, fallback to empty string if missing
+            const safeCourse = {
+              ...course,
+              id: typeof course.id === "string" ? Number(course.id) : course.id,
+              name: course.name || "",
+              slug: course.slug || "",
+              image_path: course.image_path || "",
+            };
+            return (
+              <div key={safeCourse.id}>
+                <JsonLdCourse course={safeCourse} />
+                <CourseCard course={safeCourse} />
+              </div>
+            );
+          })}
         </div>
 
         <div className="mt-8 flex justify-center">

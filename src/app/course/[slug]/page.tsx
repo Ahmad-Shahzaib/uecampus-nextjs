@@ -16,6 +16,7 @@ import JoinUs from "@/component/joinus";
 import RandomCourses from "@/component/Courses/random/RandomCourses";
 import Loader from "@/components/common/Loader";
 import Seo from "@/component/common/Seo";
+import JsonLdCourse from "@/component/common/JsonLdCourse";
 
 const DetailPage = () => {
   const dispatch = useDispatch();
@@ -75,6 +76,7 @@ const DetailPage = () => {
   return (
     <div className="space-y-4">
         <Seo pageKey="program" />
+        <JsonLdCourse course={course} />
 
       {/* Pass all content through props */}
       <CourseDetailHeader

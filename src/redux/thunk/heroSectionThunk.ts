@@ -1,4 +1,4 @@
-// src/redux/thunk/heroSectionThunk.ts
+
 import { getAxiosInstance } from "@/lib/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -8,20 +8,20 @@ export const fetchHeroSectionData = createAsyncThunk(
   "heroSection/fetchHeroSectionData",
   async (_, { rejectWithValue }) => {
     try {
-      console.log("Fetching hero section data...");
+  
       const response = await api.get("/home/section-3");
       console.log("Hero Section API Response:", response.data);
 
       if (response.data.success && response.data.data) {
         const apiData = response.data.data;
         
-        // Transform the API data to match our interface
+      
         const transformedData = {
           section_title: apiData.section_title,
           section_description: apiData.section_description,
         };
         
-        console.log("Transformed hero section data:", transformedData);
+        
         return transformedData;
       } else {
         return rejectWithValue("Invalid response from server");
