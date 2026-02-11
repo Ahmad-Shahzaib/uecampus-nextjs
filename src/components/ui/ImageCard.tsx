@@ -14,6 +14,7 @@ type ImageProps = {
     aspectRatio?: "square" | "video" | "wide" | "auto";
     className?: string;
     loading?: "lazy" | "eager";
+    priority?: boolean;
     fallback?: string;
 };
 
@@ -27,6 +28,7 @@ export function ImageCard({
     aspectRatio = "auto",
     className,
     loading = "lazy",
+    priority = false,
     fallback = "/placeholder.png", // optional fallback
 }: ImageProps) {
     const [imgSrc, setImgSrc] = React.useState(src);
@@ -54,9 +56,10 @@ export function ImageCard({
                 alt={alt}
                 width={width}
                 height={height}
-                loading={loading}
+                loading={priority ? "eager" : loading}
+                priority={priority}
                 onError={() => setImgSrc(fallback)}
-                className={cn("object-cover w-28 transition-transform hover:scale-105")}
+                className={cn("object-cover transition-transform hover:scale-105", className)}
             />
         </div>
     );

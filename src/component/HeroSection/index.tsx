@@ -15,6 +15,7 @@ const HeroSection = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [hasSearched, setHasSearched] = useState(false); // Track if user has performed a search
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const search = useSelector((state) => state.search);
 
   const handleSearch = () => {
@@ -56,6 +57,35 @@ const HeroSection = () => {
     }
   }, [dispatch, hero, isLoading]);
 
+  // Defer loading the large hero video to avoid initial transfer on slow
+  // networks. Only load after a short idle timeout on reasonable connections.
+  useEffect(() => {
+    if (!hero || !hero.video || typeof window === "undefined") return;
+
+    const conn = (navigator as any).connection;
+    const saveData = conn && conn.saveData;
+    const effectiveType = conn && conn.effectiveType;
+    const slowConnection = saveData || effectiveType === "2g" || effectiveType === "slow-2g";
+
+    if (slowConnection) return; // avoid loading heavy video on slow connections
+
+    const t = window.setTimeout(() => {
+      const el = videoRef.current;
+      if (el && !el.src) {
+        el.src = hero.video;
+        try {
+          el.load();
+          // attempt to autoplay, ignore failures
+          el.play().catch(() => {});
+        } catch (e) {
+          // ignore
+        }
+      }
+    }, 1500);
+
+    return () => window.clearTimeout(t);
+  }, [hero]);
+
   // Loading
   if (isLoading) {
     return (
@@ -81,9 +111,9 @@ const HeroSection = () => {
         {/* Dynamic Video */}
         <div className="absolute inset-0 overflow-hidden rounded-lg">
           <video
+            ref={(el) => { videoRef.current = el; }}
             className="absolute inset-0 w-full h-full object-cover"
-            src={hero.video}
-            autoPlay
+            preload="none"
             loop
             muted
             playsInline

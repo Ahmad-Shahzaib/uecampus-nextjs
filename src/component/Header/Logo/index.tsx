@@ -15,7 +15,9 @@ const LogoSection = () => {
                 src="https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/uecampus-logo.png" 
                 alt="UeCampus Logo" 
                 width={150} 
-                height={50} 
+                height={50}
+                priority
+                className="w-[150px] h-[50px] object-contain"
             />
         </div>
     )

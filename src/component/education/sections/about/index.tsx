@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
 import Link from "next/link";
 
 export function AboutSection({ about, isLoading, error }: any) {
@@ -81,15 +80,9 @@ export function AboutSection({ about, isLoading, error }: any) {
         </div>
 
         {/* Main Title */}
-        <motion.h1
-          initial={{ opacity: 0, y: -15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-          viewport={{ once: true }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-[96px] leading-tight tracking-normal text-white"
-        >
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[96px] leading-tight tracking-normal text-white">
           {title2}
-        </motion.h1>
+        </h1>
 
         {/* Description */}
         <p className="text-sm sm:text-base md:text-base lg:text-[16px] text-white/90 leading-relaxed max-w-lg">

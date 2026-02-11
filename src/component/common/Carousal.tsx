@@ -56,6 +56,8 @@ const LazyImage = memo(
               setHasError(true);
             }}
             loading="lazy"
+            decoding="async"
+            fetchPriority="low"
           />
         )}
       </div>
