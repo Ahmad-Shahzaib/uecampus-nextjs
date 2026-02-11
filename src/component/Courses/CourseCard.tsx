@@ -47,8 +47,6 @@ export const ProgramCard = React.memo<ProgramCardProps>(({ course }) => {
           alt={`Course: ${course.title || course.name}`}
           fill
           priority
-          fetchPriority="high"
-          loading="eager"
           className="object-cover transition-transform duration-300 hover:scale-105"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         />
