@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 interface BannerProps {
   imageUrl: string;
@@ -11,9 +12,10 @@ const Banner = ({ imageUrl, title }: BannerProps) => {
  // In Banner component
 return (
   <div className="relative rounded-2xl w-full h-[40vh] flex items-center justify-start text-white overflow-hidden ">
-    <img 
-      src={imageUrl} 
+    <Image
+      src={imageUrl}
       alt={title}
+      fill
       className="absolute inset-0 w-full h-full object-cover rounded-2xl"
     />
     {/* Overlay */}

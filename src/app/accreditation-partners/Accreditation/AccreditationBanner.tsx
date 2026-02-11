@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 interface BannerProps {
   imageUrl?: string;
@@ -11,11 +12,14 @@ const AccreditationBanner = ({ imageUrl, title }: BannerProps) => {
   return (
     <div className="relative rounded-2xl w-full h-[40vh] flex items-center justify-start text-white overflow-hidden">
       {imageUrl ? (
-        <img 
-          src={imageUrl} 
+        <Image
+          src={imageUrl}
           alt={title}
-          className="absolute inset-0 w-full h-full object-cover rounded-2xl"
-          loading="lazy"
+          fill
+          sizes="100vw"
+          loading="eager"
+          
+          className="object-cover"
         />
       ) : (
         <div className="absolute inset-0 w-full h-full rounded-2xl bg-gradient-to-r from-purple-700 to-purple-900" />

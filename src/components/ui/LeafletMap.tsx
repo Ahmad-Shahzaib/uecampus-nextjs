@@ -1,5 +1,10 @@
 import React from 'react'
-import GlobeWithLabels from './GlobeWithLabels'
+import dynamic from 'next/dynamic'
+
+const GlobeWithLabels = dynamic(() => import('./GlobeWithLabels'), {
+  ssr: false,
+  loading: () => <div />,
+})
 
 const LeafletMap = () => {
   return (

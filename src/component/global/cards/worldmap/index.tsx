@@ -34,16 +34,20 @@ export default function InteractiveGlobe() {
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
+    // Cache initial container measurements to avoid repeated layout reads
+    const initialWidth = container.clientWidth;
+    const initialHeight = container.clientHeight;
+
     const camera = new THREE.PerspectiveCamera(
       75,
-      container.clientWidth / container.clientHeight,
+      initialWidth / initialHeight,
       0.1,
       1000
     );
     camera.position.z = 2.5;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setSize(initialWidth, initialHeight);
     renderer.setClearColor(0x0f172a, 0);
     container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
@@ -95,19 +99,35 @@ export default function InteractiveGlobe() {
     };
     animate();
 
-    // Resize handler
+    // Resize handler: read layout once, then perform writes inside rAF
+    let resizeRaf: number | null = null;
     const handleResize = () => {
       if (!container) return;
-      camera.aspect = container.clientWidth / container.clientHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(container.clientWidth, container.clientHeight);
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
+      resizeRaf = requestAnimationFrame(() => {
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+      });
     };
+
+    // Use ResizeObserver on the container for more precise updates, fallback to window resize
+    const ro = new ResizeObserver(() => handleResize());
+    ro.observe(container);
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      try {
+        ro.disconnect();
+      } catch (e) {}
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
       renderer.dispose();
-      container.removeChild(renderer.domElement);
+      if (renderer.domElement && container.contains(renderer.domElement)) {
+        container.removeChild(renderer.domElement);
+      }
     };
   }, []);
 

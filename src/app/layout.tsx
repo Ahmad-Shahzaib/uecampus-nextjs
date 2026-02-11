@@ -91,6 +91,9 @@ export default function RootLayout({
           href="https://newwebsite.uecampus.com/wp-content/uploads/2025/08/19.jpg"
           as="image"
         />
+        {/* Preload hero poster fallback used by the client hero component so it is
+            discoverable as the LCP candidate and fetched with high priority. */}
+        <link rel="preload" href="/assets/featured-course-thumbnail.jpg" as="image" fetchPriority="high" />
       </head>
       {/* Resource hints to shorten connection setup and reduce critical chain latency */}
       <link rel="dns-prefetch" href="https://newwebsite.uecampus.com" />

@@ -125,11 +125,14 @@ const BlogDetailPage = () => {
             </div>
 
             {/* Hero Section */}
-            <div className="relative h-[60vh]  "
-                style={{
-                    backgroundImage: `url("${resolvedBlog.featuredImage}")`
-                }}
-            >
+            <div className="relative h-[60vh]">
+                <Image
+                    src={resolvedBlog.featuredImage}
+                    alt={resolvedBlog.title}
+                    fill
+                    className="object-cover"
+                    priority
+                />
                 <div className="absolute inset-0 bg-black/40" />
                 <div className="relative h-full flex items-center">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-6">
@@ -240,12 +243,12 @@ const BlogDetailPage = () => {
                     <article className="lg:col-span-9">
                         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                             {/* Featured Image */}
-                            <div className="h-96  ">
-                                <img
+                            <div className="h-96 relative">
+                                <Image
                                     src={resolvedBlog.featuredImage}
                                     alt={resolvedBlog.title}
-                                    loading='lazy'
-                                    className="w-full h-full object-cover"
+                                    fill
+                                    className="object-cover"
                                 />
                             </div>
 

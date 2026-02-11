@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useDispatch, useSelector } from "@/redux/store";
 import { fetchBlogs, fetchSearchBlogs } from "@/redux/thunk/blogsThunk";
 import Loader from "@/components/common/Loader";
@@ -14,14 +15,14 @@ const BlogCard: React.FC<{
   slug?: string;
 }> = ({ image, title, category, slug }) => {
   const href = slug ? `/blogs/detail?slug=${slug}` : `/blogs/detail`;
+  const src = getBlogImageUrl(image) ?? "";
   return (
     <Link href={href} className="block">
       <div className="group cursor-pointer overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-500 bg-white">
         <div className="relative h-64 overflow-hidden">
           <div className="relative w-full h-full bg-gray-200">
-            {image ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={getBlogImageUrl(image)} alt={title} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+            {src ? (
+              <Image src={src} alt={title ?? ''} fill className="object-cover" />
             ) : null}
           </div>
           <div className="absolute top-4 left-4 z-20">

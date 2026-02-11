@@ -16,6 +16,7 @@ const HeroSection = () => {
   const [hasSearched, setHasSearched] = useState(false); // Track if user has performed a search
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const search = useSelector((state) => state.search);
 
   const handleSearch = () => {
@@ -69,21 +70,33 @@ const HeroSection = () => {
 
     if (slowConnection) return; // avoid loading heavy video on slow connections
 
-    const t = window.setTimeout(() => {
-      const el = videoRef.current;
-      if (el && !el.src) {
-        el.src = hero.video;
-        try {
-          el.load();
-          // attempt to autoplay, ignore failures
-          el.play().catch(() => {});
-        } catch (e) {
-          // ignore
-        }
+    // Prefer requestIdleCallback to defer loading until after first paint
+    const idleCallback = (cb: () => void, timeout = 1500) => {
+      if ((window as any).requestIdleCallback) {
+        return (window as any).requestIdleCallback(cb, { timeout });
       }
+      return window.setTimeout(cb, timeout);
+    };
+
+    const id = idleCallback(() => {
+      // set source token so <source> is rendered and browser starts fetching
+      setVideoSrc(hero.video);
+      // try to play once source is set
+      setTimeout(() => {
+        const el = videoRef.current;
+        if (el) {
+          try {
+            el.load();
+            el.play().catch(() => {});
+          } catch (e) {}
+        }
+      }, 200);
     }, 1500);
 
-    return () => window.clearTimeout(t);
+    return () => {
+      if ((window as any).cancelIdleCallback) (window as any).cancelIdleCallback(id);
+      else window.clearTimeout(id as number);
+    };
   }, [hero]);
 
   // Loading
@@ -113,11 +126,18 @@ const HeroSection = () => {
           <video
             ref={(el) => { videoRef.current = el; }}
             className="absolute inset-0 w-full h-full object-cover"
-            preload="none"
+            poster={
+              // prefer hero poster/thumbnail if available, otherwise fallback to a lightweight site asset
+              (hero as any).poster || (hero as any).thumbnail || "/assets/featured-course-thumbnail.jpg"
+            }
+            preload="metadata"
             loop
             muted
             playsInline
-          />
+            aria-hidden
+          >
+            {videoSrc && <source src={videoSrc} type="video/mp4" />}
+          </video>
           <div className="absolute inset-0 bg-black/40" />
         </div>
         <div className="relative z-10 text-center px-2 sm:px-8 sm:max-w-4xl w-full mx-auto">

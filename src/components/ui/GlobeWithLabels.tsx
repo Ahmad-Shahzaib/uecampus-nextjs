@@ -61,24 +61,22 @@ export default function NightCityLightsGlobe() {
       globeEl.current.pointOfView({ lat: 20, lng: -40, altitude: 2.5 }, 1000);
     }
 
-    // Responsive sizing
+    // Responsive sizing: read measurements once and apply inside rAF to avoid forced reflows
     const updateSize = () => {
-      if (containerRef.current) {
-        if (isMobile) {
-          // For mobile, use full width and calculate height
-          const width = containerRef.current.clientWidth;
-          const height = width * 1.2; // 5:6 aspect ratio for mobile
-          setSize({ width, height });
-        } else {
-          // For web, keep fixed dimensions
-          setSize({ width: 700, height: 800 });
-        }
-      }
+      const el = containerRef.current;
+      if (!el) return;
+      // read layout once
+      const width = el.clientWidth;
+      const height = isMobile ? Math.round(width * 1.2) : 800;
+      // write inside rAF to batch and avoid layout thrashing
+      requestAnimationFrame(() => {
+        setSize({ width: isMobile ? width : 700, height });
+      });
     };
 
     updateSize();
 
-    const ro = new ResizeObserver(updateSize);
+    const ro = new ResizeObserver(() => updateSize());
     if (containerRef.current) ro.observe(containerRef.current);
 
     window.addEventListener("orientationchange", updateSize);

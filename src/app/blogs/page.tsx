@@ -3,6 +3,7 @@
 import BlogHeroSection from '@/component/blogs/BlogHeroSection';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import BlogsList from '@/component/blogs/BlogsList';
 import { useDispatch, useSelector } from '@/redux/store';
 import { fetchLatestBlogs } from '@/redux/thunk/blogsThunk';
@@ -77,7 +78,7 @@ const BlogsPage = () => {
 
             {/* Image with gradient overlay */}
             <div className="relative w-full h-full bg-gradient-to-br from-purple-900 via-purple-700 to-purple-600">
-              <img src={getBlogImageUrl(image)} alt={title} className="absolute  inset-0 w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" loading="lazy" />
+              <Image src={getBlogImageUrl(image) || '/images/blog-placeholder.jpg'} alt={title} fill className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
               {/* Decorative pattern */}
               <div className="absolute inset-0 opacity-20">
                 <div className="absolute inset-0 bg-gradient-to-br from-white to-transparent" />

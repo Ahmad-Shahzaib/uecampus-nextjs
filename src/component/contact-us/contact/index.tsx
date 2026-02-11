@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
+import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/rootReducer";
 import { fetchContactUsData } from "@/redux/thunk/contactUsThunk";
@@ -79,16 +80,16 @@ export default function ContactPage() {
                 </div>
               </div>
             ) : (
-              /* Actual Image */
-              <img
+              /* Actual Image using next/image */
+              <Image
                 src={data.contact_image}
                 alt="Contact us - Get in touch with our team"
-                className={`w-full h-64 lg:h-full object-cover transition-opacity duration-300 ${
+                fill
+                className={`transition-opacity duration-300 ${
                   imageLoading ? "opacity-0" : "opacity-100"
-                }`}
-                onLoad={handleLoad}
-                onError={handleError}
-                loading="lazy"
+                } object-cover`}
+                onLoadingComplete={() => handleLoad()}
+                onError={() => handleError()}
               />
             )}
           </div>
