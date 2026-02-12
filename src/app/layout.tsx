@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Organization and WebSite JSON-LD for structured data */}
+       
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -74,9 +74,7 @@ export default function RootLayout({
             }),
           }}
         />
-        {/* Preload likely above-the-fold images so they are discoverable by the browser
-            and fetched with high priority. These are conservative picks used across
-            the homepage and hero/feature cards. Adjust or remove as needed. */}
+    
         <link
           rel="preload"
           href="https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-2.png"
@@ -92,10 +90,9 @@ export default function RootLayout({
           href="https://newwebsite.uecampus.com/wp-content/uploads/2025/08/19.jpg"
           as="image"
         />
-        {/* Preload hero poster fallback used by the client hero component so it is
-            discoverable as the LCP candidate and fetched with high priority. */}
+ 
         <link rel="preload" href="/assets/featured-course-thumbnail.jpg" as="image" fetchPriority="high" />
-        {/* Resource hints to shorten connection setup and reduce critical chain latency */}
+      
         <link rel="dns-prefetch" href="https://newwebsite.uecampus.com" />
         <link rel="preconnect" href="https://newwebsite.uecampus.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.uecampus.com" />
@@ -104,10 +101,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://new.uecampus.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://i.ytimg.com" />
         <link rel="preconnect" href="https://i.ytimg.com" crossOrigin="anonymous" />
-        {/* Make non-critical Next.js generated CSS non-blocking by deferring it.
-            This script sets Next's chunked stylesheet links (/_next/static/css/) to
-            media="print" and swaps them back to "all" onload so they load
-            asynchronously and don't block the initial render. */}
+      
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var ls=document.querySelectorAll('link[rel="stylesheet"][href*="/_next/static/css/"]');for(var i=0;i<ls.length;i++){var l=ls[i];if(l.dataset.deferred)continue;l.dataset.deferred='true';l.media='print';l.onload=function(){this.media='all'};} }catch(e){} })();`,
@@ -117,23 +111,22 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Small, non-visual eager image to ensure discovery by LCP heuristics.
-            Kept offscreen rather than display:none so browsers fetch it. */}
+ 
        
         <ReduxProvider>
           <Analytics />
           <Seo />
-          {/* ✅ Fixed Header */}
+        
           
             <HeaderSection />
        
 
-          {/* ✅ Main Content with top padding to prevent overlap */}
+    
           <main className="pt-[80px]">
             {children}
           </main>
 
-          {/* ✅ Normal Footer (not fixed) */}
+        
           <Footer />
         </ReduxProvider>
       </body>
