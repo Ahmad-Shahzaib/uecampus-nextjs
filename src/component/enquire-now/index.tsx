@@ -7,6 +7,8 @@ import { fetchProgramsData, ProgramType, University, AcademicYear } from "@/redu
 import { sendEnquiry } from "@/redux/thunk/enquiryThunk";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Image from "next/image";
+import contactus from "../../../public/assets/contactus.jpg";
 
 interface FormData {
   fullName: string;
@@ -396,11 +398,12 @@ export function ScholarshipForm(): JSX.Element {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden shadow-2xl bg-white">
           {/* Left Side - Image */}
           <div className="relative h-64 lg:h-full">
-            <img
-              src="https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/thumbnail-9.jpg"
+            <Image
+              src={contactus}
               alt="Student with books"
               loading="lazy" 
               className="w-full h-full object-cover"
+              fill
             />
           </div>
 

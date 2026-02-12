@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useMemo, memo } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useDispatch, useSelector } from "@/redux/store";
 import { fetchStudentFeedbackData } from "@/redux/thunk/studentFeedback";
+import Image from "next/image";
 
 interface Testimonial {
   id: string;
@@ -46,7 +47,7 @@ const LazyImage = memo(
             <div className="text-gray-400 text-sm">Image not available</div>
           </div>
         ) : (
-          <img
+          <Image
             src={src}
             alt={alt}
             className={className}
@@ -55,6 +56,9 @@ const LazyImage = memo(
               setIsLoading(false);
               setHasError(true);
             }}
+            layout="responsive"
+            width={500}
+            height={500}
             loading="lazy"
             decoding="async"
             fetchPriority="low"

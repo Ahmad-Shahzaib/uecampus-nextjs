@@ -3,7 +3,7 @@ import Seo from "@/component/common/Seo";
 import Faqs from "@/component/faqs/Faqs";
 import FrequentlyAskedQuestionHeader from "@/component/faqs/faqsQuestionHeader";
 import JoinUs from "@/component/joinus";
-import faqs from "../../../public/assets/featured-course-thumbnail.jpg";
+import faqs from "../../../public/featured-course-thumbnail.jpg";
 
 const Page = () => {
   const faqData = {

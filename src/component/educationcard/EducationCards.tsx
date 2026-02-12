@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "@/redux/store";
 import { RootState } from "@/redux/rootReducer";
 import { fetchEducationCardsData } from "@/redux/thunk/educationCardsThunk";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const EducationCards = () => {
   const dispatch = useDispatch();
@@ -67,8 +68,10 @@ const EducationCards = () => {
                 <img
                   src={partner.logo}
                   alt={partner.title}
-                  loading="lazy" 
+                  loading="lazy"
                   className="h-32 w-auto object-contain"
+                  width={128}
+                  height={128}
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.style.display = "none";

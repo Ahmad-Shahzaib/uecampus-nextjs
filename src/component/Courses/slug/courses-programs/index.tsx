@@ -4,6 +4,7 @@ import type { CourseTable } from "@/redux/slices/detailCourseSlice";
 import { RootState } from "@/redux/rootReducer";
 import { useSelector } from "@/redux/store";
 import { useMemo, useState } from "react";
+import Image from "next/image";
 
 const fallbackBenefits = [
   "Comprehensive Foundation",
@@ -81,7 +82,7 @@ export default function ProgramPage() {
     // --- Image URLs ---
     updated = updated.replace(
       /(https?:\/\/[^\s"']+\.(png|jpg|jpeg|gif|webp))/gi,
-      `<img src="$1" class="w-full rounded-lg my-4" />`
+      `<Image src="$1" class="w-full rounded-lg my-4" />`
     );
 
     // --- Video URLs ---

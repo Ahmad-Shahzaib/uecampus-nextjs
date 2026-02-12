@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 interface CircularImageProps {
   imageUrl: string;
@@ -27,9 +28,12 @@ const CircularImage = ({
   return (
     <div className={imageStyles}>
       <div className={`relative w-full ${imageContainer} rounded-lg overflow-hidden shadow-xl`}>
-        <img
+        <Image
           src={imageUrl}
           alt={alt}
+          layout="responsive"
+          width={500}
+          height={500}
           className="w-full h-auto object-cover"
         />
       </div>

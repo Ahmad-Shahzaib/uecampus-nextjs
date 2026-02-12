@@ -6,6 +6,7 @@ import { Footer } from "@/component/footer";
 import HeaderSection from "@/component/Header";
 import Seo from "@/component/common/Seo";
 import Analytics from "@/component/common/Analytics";
+ 
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -94,38 +95,31 @@ export default function RootLayout({
         {/* Preload hero poster fallback used by the client hero component so it is
             discoverable as the LCP candidate and fetched with high priority. */}
         <link rel="preload" href="/assets/featured-course-thumbnail.jpg" as="image" fetchPriority="high" />
+        {/* Resource hints to shorten connection setup and reduce critical chain latency */}
+        <link rel="dns-prefetch" href="https://newwebsite.uecampus.com" />
+        <link rel="preconnect" href="https://newwebsite.uecampus.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.uecampus.com" />
+        <link rel="preconnect" href="https://www.uecampus.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://new.uecampus.com" />
+        <link rel="preconnect" href="https://new.uecampus.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://i.ytimg.com" />
+        <link rel="preconnect" href="https://i.ytimg.com" crossOrigin="anonymous" />
+        {/* Make non-critical Next.js generated CSS non-blocking by deferring it.
+            This script sets Next's chunked stylesheet links (/_next/static/css/) to
+            media="print" and swaps them back to "all" onload so they load
+            asynchronously and don't block the initial render. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var ls=document.querySelectorAll('link[rel="stylesheet"][href*="/_next/static/css/"]');for(var i=0;i<ls.length;i++){var l=ls[i];if(l.dataset.deferred)continue;l.dataset.deferred='true';l.media='print';l.onload=function(){this.media='all'};} }catch(e){} })();`,
+          }}
+        />
       </head>
-      {/* Resource hints to shorten connection setup and reduce critical chain latency */}
-      <link rel="dns-prefetch" href="https://newwebsite.uecampus.com" />
-      <link rel="preconnect" href="https://newwebsite.uecampus.com" crossOrigin="anonymous" />
-      <link rel="dns-prefetch" href="https://www.uecampus.com" />
-      <link rel="preconnect" href="https://www.uecampus.com" crossOrigin="anonymous" />
-      <link rel="dns-prefetch" href="https://new.uecampus.com" />
-      <link rel="preconnect" href="https://new.uecampus.com" crossOrigin="anonymous" />
-      <link rel="dns-prefetch" href="https://i.ytimg.com" />
-      <link rel="preconnect" href="https://i.ytimg.com" crossOrigin="anonymous" />
-      {/* Make non-critical Next.js generated CSS non-blocking by deferring it.
-          This script sets Next's chunked stylesheet links (/_next/static/css/) to
-          media="print" and swaps them back to "all" onload so they load
-          asynchronously and don't block the initial render. */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `(function(){try{var ls=document.querySelectorAll('link[rel="stylesheet"][href*="/_next/static/css/"]');for(var i=0;i<ls.length;i++){var l=ls[i];if(l.dataset.deferred)continue;l.dataset.deferred='true';l.media='print';l.onload=function(){this.media='all'};} }catch(e){} })();`,
-        }}
-      />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {/* Small, non-visual eager image to ensure discovery by LCP heuristics.
             Kept offscreen rather than display:none so browsers fetch it. */}
-        <img
-          src="https://newwebsite.uecampus.com/wp-content/uploads/2025/08/19.jpg"
-          alt=""
-          aria-hidden="true"
-          loading="eager"
-          fetchPriority="high"
-          style={{ position: "absolute", width: 1, height: 1, left: -9999 }}
-        />
+       
         <ReduxProvider>
           <Analytics />
           <Seo />

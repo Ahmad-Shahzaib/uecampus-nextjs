@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "@/redux/store";
 import { fetchHeroSectionData } from "@/redux/thunk/heroSectionThunk";
 import { RootState } from "@/redux/rootReducer";
+import Image from "next/image";
+import background from "../../../../../public/assets/backgoundimage.png";
 
 export function HeroCard() {
   const dispatch = useDispatch();
@@ -70,25 +72,11 @@ export function HeroCard() {
       {/* Grid Line Overlay (opacity: 0.15) */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-2.png')`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          opacity: 0.15,
-          zIndex: 1,
-        }}
+       
       />
       {/* Ensure the overlay image is discoverable as an image resource (helps LCP)
-          by adding an eager, offscreen <img> with high fetch priority. */}
-      <img
-        src="https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-2.png"
-        alt=""
-        aria-hidden="true"
-        loading="eager"
-        fetchPriority="high"
-        style={{ position: "absolute", width: 1, height: 1, left: -9999 }}
-      />
+          by adding an eager, offscreen <Image> with high fetch priority. */}
+     
 
       {/* Content */}
       <div className="relative z-10 flex flex-col gap-6">

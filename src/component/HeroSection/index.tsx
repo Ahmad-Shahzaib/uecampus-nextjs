@@ -126,10 +126,6 @@ const HeroSection = () => {
           <video
             ref={(el) => { videoRef.current = el; }}
             className="absolute inset-0 w-full h-full object-cover"
-            poster={
-              // prefer hero poster/thumbnail if available, otherwise fallback to a lightweight site asset
-              (hero as any).poster || (hero as any).thumbnail || "/assets/featured-course-thumbnail.jpg"
-            }
             preload="metadata"
             loop
             muted

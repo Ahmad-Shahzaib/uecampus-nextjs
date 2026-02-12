@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from "next/image";
 
 const BlogHeroSection = () => {
   const [isContactVisible, setIsContactVisible] = useState(true);
@@ -14,10 +15,11 @@ const BlogHeroSection = () => {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         {/* Background Image */}
-        <img
+        <Image
           src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=1920&q=80"
           alt="Library Background"
-          className="w-full h-full object-cover"
+          layout="fill"
+          objectFit="cover"
         />
 
         {/* Dark Overlay */}
