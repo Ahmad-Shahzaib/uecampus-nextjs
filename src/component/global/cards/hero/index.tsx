@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "@/redux/store";
 import { fetchHeroSectionData } from "@/redux/thunk/heroSectionThunk";
 import { RootState } from "@/redux/rootReducer";
 import Image from "next/image";
-import background from "../../../../../public/assets/backgoundimage.png";
+import background from "../../../../../public/assets/backgoundimage.webp";
 
 export function HeroCard() {
   const dispatch = useDispatch();

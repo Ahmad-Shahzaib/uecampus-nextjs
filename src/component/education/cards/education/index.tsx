@@ -34,7 +34,7 @@ export function EducationCard({
         backgroundImage: isDarkMode
           ? "none"
           : bg
-          ? `url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.png'), url(${backgroundImage})`
+          ? `url('https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.webp'), url(${backgroundImage})`
           : `url(${backgroundImage})`,
         backgroundSize: "cover, cover",
         backgroundPosition: "center, center",

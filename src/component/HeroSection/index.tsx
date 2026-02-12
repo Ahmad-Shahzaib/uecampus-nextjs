@@ -7,16 +7,19 @@ import { useDispatch, useSelector } from "@/redux/store";
 import { fetchHeroData } from "@/redux/thunk/hero";
 import { fetchSearchResults, CourseSearchItem } from "@/redux/thunk/searchCourses";
 import { useEffect, useState, useRef } from "react";
+import Image from "next/image";
 
 const HeroSection = () => {
   const dispatch = useDispatch();
   const { data: hero, isLoading, error } = useSelector((state) => state.hero);
   const [keyword, setKeyword] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
-  const [hasSearched, setHasSearched] = useState(false); // Track if user has performed a search
+  const [hasSearched, setHasSearched] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
   const search = useSelector((state) => state.search);
 
   const handleSearch = () => {
@@ -25,7 +28,7 @@ const HeroSection = () => {
       setShowDropdown(false);
       return;
     }
-    setHasSearched(true); // Mark that user has performed a search
+    setHasSearched(true);
     dispatch(fetchSearchResults(q));
     setShowDropdown(true);
   };
@@ -46,20 +49,16 @@ const HeroSection = () => {
   // Open dropdown when results arrive AND user has performed a search
   useEffect(() => {
     if (hasSearched && search?.data && search.data.length > 0) {
-      // schedule open to avoid synchronous setState inside effect
       setTimeout(() => setShowDropdown(true), 0);
     }
   }, [search?.data, hasSearched]);
 
-  // Fetch on mount if not already loaded
+  // OPTIMIZATION 1: Fetch on mount immediately (not conditional)
   useEffect(() => {
-    if (!hero && !isLoading) {
-      dispatch(fetchHeroData());
-    }
-  }, [dispatch, hero, isLoading]);
+    dispatch(fetchHeroData());
+  }, [dispatch]);
 
-  // Defer loading the large hero video to avoid initial transfer on slow
-  // networks. Only load after a short idle timeout on reasonable connections.
+  // OPTIMIZATION 2: Improved video loading strategy
   useEffect(() => {
     if (!hero || !hero.video || typeof window === "undefined") return;
 
@@ -68,138 +67,187 @@ const HeroSection = () => {
     const effectiveType = conn && conn.effectiveType;
     const slowConnection = saveData || effectiveType === "2g" || effectiveType === "slow-2g";
 
-    if (slowConnection) return; // avoid loading heavy video on slow connections
+    if (slowConnection) return;
 
-    // Prefer requestIdleCallback to defer loading until after first paint
-    const idleCallback = (cb: () => void, timeout = 1500) => {
-      if ((window as any).requestIdleCallback) {
-        return (window as any).requestIdleCallback(cb, { timeout });
-      }
-      return window.setTimeout(cb, timeout);
-    };
-
-    const id = idleCallback(() => {
-      // set source token so <source> is rendered and browser starts fetching
+    // Load video immediately after hero data is available
+    const loadVideo = () => {
       setVideoSrc(hero.video);
-      // try to play once source is set
-      setTimeout(() => {
-        const el = videoRef.current;
-        if (el) {
-          try {
-            el.load();
-            el.play().catch(() => {});
-          } catch (e) {}
-        }
-      }, 200);
-    }, 1500);
-
-    return () => {
-      if ((window as any).cancelIdleCallback) (window as any).cancelIdleCallback(id);
-      else window.clearTimeout(id as number);
+      
+      // Use IntersectionObserver for better performance
+      if ('IntersectionObserver' in window && videoRef.current) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const el = videoRef.current;
+                if (el && videoSrc) {
+                  try {
+                    el.load();
+                    el.play().catch(() => {});
+                  } catch (e) {}
+                  observer.disconnect();
+                }
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+        observer.observe(videoRef.current);
+        return () => observer.disconnect();
+      } else {
+        // Fallback for browsers without IntersectionObserver
+        setTimeout(() => {
+          const el = videoRef.current;
+          if (el) {
+            try {
+              el.load();
+              el.play().catch(() => {});
+            } catch (e) {}
+          }
+        }, 100);
+      }
     };
-  }, [hero]);
 
-  // Loading
-  if (isLoading) {
-    return (
-      <div className="bg-black h-[500px] flex items-center justify-center rounded-lg">
-        <Loader size={120} text={"Loading hero section..."} />
-      </div>
-    );
-  }
+    // Use requestIdleCallback for non-critical video load, but don't delay initial render
+    if ((window as any).requestIdleCallback) {
+      const id = (window as any).requestIdleCallback(loadVideo, { timeout: 500 });
+      return () => (window as any).cancelIdleCallback(id);
+    } else {
+      const id = setTimeout(loadVideo, 200);
+      return () => clearTimeout(id);
+    }
+  }, [hero, videoSrc]);
 
-  // Error
-  // Error or missing hero data — show loader image instead of plain text
-  if (error || !hero) {
-    return (
-      <div className="bg-black h-[500px] flex items-center justify-center rounded-lg">
-        <Loader size={120} text={error ? String(error) : ""} />
-      </div>
-    );
-  }
+  // OPTIMIZATION 3: Show video only after it starts loading
+  useEffect(() => {
+    if (videoSrc) {
+      // Small delay to ensure smooth transition
+      const timer = setTimeout(() => setShowVideo(true), 100);
+      return () => clearTimeout(timer);
+    }
+  }, [videoSrc]);
 
-  return (
-    <div className="bg-black w-full flex justify-center rounded-lg">
-      <div className="relative w-[calc(100%-24px)] h-[550px] flex items-center justify-center mx-auto rounded-lg">
-        {/* Dynamic Video */}
-        <div className="absolute inset-0 overflow-hidden rounded-lg">
-          <video
-            ref={(el) => { videoRef.current = el; }}
-            className="absolute inset-0 w-full h-full object-cover"
-            preload="metadata"
-            loop
-            muted
-            playsInline
-            aria-hidden
-          >
-            {videoSrc && <source src={videoSrc} type="video/mp4" />}
-          </video>
-          <div className="absolute inset-0 bg-black/40" />
-        </div>
-        <div className="relative z-10 text-center px-2 sm:px-8 sm:max-w-4xl w-full mx-auto">
-          <div className="sm:w-2xl w-full mx-auto">
-            <h1 className="text-2xl font-medium sm:text-3xl lg:text-6xl text-white whitespace-pre-line">
-              {hero.title}
-            </h1>
-          </div>
-          <p className="mt-6 text-lg whitespace-pre-line max-w-2xl mx-auto text-white/90">
-            {hero.description}
-          </p>
-          {/* Search Bar */}
-          <div className="mt-8 flex flex-col sm:flex-row gap-3 items-center justify-center w-full relative">
-            <div className="w-full sm:w-auto relative">
-              <Input
-                value={keyword}
-                onChange={(e) => setKeyword(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    handleSearch();
-                  }
-                }}
-                className="w-full py-6 sm:w-[600px] bg-white/90 backdrop-blur-sm border-white/20"
-                placeholder="Search courses..."
-              />
-              {/* Results dropdown */}
-              {showDropdown && hasSearched && search?.data && search.data.length > 0 && (
-                <div
-                  ref={dropdownRef}
-                  className="absolute left-0 right-0 mt-2 bg-white/95 backdrop-blur-sm rounded-md shadow-lg z-50 max-h-64 overflow-auto"
-                >
-                  {search.data.map((item: CourseSearchItem) => (
-                    <a
-                      key={item.id}
-                      href={`/course/${item.slug}`}
-                      className="block px-4 py-3 hover:bg-slate-50 border-b last:border-b-0"
-                    >
-                      <div className="text-sm font-medium text-slate-800">{item.name}</div>
-                      {item.small_description && (
-                        <div className="text-xs text-slate-600">{item.small_description}</div>
-                      )}
-                    </a>
-                  ))}
-                </div>
-              )}
+  // OPTIMIZATION 4: Render placeholder immediately, don't block LCP
+  // This ensures the hero section renders instantly with skeleton content
+  const renderContent = () => {
+    // Show skeleton with gradient background immediately
+    if (isLoading || !hero) {
+      return (
+        <div className="bg-black w-full flex justify-center rounded-lg">
+          <div className="relative w-[calc(100%-24px)] h-[550px] flex items-center justify-center mx-auto rounded-lg overflow-hidden">
+            {/* Gradient placeholder for instant render */}
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 animate-pulse rounded-lg" />
+            
+            {/* Skeleton content for LCP optimization */}
+            <div className="relative z-10 text-center px-2 sm:px-8 sm:max-w-4xl w-full mx-auto">
+              <div className="sm:w-2xl w-full mx-auto">
+                <div className="h-16 bg-white/10 rounded-lg mx-auto max-w-2xl animate-pulse" />
+              </div>
+              <div className="mt-6 h-6 bg-white/10 rounded-lg max-w-xl mx-auto animate-pulse" />
+              <div className="mt-8 flex flex-col sm:flex-row gap-3 items-center justify-center w-full">
+                <div className="w-full sm:w-[600px] h-14 bg-white/10 rounded-lg animate-pulse" />
+                <div className="w-full sm:w-32 h-14 bg-white/10 rounded-lg animate-pulse" />
+              </div>
             </div>
-            <Button
-              onClick={handleSearch}
-              variant="destructive"
-              className="px-8 py-6 w-full rounded-md sm:w-auto"
-            >
-              Search
-            </Button>
           </div>
-          {/* CTA Button from API */}
-          {/* <div className="mt-6">
-            <Button asChild variant="destructive" className="px-8 py-6 rounded-md">
-              <a href={hero.button_link} target="_blank" rel="noopener noreferrer">
-                {hero.button_name}
-              </a>
-            </Button>
-          </div> */}
+        </div>
+      );
+    }
+
+    // Main hero content
+    return (
+      <div className="bg-black w-full flex justify-center rounded-lg">
+        <div className="relative w-[calc(100%-24px)] h-[550px] flex items-center justify-center mx-auto rounded-lg">
+          {/* Video Background with optimized loading */}
+          <div className="absolute inset-0 overflow-hidden rounded-lg">
+            {/* OPTIMIZATION 5: Fallback gradient background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
+            
+            {/* OPTIMIZATION 6: Optimized video element */}
+            <video
+              ref={videoRef}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+                showVideo ? 'opacity-100' : 'opacity-0'
+              }`}
+              preload="none"
+              loop
+              muted
+              playsInline
+              aria-hidden="true"
+              onLoadedData={() => setVideoLoaded(true)}
+              poster={hero.thumbnail || undefined} // Add poster if available from API
+            >
+              {videoSrc && <source src={videoSrc} type="video/mp4" />}
+            </video>
+            <div className="absolute inset-0 bg-black/40" />
+          </div>
+
+          {/* Content - renders immediately */}
+          <div className="relative z-10 text-center px-2 sm:px-8 sm:max-w-4xl w-full mx-auto">
+            <div className="sm:w-2xl w-full mx-auto">
+              <h1 className="text-2xl font-medium sm:text-3xl lg:text-6xl text-white whitespace-pre-line">
+                {hero.title}
+              </h1>
+            </div>
+            <p className="mt-6 text-lg whitespace-pre-line max-w-2xl mx-auto text-white/90">
+              {hero.description}
+            </p>
+            
+            {/* OPTIMIZATION 7: Search bar optimized */}
+            <div className="mt-8 flex flex-col sm:flex-row gap-3 items-center justify-center w-full relative">
+              <div className="w-full sm:w-auto relative">
+                <Input
+                  value={keyword}
+                  onChange={(e) => setKeyword(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleSearch();
+                    }
+                  }}
+                  className="w-full py-6 sm:w-[600px] bg-white/90 backdrop-blur-sm border-white/20"
+                  placeholder="Search courses..."
+                  aria-label="Search courses"
+                />
+                
+                {/* Results dropdown with optimized rendering */}
+                {showDropdown && hasSearched && search?.data && search.data.length > 0 && (
+                  <div
+                    ref={dropdownRef}
+                    className="absolute left-0 right-0 mt-2 bg-white/95 backdrop-blur-sm rounded-md shadow-lg z-50 max-h-64 overflow-auto"
+                    role="listbox"
+                  >
+                      {search.data.map((item: CourseSearchItem) => (
+                        <a
+                          key={item.id}
+                          href={`/course/${item.slug}`}
+                          className="block px-4 py-3 hover:bg-slate-50 border-b last:border-b-0"
+                          role="option"
+                        >
+                          <div className="text-sm font-medium text-slate-800">{item.name}</div>
+                          {item.small_description && (
+                            <div className="text-xs text-slate-600">{item.small_description}</div>
+                          )}
+                        </a>
+                      ))}
+                  </div>
+                )}
+              </div>
+              <Button
+                onClick={handleSearch}
+                variant="destructive"
+                className="px-8 py-6 w-full rounded-md sm:w-auto"
+                aria-label="Search"
+              >
+                Search
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
+
+  return renderContent();
 };
 
 export default HeroSection;

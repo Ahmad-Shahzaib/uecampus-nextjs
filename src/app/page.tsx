@@ -13,7 +13,7 @@ import { fetchFeatureCardsData } from "@/redux/thunk/featureCards";
 import { fetchAboutSectionData } from "@/redux/thunk/aboutSection";
 
 // Dynamic imports with no SSR for below-the-fold components
-const LogoCarousel = dynamic(() => import("@/component/partners").then(mod => ({ default: mod.LogoCarousel })), { ssr: false });
+const LogoCarousel = dynamic(() => import("@/component/partners").then(mod => mod.default), { ssr: false });
 const CouresSection = dynamic(() => import("@/component/Courses"), { ssr: false });
 const AboutSection = dynamic(() => import("@/component/education/sections/about").then(mod => ({ default: mod.AboutSection })), { ssr: false });
 const EducationSection = dynamic(() => import("@/component/education/sections/education").then(mod => ({ default: mod.EducationSection })), { ssr: false });
@@ -61,7 +61,7 @@ export default function Home() {
       description: "Learn more about our mission and vision.",
       backgroundClass: "text-[#6a1b9a]",
       backgroundImage:
-        "https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.png",
+        "https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.webp",
       about: {
         secondCardTitle: about?.secondCardTitle,
         secondCardDescription: about?.secondCardDescription,

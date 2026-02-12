@@ -57,7 +57,7 @@ export const fetchRandomCourses = createAsyncThunk<
       meta_tags: course.meta_tags ?? null,
       meta_description: course.meta_description ?? null,
       page: course.page ?? null,
-      image_path: course.image_path || "/assets/uecampus-logo.png",
+      image_path: course.image_path || "/assets/uecampus-logo.webp",
       video: course.video ?? null,
       created_at: course.created_at ?? "",
       updated_at: course.updated_at ?? "",

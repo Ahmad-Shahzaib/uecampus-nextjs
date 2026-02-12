@@ -8,7 +8,7 @@ import { sendEnquiry } from "@/redux/thunk/enquiryThunk";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import contactus from "../../../public/assets/contactus.jpg";
+import contactus from "../../../public/assets/contactus.webp";
 
 interface FormData {
   fullName: string;

@@ -6,6 +6,8 @@ import { Footer } from "@/component/footer";
 import HeaderSection from "@/component/Header";
 import Seo from "@/component/common/Seo";
 import Analytics from "@/component/common/Analytics";
+import Image from "next/image";
+import logo from "../../public/assets/uecampus-logo.webp";
  
 
 const geistSans = Geist({
@@ -31,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-       
+        {/* Only valid head elements here */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -40,7 +42,7 @@ export default function RootLayout({
               "@type": "Organization",
               name: "UECampus",
               url: "https://www.uecampus.com",
-              logo: "https://www.uecampus.com/wp-content/uploads/2024/01/uecampus-logo.png",
+              logo: "https://www.uecampus.com/wp-content/uploads/2024/01/uecampus-logo.webp",
               contactPoint: [
                 {
                   "@type": "ContactPoint",
@@ -57,7 +59,6 @@ export default function RootLayout({
             }),
           }}
         />
-
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -74,25 +75,22 @@ export default function RootLayout({
             }),
           }}
         />
-    
         <link
           rel="preload"
-          href="https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-2.png"
+          href="https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-2.webp"
           as="image"
         />
         <link
           rel="preload"
-          href="https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.png"
+          href="https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/grid-line-3.webp"
           as="image"
         />
         <link
           rel="preload"
-          href="https://newwebsite.uecampus.com/wp-content/uploads/2025/08/19.jpg"
+          href="https://newwebsite.uecampus.com/wp-content/uploads/2025/08/19.webp"
           as="image"
         />
- 
-        <link rel="preload" href="/assets/featured-course-thumbnail.jpg" as="image" fetchPriority="high" />
-      
+        <link rel="preload" href="/assets/featured-course-thumbnail.webp" as="image" fetchPriority="high" />
         <link rel="dns-prefetch" href="https://newwebsite.uecampus.com" />
         <link rel="preconnect" href="https://newwebsite.uecampus.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.uecampus.com" />
@@ -101,7 +99,6 @@ export default function RootLayout({
         <link rel="preconnect" href="https://new.uecampus.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://i.ytimg.com" />
         <link rel="preconnect" href="https://i.ytimg.com" crossOrigin="anonymous" />
-      
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var ls=document.querySelectorAll('link[rel="stylesheet"][href*="/_next/static/css/"]');for(var i=0;i<ls.length;i++){var l=ls[i];if(l.dataset.deferred)continue;l.dataset.deferred='true';l.media='print';l.onload=function(){this.media='all'};} }catch(e){} })();`,
@@ -111,22 +108,21 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
- 
-       
+        {/* Logo image moved here for valid HTML */}
+        <Image
+          src={logo}
+          alt="UECampus Logo"
+          width={150}
+          height={50}
+          priority
+        />
         <ReduxProvider>
           <Analytics />
           <Seo />
-        
-          
-            <HeaderSection />
-       
-
-    
+          <HeaderSection />
           <main className="pt-[80px]">
             {children}
           </main>
-
-        
           <Footer />
         </ReduxProvider>
       </body>

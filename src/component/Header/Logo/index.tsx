@@ -2,6 +2,8 @@
 import { ImageCard } from '@/components/ui/ImageCard'
 import React from 'react'
 import { useRouter } from "next/navigation";
+import Image from 'next/image';
+import logo from '../../../../public/assets/uecampus-logo.webp';
 
 const LogoSection = () => {
     const router = useRouter();
@@ -11,8 +13,8 @@ const LogoSection = () => {
             className="cursor-pointer"
             onClick={() => router.push("/")}
         >
-            <ImageCard 
-                src="https://newwebsite.uecampus.com/wp-content/themes/uecampus-theme-2025/assets/images/uecampus-logo.png" 
+            <Image 
+                src={logo}
                 alt="UeCampus Logo" 
                 width={150} 
                 height={50}
