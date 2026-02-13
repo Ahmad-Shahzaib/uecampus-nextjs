@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
-import Globe from "react-globe.gl";
+import dynamic from "next/dynamic";
+const Globe = dynamic(() => import("react-globe.gl"), { ssr: false });
 
 export default function NightCityLightsGlobe() {
   const globeEl = useRef<any>(null);

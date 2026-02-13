@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import * as THREE from "three";
+import type { Scene, WebGLRenderer, Group } from "three";
 
 interface Location {
   name: string;
@@ -22,113 +22,118 @@ const HIGHLIGHTED_LOCATIONS: Location[] = [
 
 export default function InteractiveGlobe() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const sceneRef = useRef<THREE.Scene | null>(null);
-  const globeGroupRef = useRef<THREE.Group | null>(null);
+  const rendererRef = useRef<WebGLRenderer | null>(null);
+  const sceneRef = useRef<Scene | null>(null);
+  const globeGroupRef = useRef<Group | null>(null);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    // Scene setup
-    const scene = new THREE.Scene();
-    sceneRef.current = scene;
+    // load three.js only on the client when the component mounts
+    (async () => {
+      const THREE = (await import("three")) as typeof import("three");
 
-    // Cache initial container measurements to avoid repeated layout reads
-    const initialWidth = container.clientWidth;
-    const initialHeight = container.clientHeight;
+      // Scene setup
+      const scene = new THREE.Scene();
+      sceneRef.current = scene;
 
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      initialWidth / initialHeight,
-      0.1,
-      1000
-    );
-    camera.position.z = 2.5;
+      // Cache initial container measurements to avoid repeated layout reads
+      const initialWidth = container.clientWidth;
+      const initialHeight = container.clientHeight;
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(initialWidth, initialHeight);
-    renderer.setClearColor(0x0f172a, 0);
-    container.appendChild(renderer.domElement);
-    rendererRef.current = renderer;
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        initialWidth / initialHeight,
+        0.1,
+        1000
+      );
+      camera.position.z = 2.5;
 
-    // Lighting
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionalLight.position.set(5, 3, 5);
-    scene.add(directionalLight);
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(initialWidth, initialHeight);
+      renderer.setClearColor(0x0f172a, 0);
+      container.appendChild(renderer.domElement);
+      rendererRef.current = renderer;
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
+      // Lighting
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+      directionalLight.position.set(5, 3, 5);
+      scene.add(directionalLight);
 
-    // Globe group
-    const globeGroup = new THREE.Group();
-    scene.add(globeGroup);
-    globeGroupRef.current = globeGroup;
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+      scene.add(ambientLight);
 
-    // Globe geometry
-    const geometry = new THREE.SphereGeometry(1, 64, 64);
-    const material = new THREE.MeshPhongMaterial({
-      color: 0x0f172a,
-      emissive: 0x222222,
-      shininess: 5,
-      wireframe: false,
-    });
-    const globe = new THREE.Mesh(geometry, material);
-    globeGroup.add(globe);
+      // Globe group
+      const globeGroup = new THREE.Group();
+      scene.add(globeGroup);
+      globeGroupRef.current = globeGroup;
 
-    // Add highlight markers
-    HIGHLIGHTED_LOCATIONS.forEach((loc) => {
-      const phi = (90 - loc.lat) * (Math.PI / 180);
-      const theta = (loc.lng + 180) * (Math.PI / 180);
-      const x = Math.sin(phi) * Math.cos(theta);
-      const y = Math.cos(phi);
-      const z = Math.sin(phi) * Math.sin(theta);
-
-      const markerGeo = new THREE.SphereGeometry(0.03, 16, 16);
-      const markerMat = new THREE.MeshBasicMaterial({ color: loc.color });
-      const marker = new THREE.Mesh(markerGeo, markerMat);
-      marker.position.set(x, y, z);
-      globeGroup.add(marker);
-    });
-
-    // Animate rotation
-    const animate = () => {
-      requestAnimationFrame(animate);
-      globeGroup.rotation.y += 0.0008;
-      renderer.render(scene, camera);
-    };
-    animate();
-
-    // Resize handler: read layout once, then perform writes inside rAF
-    let resizeRaf: number | null = null;
-    const handleResize = () => {
-      if (!container) return;
-      const w = container.clientWidth;
-      const h = container.clientHeight;
-      if (resizeRaf) cancelAnimationFrame(resizeRaf);
-      resizeRaf = requestAnimationFrame(() => {
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
-        renderer.setSize(w, h);
+      // Globe geometry
+      const geometry = new THREE.SphereGeometry(1, 64, 64);
+      const material = new THREE.MeshPhongMaterial({
+        color: 0x0f172a,
+        emissive: 0x222222,
+        shininess: 5,
+        wireframe: false,
       });
-    };
+      const globe = new THREE.Mesh(geometry, material);
+      globeGroup.add(globe);
 
-    // Use ResizeObserver on the container for more precise updates, fallback to window resize
-    const ro = new ResizeObserver(() => handleResize());
-    ro.observe(container);
-    window.addEventListener("resize", handleResize);
+      // Add highlight markers
+      HIGHLIGHTED_LOCATIONS.forEach((loc) => {
+        const phi = (90 - loc.lat) * (Math.PI / 180);
+        const theta = (loc.lng + 180) * (Math.PI / 180);
+        const x = Math.sin(phi) * Math.cos(theta);
+        const y = Math.cos(phi);
+        const z = Math.sin(phi) * Math.sin(theta);
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      try {
-        ro.disconnect();
-      } catch (e) {}
-      if (resizeRaf) cancelAnimationFrame(resizeRaf);
-      renderer.dispose();
-      if (renderer.domElement && container.contains(renderer.domElement)) {
-        container.removeChild(renderer.domElement);
-      }
-    };
+        const markerGeo = new THREE.SphereGeometry(0.03, 16, 16);
+        const markerMat = new THREE.MeshBasicMaterial({ color: loc.color });
+        const marker = new THREE.Mesh(markerGeo, markerMat);
+        marker.position.set(x, y, z);
+        globeGroup.add(marker);
+      });
+
+      // Animate rotation
+      const animate = () => {
+        requestAnimationFrame(animate);
+        globeGroup.rotation.y += 0.0008;
+        renderer.render(scene, camera);
+      };
+      animate();
+
+      // Resize handler: read layout once, then perform writes inside rAF
+      let resizeRaf: number | null = null;
+      const handleResize = () => {
+        if (!container) return;
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        if (resizeRaf) cancelAnimationFrame(resizeRaf);
+        resizeRaf = requestAnimationFrame(() => {
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+          renderer.setSize(w, h);
+        });
+      };
+
+      // Use ResizeObserver on the container for more precise updates, fallback to window resize
+      const ro = new ResizeObserver(() => handleResize());
+      ro.observe(container);
+      window.addEventListener("resize", handleResize);
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+        try {
+          ro.disconnect();
+        } catch (e) {}
+        if (resizeRaf) cancelAnimationFrame(resizeRaf);
+        renderer.dispose();
+        if (renderer.domElement && container.contains(renderer.domElement)) {
+          container.removeChild(renderer.domElement);
+        }
+      };
+    })();
   }, []);
 
   return (

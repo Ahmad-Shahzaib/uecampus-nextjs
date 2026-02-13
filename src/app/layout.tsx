@@ -13,11 +13,16 @@ import logo from "../../public/assets/uecampus-logo.webp";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
+  // disable preload to avoid blocking LCP image — font will load with `font-display: swap`
+  preload: false,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -90,7 +95,7 @@ export default function RootLayout({
           href="https://newwebsite.uecampus.com/wp-content/uploads/2025/08/19.webp"
           as="image"
         />
-        <link rel="preload" href="/assets/featured-course-thumbnail.webp" as="image" fetchPriority="high" />
+        <link rel="preload" href="/featured-course-thumbnail.webp" as="image" fetchPriority="high" />
         <link rel="dns-prefetch" href="https://newwebsite.uecampus.com" />
         <link rel="preconnect" href="https://newwebsite.uecampus.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.uecampus.com" />
@@ -99,11 +104,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://new.uecampus.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://i.ytimg.com" />
         <link rel="preconnect" href="https://i.ytimg.com" crossOrigin="anonymous" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var ls=document.querySelectorAll('link[rel="stylesheet"][href*="/_next/static/css/"]');for(var i=0;i<ls.length;i++){var l=ls[i];if(l.dataset.deferred)continue;l.dataset.deferred='true';l.media='print';l.onload=function(){this.media='all'};} }catch(e){} })();`,
-          }}
-        />
+        {/* Deferred stylesheet handling moved to `app/head.tsx` so it runs before Next inserts CSS links. */}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

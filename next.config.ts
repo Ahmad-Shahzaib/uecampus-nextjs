@@ -12,20 +12,31 @@ const nextConfig = {
       "example.com",
       "uecampus.com",
       "new.uecampus.com",
+      "i.ytimg.com"
     ],
   },
 
   async headers() {
+    // long cache for build/static assets, moderate for image files, short/no-cache for HTML pages
     return [
+      {
+        source: "/_next/static/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" }
+        ]
+      },
+      {
+        source: "/:all*.(js|css|woff2|woff|png|jpg|jpeg|webp|avif|svg)",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=86400" }
+        ]
+      },
       {
         source: "/(.*)",
         headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
-          },
-        ],
-      },
+          { key: "Cache-Control", value: "no-cache, no-store, must-revalidate" }
+        ]
+      }
     ];
       const csp = "default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://www.googletagmanager.com/gtm.js; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://stats.g.doubleclick.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; frame-src https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'";
 
@@ -113,4 +124,6 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+const withBundleAnalyzer = require('@next/bundle-analyzer')({ enabled: process.env.ANALYZE === 'true' });
+
+export default withBundleAnalyzer(nextConfig);

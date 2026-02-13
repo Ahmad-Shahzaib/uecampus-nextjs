@@ -17,7 +17,7 @@ export function Footer() {
   const dispatch = useDispatch();
   const settings = useSelector((state: any) => state?.settings?.data);
 
-  const imgSrc = settings?.logo || "/default-logo.png";
+  const imgSrc = settings?.logo || "/assets/uecampus-logo.png";
   const alt = settings?.company_name || "UeCampus Logo";
 
   useEffect(() => {

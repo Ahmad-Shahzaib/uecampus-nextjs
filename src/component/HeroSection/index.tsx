@@ -9,9 +9,12 @@ import { fetchSearchResults, CourseSearchItem } from "@/redux/thunk/searchCourse
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 
-const HeroSection = () => {
+const HeroSection = ({ heroProp }: { heroProp?: any } ) => {
   const dispatch = useDispatch();
-  const { data: hero, isLoading, error } = useSelector((state) => state.hero);
+  const reduxHeroState = useSelector((state) => state.hero);
+  const hero = heroProp ?? reduxHeroState.data;
+  const isLoading = heroProp ? false : reduxHeroState.isLoading;
+  const error = reduxHeroState.error;
   const [keyword, setKeyword] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
@@ -53,10 +56,11 @@ const HeroSection = () => {
     }
   }, [search?.data, hasSearched]);
 
-  // OPTIMIZATION 1: Fetch on mount immediately (not conditional)
+  // OPTIMIZATION 1: Fetch on mount only when server didn't provide hero data
   useEffect(() => {
+    if (heroProp) return; // server already hydrated the hero
     dispatch(fetchHeroData());
-  }, [dispatch]);
+  }, [dispatch, heroProp]);
 
   // OPTIMIZATION 2: Improved video loading strategy
   useEffect(() => {
@@ -160,13 +164,29 @@ const HeroSection = () => {
         <div className="relative w-[calc(100%-24px)] h-[550px] flex items-center justify-center mx-auto rounded-lg">
           {/* Video Background with optimized loading */}
           <div className="absolute inset-0 overflow-hidden rounded-lg">
-            {/* OPTIMIZATION 5: Fallback gradient background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
-            
-            {/* OPTIMIZATION 6: Optimized video element */}
+            {/* OPTIMIZATION 5: Render a preloaded `Image` as the LCP candidate (priority). */}
+            {hero?.thumbnail ? (
+              <Image
+                src={hero.thumbnail}
+                alt={hero.title || "Hero background"}
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 1200px"
+                className={`absolute inset-0 object-cover transition-opacity duration-150 ${videoLoaded ? 'opacity-0' : 'opacity-100'}`}
+                // keep image accessible but decorative for screen readers
+                aria-hidden={videoLoaded}
+              />
+            ) : (
+              // Fallback gradient when no thumbnail is available (still fast to paint)
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
+            )}
+
+            {/* OPTIMIZATION 6: Keep the <video> off the LCP path by not providing sources until we want to load it.
+                - `videoSrc` is set only after idle/observer checks (so it won't be chosen as LCP)
+                - video remains visually hidden (opacity) until it has loaded */}
             <video
               ref={videoRef}
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-150 ${
                 showVideo ? 'opacity-100' : 'opacity-0'
               }`}
               preload="none"
@@ -175,10 +195,19 @@ const HeroSection = () => {
               playsInline
               aria-hidden="true"
               onLoadedData={() => setVideoLoaded(true)}
-              poster={hero.thumbnail || undefined} // Add poster if available from API
+              // keep poster on the video as a safety-net for browsers that use it
+              poster={hero?.thumbnail || undefined}
             >
-              {videoSrc && <source src={videoSrc} type="video/mp4" />}
+              {/* Source is injected only when `videoSrc` is set (keeps video out of LCP) */}
+              {videoSrc && (
+                <>
+                  {/* prefer small/webm first if available (add on server-side if possible) */}
+                  <source src={videoSrc.replace(/\.mp4$/i, '.webm')} type="video/webm" />
+                  <source src={videoSrc} type="video/mp4" />
+                </>
+              )}
             </video>
+
             <div className="absolute inset-0 bg-black/40" />
           </div>
 

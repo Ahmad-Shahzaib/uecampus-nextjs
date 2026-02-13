@@ -5,8 +5,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "@/redux/store";
 import { fetchHeroSectionData } from "@/redux/thunk/heroSectionThunk";
 import { RootState } from "@/redux/rootReducer";
-import Image from "next/image";
-import background from "../../../../../public/assets/backgoundimage.webp";
+import cardbg from "../../../../../public/assets/backgoundimage.webp";
+
 
 export function HeroCard() {
   const dispatch = useDispatch();
@@ -72,7 +72,12 @@ export function HeroCard() {
       {/* Grid Line Overlay (opacity: 0.15) */}
       <div
         className="absolute inset-0 pointer-events-none"
-       
+        style={{
+          backgroundImage: `url(${cardbg.src})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 0.15,
+        }}
       />
       {/* Ensure the overlay image is discoverable as an image resource (helps LCP)
           by adding an eager, offscreen <Image> with high fetch priority. */}

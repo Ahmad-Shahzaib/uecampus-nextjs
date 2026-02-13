@@ -33,7 +33,7 @@ export function EducationSection({
           backgroundImage={cardData1?.backgroundImage}
           backgroundClass={cardData1?.backgroundClass}
           about={cardData1?.about}
-          bg={false}
+          bg={true}
           // Remove bgStyles since we'll control color via isDarkMode
           isDarkMode={!link} // Changed: true when link=false, false when link=true
         />

@@ -1,5 +1,5 @@
 "use client"
-export default LogoCarousel;
+
 import { useState } from "react"
 
 import Image from "next/image"
@@ -57,7 +57,7 @@ export function LogoCarousel({ logos }: LogoCarouselProps) {
 
           {/* Navigation Buttons */}
           {showControls && (
-            <> 
+            <>
               <button
                 onClick={prev}
                 aria-label="Previous"
@@ -98,3 +98,5 @@ export function LogoCarousel({ logos }: LogoCarouselProps) {
     </section>
   )
 }
+
+export default LogoCarousel;
