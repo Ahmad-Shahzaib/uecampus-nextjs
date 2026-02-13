@@ -137,7 +137,7 @@ const HeroSection = ({ heroProp }: { heroProp?: any } ) => {
     // Show skeleton with gradient background immediately
     if (isLoading || !hero) {
       return (
-        <div className="bg-black w-full flex justify-center rounded-lg">
+        <div className="bg-black w-full flex justify-center ">
           <div className="relative w-[calc(100%-24px)] h-[550px] flex items-center justify-center mx-auto rounded-lg overflow-hidden">
             {/* Gradient placeholder for instant render */}
             <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 animate-pulse rounded-lg" />
@@ -160,7 +160,7 @@ const HeroSection = ({ heroProp }: { heroProp?: any } ) => {
 
     // Main hero content
     return (
-      <div className="bg-black w-full flex justify-center rounded-lg">
+      <div className="bg-black w-full flex justify-center">
         <div className="relative w-[calc(100%-24px)] h-[550px] flex items-center justify-center mx-auto rounded-lg">
           {/* Video Background with optimized loading */}
           <div className="absolute inset-0 overflow-hidden rounded-lg">
