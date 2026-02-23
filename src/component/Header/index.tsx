@@ -74,7 +74,7 @@ const HeaderSection = () => {
                onClick={enqureNavigation}
                 className="w-full bg-[#4C136F] text-white font-semibold py-2.5 rounded-full"
               >
-                Enquire Now
+                Apply Now
               </button>
             </div>
           </div>

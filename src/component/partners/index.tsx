@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-
 import Image from "next/image"
 
 interface Logo {
@@ -21,7 +20,6 @@ export function LogoCarousel({ logos }: LogoCarouselProps) {
   const itemsPerPage = 4
   const logoCount = logos.length
   const [start, setStart] = useState(0)
-  // always show 4 items, wrap around when reaching the end
   const showControls = logoCount > 1
 
   const next = () => setStart((s) => (s + 1) % logoCount)
@@ -30,7 +28,7 @@ export function LogoCarousel({ logos }: LogoCarouselProps) {
   const visibleLogos = Array.from({ length: itemsPerPage }).map((_, i) => logos[(start + i) % logoCount])
 
   return (
-    <section className="w-full py-12 hidden lg:block bg-gray-900">
+    <section className="w-full py-12 hidden lg:block bg-purple-900">
       <div className="max-w-screen-2xl mx-auto px-6 relative">
         <div className="flex items-center justify-center">
           <div className={`w-full`}>
@@ -40,7 +38,7 @@ export function LogoCarousel({ logos }: LogoCarouselProps) {
                   key={`${logo.id}-${(start + idx) % logoCount}-${idx}`}
                   className="flex-shrink-0 flex items-center justify-center w-1/4 h-32 md:h-36 lg:h-40 transition-all duration-300 hover:scale-105"
                 >
-                  <div className="relative w-full h-28 md:h-32 lg:h-36">
+                  <div className="relative w-[80%] h-24 md:h-28 lg:h-32">
                     <Image
                       src={logo.src || "/placeholder.svg"}
                       alt={logo.alt}
@@ -55,33 +53,50 @@ export function LogoCarousel({ logos }: LogoCarouselProps) {
             </div>
           </div>
 
-          {/* Navigation Buttons */}
           {showControls && (
             <>
               <button
                 onClick={prev}
                 aria-label="Previous"
-                className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-gray-800 text-gray-200 hover:bg-gray-700"
+                className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-gray-800 text-gray-200 hover:bg-gray-700"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M12.293 16.293a1 1 0 010-1.414L15.586 11H5a1 1 0 110-2h10.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12.293 16.293a1 1 0 010-1.414L15.586 11H5a1 1 0 110-2h10.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 0 01-1.414 0z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </button>
 
               <button
                 onClick={next}
                 aria-label="Next"
-                className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-gray-800 text-gray-200 hover:bg-gray-700"
+                className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-gray-800 text-gray-200 hover:bg-gray-700"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 rotate-180" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M12.293 16.293a1 1 0 010-1.414L15.586 11H5a1 1 0 110-2h10.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 rotate-180"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12.293 16.293a1 1 0 010-1.414L15.586 11H5a1 1 0 110-2h10.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 0 01-1.414 0z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </button>
             </>
           )}
+
         </div>
 
-        {/* Indicators - show current start index among logos */}
         {showControls && (
           <div className="mt-6 flex justify-center gap-2">
             {Array.from({ length: logoCount }).map((_, idx) => (
@@ -99,4 +114,4 @@ export function LogoCarousel({ logos }: LogoCarouselProps) {
   )
 }
 
-export default LogoCarousel;
+export default LogoCarousel

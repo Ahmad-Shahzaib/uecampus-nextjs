@@ -6,6 +6,7 @@ import { Footer } from "@/component/footer";
 import HeaderSection from "@/component/Header";
 import Seo from "@/component/common/Seo";
 import Analytics from "@/component/common/Analytics";
+import WhatsAppButton from "@/component/common/WhatsAppButton";
 import Image from "next/image";
 import logo from "../../public/assets/uecampus-logo.webp";
  
@@ -125,6 +126,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <WhatsAppButton />
         </ReduxProvider>
       </body>
     </html>

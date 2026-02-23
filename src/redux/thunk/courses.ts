@@ -6,9 +6,11 @@ import type { Course } from "@/redux/slices/courses";
 const coursesApis = getAxiosInstance();
 
 export interface FetchCourseParams {
-  program_type_ids?: string;
-  university_ids?: string;
-  level_ids?: string;
+  // the API accepts multiple ids for each filter; we allow either a comma-separated string or array
+  program_type_ids?: string | string[];
+  university_ids?: string | string[];
+  level_ids?: string | string[];
+  academic_year_ids?: string | string[];
   page?: string | number;
   per_page?: string | number;
 }
@@ -30,12 +32,39 @@ export const fetchCoursesData = createAsyncThunk(
         Object.entries(params ?? {}).filter(
           ([, value]) => value !== undefined && value !== ""
         )
-      ) as Record<string, string | number>;
+      ) as Record<string, unknown>;
       const hasFilters = Object.keys(filterParams).length > 0;
+
+      // ensure arrays are serialized with bracket notation (param[]=value)
+      const axiosConfig: Record<string, unknown> | undefined = hasFilters
+        ? {
+            params: filterParams,
+            paramsSerializer: (p: Record<string, any>) => {
+              const parts: string[] = [];
+              Object.entries(p).forEach(([key, value]) => {
+                if (value === undefined || value === null) {
+                  return;
+                }
+                if (Array.isArray(value)) {
+                  value.forEach((v) => {
+                    parts.push(`${encodeURIComponent(key)}[]=${encodeURIComponent(
+                      String(v),
+                    )}`);
+                  });
+                } else {
+                  parts.push(
+                    `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`,
+                  );
+                }
+              });
+              return parts.join("&");
+            },
+          }
+        : undefined;
 
       const response = await coursesApis.get(
         hasFilters ? "/courses/filter" : "/courses",
-        hasFilters ? { params: filterParams } : undefined
+        axiosConfig as any
       );
 
       const coursesArray =

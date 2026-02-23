@@ -36,18 +36,23 @@ function CoursesPageContent() {
         const filters: FetchCourseParams = {};
         const params = new URLSearchParams(paramsKey);
 
-        const programTypeIds = params.get("program_type_ids");
-        const universityIds = params.get("university_ids");
-        const levelIds = params.get("level_ids");
+        // the API expects array parameters, our sidebar uses bracket syntax
+        const programTypeIds = params.getAll("program_type_ids[]");
+        const universityIds = params.getAll("university_ids[]");
+        const levelIds = params.getAll("level_ids[]");
+        const academicYears = params.getAll("academic_year_ids[]");
 
-        if (programTypeIds) {
+        if (programTypeIds.length > 0) {
             filters.program_type_ids = programTypeIds;
         }
-        if (universityIds) {
+        if (universityIds.length > 0) {
             filters.university_ids = universityIds;
         }
-        if (levelIds) {
+        if (levelIds.length > 0) {
             filters.level_ids = levelIds;
+        }
+        if (academicYears.length > 0) {
+            filters.academic_year_ids = academicYears;
         }
 
         // Use server-side pagination by sending the page param

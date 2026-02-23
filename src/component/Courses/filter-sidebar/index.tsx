@@ -22,37 +22,52 @@ export default function FilterSidebar() {
   }, [data, dispatch]);
 
   const handleFilterChange = (paramKey: string, filterId: number) => {
-    // When clicking a program type checkbox, navigate to the program route
-    if (paramKey === "program_type_ids" || paramKey === "university_ids" || paramKey === "level_ids") {
-      const paramValue = searchParams.get(paramKey);
-      const currentIds = new Set<number>(
-        paramValue
-          ? paramValue
-              .split(",")
-              .map((v) => parseInt(v.trim(), 10))
-              .filter((n) => !Number.isNaN(n))
-          : []
-      );
+    // special-case several filters that have their own top-level route
+    // so the user is taken to a dedicated page instead of staying on
+    // /courses with query params. The uncheck behaviour always returns
+    // to the main /courses list.
+    if (
+      paramKey === "program_type_ids" ||
+      paramKey === "university_ids" ||
+      paramKey === "level_ids" ||
+      paramKey === "academic_year_ids"
+    ) {
+      const idStr = String(filterId);
+      const target =
+        paramKey === "program_type_ids"
+          ? `/program/${idStr}`
+          : paramKey === "university_ids"
+          ? `/university/${idStr}`
+          : paramKey === "level_ids"
+          ? `/level/${idStr}`
+          : `/academic-year/${idStr}`;
 
-      // If this id is already selected (unchecking) go back to courses list
+      const params = new URLSearchParams(searchParams.toString());
+      const existing = params
+        .getAll(`${paramKey}[]`)
+        .map((v) => parseInt(v, 10))
+        .filter((n) => !Number.isNaN(n));
+      const currentIds = new Set<number>(existing);
+
       if (currentIds.has(filterId)) {
         router.push(`/courses`, { scroll: false });
       } else {
-        router.push(`/program/${filterId}`, { scroll: false });
+        router.push(target, { scroll: false });
       }
 
       return;
     }
 
-    const paramValue = searchParams.get(paramKey);
-    const currentIds = new Set<number>(
-      paramValue
-        ? paramValue
-            .split(",")
-            .map((v) => parseInt(v.trim(), 10))
-            .filter((n) => !Number.isNaN(n))
-        : []
-    );
+    // generic handling for other filters (level, university, academic year, etc.)
+    const key = `${paramKey}[]`;
+    const params = new URLSearchParams(searchParams.toString());
+
+    // gather existing values for this key
+    const existing = params
+      .getAll(key)
+      .map((v) => parseInt(v, 10))
+      .filter((n) => !Number.isNaN(n));
+    const currentIds = new Set<number>(existing);
 
     if (currentIds.has(filterId)) {
       currentIds.delete(filterId);
@@ -60,26 +75,20 @@ export default function FilterSidebar() {
       currentIds.add(filterId);
     }
 
-    const selectedIds = Array.from(currentIds).sort((a, b) => a - b);
-    const params = new URLSearchParams(searchParams.toString());
-    if (selectedIds.length > 0) {
-      params.set(paramKey, selectedIds.join(","));
-    } else {
-      params.delete(paramKey);
-    }
+    // remove all previous entries and append updated set
+    params.delete(key);
+    Array.from(currentIds)
+      .sort((a, b) => a - b)
+      .forEach((id) => params.append(key, String(id)));
 
     const search = params.toString();
     router.push(search ? `${pathname}?${search}` : pathname, { scroll: false });
   };
 
   const isFilterSelected = (paramKey: string, filterId: number) => {
-    const paramValue = searchParams.get(paramKey);
-    if (!paramValue) return false;
-    return paramValue
-      .split(",")
-      .map((v) => parseInt(v.trim(), 10))
-      .filter((n) => !Number.isNaN(n))
-      .includes(filterId);
+    const key = `${paramKey}[]`;
+    const values = searchParams.getAll(key);
+    return values.some((v) => String(filterId) === v);
   };
 
   const filterConfigs = [

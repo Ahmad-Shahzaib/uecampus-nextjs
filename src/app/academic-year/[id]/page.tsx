@@ -1,116 +1,60 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "@/redux/store";
 import { RootState } from "@/redux/rootReducer";
-import { fetchCoursesData } from "@/redux/thunk/courses";import { fetchProgramsData } from "@/redux/thunk/programsThunk";import Loader from "@/components/common/Loader";
+import { fetchCoursesData } from "@/redux/thunk/courses";
+import { fetchProgramsData } from "@/redux/thunk/programsThunk";
+import Loader from "@/components/common/Loader";
 import CourseCard from "@/component/Courses/courses-card";
 import PaginationComponent from "@/component/Courses/pagination";
 import Seo from "@/component/common/Seo";
 import JsonLdCourse from "@/component/common/JsonLdCourse";
 
-// Define a Course type based on your data structure
+// simplified Course type
+
 type Course = {
   id: string | number;
   program_type_name?: string;
-  // Add other properties as needed for CourseCard and JsonLdCourse
   [key: string]: any;
 };
 
-export default function ProgramPage() {
+export default function AcademicYearPage() {
   const params = useParams();
-  const programId = params?.id;
+  const ayId = params?.id;
   const dispatch = useDispatch();
   const { data: courses = [], isLoading, error } = useSelector((state: RootState) => state.courses);
   const programsData = useSelector((state: RootState) => state.programs.data);
-  const searchParams = useSearchParams();
-  const [programName, setProgramName] = useState<string>("");
-  const [academicYearName, setAcademicYearName] = useState<string>("");
+  const [yearName, setYearName] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
   const coursesPerPage = 6;
   const router = useRouter();
 
   useEffect(() => {
     setCurrentPage(1);
-    // clear derived names so they can be recomputed for the new program id
-    setProgramName("");
-    setAcademicYearName("");
-  }, [programId]);
+    setYearName("");
+  }, [ayId]);
 
   useEffect(() => {
-    if (!programId) return;
-    const params: Record<string, any> = { program_type_ids: String(programId) };
+    if (!ayId) return;
+    dispatch(fetchCoursesData({ academic_year_ids: [String(ayId)] }));
+  }, [dispatch, ayId]);
 
-    const ayValues = searchParams?.getAll("academic_year_ids[]") || [];
-    if (ayValues.length > 0) {
-      params.academic_year_ids = ayValues;
-    }
-
-    dispatch(fetchCoursesData(params as any));
-  }, [dispatch, programId, searchParams]);
-
-  // ensure programs list is loaded so we can resolve program name
   useEffect(() => {
     if (!programsData) {
       dispatch(fetchProgramsData());
     }
   }, [dispatch, programsData]);
 
-  // derive program name: prefer course-level program_type_name, fall back to programs list or program types
   useEffect(() => {
-    if (courses.length > 0) {
-      const pn = courses[0]?.program_type_name;
-      if (pn) {
-        setProgramName(pn);
-        return;
-      }
-    }
-
-    if (!programName && programsData) {
-      // try explicit programs list first (when available)
-      const foundProgram = programsData.programs?.find((p) => String(p.id) === String(programId));
-      if (foundProgram) {
-        setProgramName(foundProgram.name);
-        return;
-      }
-
-      // fallback to programTypes (filters) — these are used when user navigates by program type id
-      const foundType = programsData.programTypes?.find((p) => String(p.id) === String(programId));
-      if (foundType) {
-        setProgramName(foundType.name);
-        return;
-      }
-    }
-  }, [courses, programsData, programId, programName]);
-
-  // derive academic year name from search params and programs data
-  useEffect(() => {
-    // our filtering sidebar appends values as academic_year_ids[]
-    const ayParamArray = searchParams?.getAll("academic_year_ids[]");
-    const ayParam =
-      (ayParamArray && ayParamArray.length > 0 && ayParamArray[0]) ||
-      searchParams?.get("academic_year_ids") ||
-      searchParams?.get("academic_year_id") ||
-      searchParams?.get("academic_year");
-
-    if (!ayParam) {
-      setAcademicYearName("");
-      return;
-    }
-
-    const firstId = String(ayParam).split(",")[0];
-    if (programsData?.academicYears) {
-      const found = programsData.academicYears.find((a) => String(a.id) === String(firstId));
+    if (!yearName && programsData?.academicYears && ayId) {
+      const found = programsData.academicYears.find((a) => String(a.id) === String(ayId));
       if (found) {
-        setAcademicYearName(found.name);
-        return;
+        setYearName(found.name);
       }
     }
-
-    // fallback: clear if not found
-    setAcademicYearName("");
-  }, [searchParams, programsData]);
+  }, [programsData, ayId, yearName]);
 
   if (isLoading) {
     return (
@@ -130,10 +74,10 @@ export default function ProgramPage() {
   const displayedCourses = courses.slice(startIndex, endIndex);
 
   return (
-    <div className="flex flex-col   bg-background">
+    <div className="flex flex-col bg-background">
       <Seo pageKey={"program"} />
 
-      {/* Hero / banner with background image and overlay text */}
+      {/* hero */}
       <div className="w-full">
         <div
           className="relative w-full h-64 md:h-96 bg-cover bg-center"
@@ -145,21 +89,21 @@ export default function ProgramPage() {
           <div className="absolute inset-0 bg-black/60" />
           <div className="relative z-10 max-w-6xl mx-auto px-8 py-16">
             <h1 className="text-4xl md:text-6xl font-extrabold text-white">
-              <span className="text-yellow-400">Program</span> Details
+              <span className="text-yellow-400">Academic Year</span> Details
             </h1>
             <p className="mt-4 text-white max-w-2xl">
-              Be inspired by the latest trends that shape the world. Be the next one!
+              Browse courses available this academic year.
             </p>
           </div>
         </div>
-
-         
       </div>
 
       <div className="p-8 w-full">
         <div className="bg-white border-b border-border p-4 mb-6">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold"> {programName || "Unknown"}{academicYearName ? ` — ${academicYearName}` : ""}</h1>
+            <h1 className="text-2xl font-bold">
+              {yearName || "Unknown"}
+            </h1>
             <button
               className="text-sm text-purple-700 underline"
               onClick={() => router.push('/courses')}
@@ -171,7 +115,6 @@ export default function ProgramPage() {
 
         <div className="space-y-6">
           {displayedCourses.map((course: Course) => {
-            // Ensure required properties exist, fallback to empty string if missing
             const safeCourse = {
               ...course,
               id: typeof course.id === "string" ? Number(course.id) : course.id,

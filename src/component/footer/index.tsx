@@ -57,6 +57,11 @@ export function Footer() {
               courses designed to help you expand your knowledge, acquire new
               skills, and stay ahead of the curve in your industry.
             </p>
+            {/* Contact Info */}
+            <div className="mb-4 text-[14px] sm:text-[15px] text-[#C0C0C0]">
+              <p>Email: <a href="mailto:Info@uecampus.com" className="hover:underline">Info@uecampus.com</a></p>
+              <p>Phone: <a href="tel:+447586797014" className="hover:underline">+44&nbsp;7586&nbsp;797014</a></p>
+            </div>
             {/* Social Links */}
             <div className="flex justify-center sm:justify-start gap-5 mt-6">
               {(settings
