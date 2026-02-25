@@ -8,13 +8,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/rootReducer";
 import { fetchCourseOrder } from "@/redux/thunk/courseOrder";
 import { AppDispatch } from "@/redux/store";
-import { Course, FeaturedCourse } from "./types";
+import type { Course as UICourse, FeaturedCourse } from "./types";
+import type { Course as OrderCourse } from "@/redux/slices/courseOrder";
 import Loader from "@/components/common/Loader";
 
 const CourseSection: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { data: courses, isLoading, error } = useSelector((state: RootState) => state.courses);
-  const courseOrder = useSelector((state: RootState) => state.courseOrder?.data ?? []);
+  const { data: allCourses, isLoading, error } = useSelector((state: RootState) => state.courses);
+  // Cast to UI Course type for compatibility
+  const courseOrderCourses = useSelector((state: RootState) => state.courseOrder?.data ?? []) as UICourse[];
 
   const [showAll, setShowAll] = useState(false);
 
@@ -33,80 +35,56 @@ const CourseSection: React.FC = () => {
     []
   );
 
-  // Dynamic prioritized course IDs - using includes method to fetch records
-  const prioritizedCourseIds = useMemo(() => {
-    // If we have courses, prefer server-provided order (but only IDs present
-    // in the fetched `courses`). If none of the server IDs match, fall back
-    // to featured-course names. If no courses exist yet, use server order.
-    if (courses && courses.length > 0) {
-      if (courseOrder && courseOrder.length > 0) {
-        const presentServerIds = courseOrder.filter((id) =>
-          courses.some((c) => String(c.id) === String(id))
-        );
-        if (presentServerIds.length > 0) return presentServerIds;
-      }
 
-      // Fallback to featured names when server order doesn't match any fetched course
-      const fromFeatured = courses
-        .filter((course) => featuredCourseNames.includes(course.name))
-        .map((course) => String(course.id));
-      if (fromFeatured.length > 0) return fromFeatured;
+  // Remove duplicates: filter out allCourses that are present in courseOrderCourses (by id or _id)
+  const filteredAllCourses = useMemo(() => {
+    if (!Array.isArray(allCourses) || allCourses.length === 0) return [];
+    if (!Array.isArray(courseOrderCourses) || courseOrderCourses.length === 0) return allCourses;
+    // Build a Set of all ids from courseOrderCourses
+    const orderIds = new Set(
+      courseOrderCourses.map((c) => String(c.id)).filter(Boolean)
+    );
+    return allCourses.filter(
+      (c) => !orderIds.has(String(c.id))
+    );
+  }, [allCourses, courseOrderCourses]);
 
-      return [];
-    }
+  // Final merged list: courseOrderCourses first, then filteredAllCourses
+  const mergedCourses: UICourse[] = useMemo(() => {
+    // Defensive: ensure image_path is always a string for UI
+    const normalize = (course: UICourse): UICourse => ({
+      ...course,
+      image_path: course.image_path || "",
+    });
+    return [
+      ...courseOrderCourses.map(normalize),
+      ...filteredAllCourses.map(normalize),
+    ];
+  }, [courseOrderCourses, filteredAllCourses]);
 
-    // If no courses yet, but server provided an order, use it so the client
-    // can attempt to prioritize when courses arrive later.
-    if (courseOrder && courseOrder.length > 0) {
-      return courseOrder;
-    }
 
-    return [];
-  }, [courses, featuredCourseNames, courseOrder]);
-
-  // Ordered prioritized courses (keeps the order defined in prioritizedCourseIds)
-  const prioritizedCourses = useMemo(() => {
-    return prioritizedCourseIds
-      .map((id) => courses.find((c) => String(c.id) === String(id)))
-      .filter(Boolean) as Course[];
-  }, [courses, prioritizedCourseIds]);
-
-  // Filter featured courses by matching names
+  // Featured courses logic (optional, if you want to keep featured highlight)
   const featuredCourses = useMemo(() =>
-    courses.filter((course) =>
-      featuredCourseNames.includes(course.name)
+    mergedCourses.filter((course) =>
+      typeof course.name === "string" && featuredCourseNames.includes(course.name)
     ),
-    [courses, featuredCourseNames]
+    [mergedCourses, featuredCourseNames]
   );
 
   // Decide which courses to display
   const coursesToShow = useMemo(() => {
     if (showAll) {
-      // When showing all, put prioritized courses first, then the rest
-      return [
-        ...prioritizedCourses,
-        ...courses.filter((c) => !prioritizedCourses.some((p) => p.id === c.id)),
-      ];
+      return mergedCourses;
     }
-
-    // Not showing all: prefer featured courses if available, otherwise all courses
-    const source = featuredCourses.length > 0 ? featuredCourses : courses;
-
-    // Bring prioritized courses (that exist in the source) to the front, then fill
-    const prioritizedInSource = prioritizedCourses.filter((p) =>
-      source.some((s) => s.id === p.id)
-    );
-    const others = source.filter(
-      (s) => !prioritizedInSource.some((p) => p.id === s.id)
-    );
-
-    return [...prioritizedInSource, ...others].slice(0, 4);
-  }, [showAll, courses, featuredCourses, prioritizedCourses]);
+    // Not showing all: prefer featured courses if available, otherwise mergedCourses
+    const source = featuredCourses.length > 0 ? featuredCourses : mergedCourses;
+    return source.slice(0, 4);
+  }, [showAll, mergedCourses, featuredCourses]);
 
   const hasMore = useMemo(() => {
     if (showAll) return false;
-    return featuredCourses.length > 3 || courses.length > 3;
-  }, [showAll, featuredCourses.length, courses.length]);
+    return featuredCourses.length > 3 || mergedCourses.length > 3;
+  }, [showAll, featuredCourses.length, mergedCourses.length]);
 
   const handleShowAll = useCallback(() => setShowAll(true), []);
   const handleShowLess = useCallback(() => setShowAll(false), []);
@@ -148,7 +126,7 @@ const CourseSection: React.FC = () => {
 
       {/* Courses Grid */}
       <div className="grid gap-4 sm:gap-6 grid-cols-[repeat(auto-fit,minmax(275px,1fr))]">
-        {isLoading || courses == null ? (
+        {isLoading || mergedCourses == null ? (
           <div className="col-span-full flex items-center justify-center py-8">
             <Loader size={120} text={""} />
           </div>
@@ -161,11 +139,10 @@ const CourseSection: React.FC = () => {
             {error}
           </div>
         ) : coursesToShow.length > 0 ? (
-          coursesToShow.map((course: Course, index) => (
+          coursesToShow.map((course: UICourse, index) => (
             <ProgramCard
               key={
                 course.id ??
-                course._id ??
                 course.slug ??
                 `${course.program_type_name ?? "course"}-${index}`
               }
@@ -184,9 +161,9 @@ const CourseSection: React.FC = () => {
       </div>
 
       {/* Course count display */}
-      {showAll && courses.length > 0 && (
+      {showAll && mergedCourses.length > 0 && (
         <p className="text-center mt-8 text-gray-600" role="status">
-          Showing all {courses.length} course{courses.length !== 1 ? 's' : ''}
+          Showing all {mergedCourses.length} course{mergedCourses.length !== 1 ? 's' : ''}
         </p>
       )}
     </section>

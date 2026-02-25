@@ -15,19 +15,19 @@ export const fetchCourseOrder = createAsyncThunk(
   async (_: void, { rejectWithValue }) => {
     try {
       // Primary attempt using configured instance
-      const resp = await apis.get("/get/courses");
+      const resp = await apis.get("/get/courses/full");
       const payload = resp?.data ?? {};
-        const ids = Array.isArray(payload?.data) ? (payload.data as Array<string | number>) : [];
-      return ids.map((id) => String(id));
+      const courses = Array.isArray(payload?.data) ? payload.data : [];
+      return courses;
     } catch (firstError: unknown) {
       // Try a direct browser-origin request as a fallback (only on client)
       try {
         if (typeof window !== "undefined") {
-          const url = `${window.location.origin}/get/courses`;
+          const url = `${window.location.origin}/get/courses/full`;
           const resp2 = await axios.get(url, { timeout: 10000 });
           const payload2 = resp2?.data ?? {};
-            const ids2 = Array.isArray(payload2?.data) ? (payload2.data as Array<string | number>) : [];
-          return ids2.map((id) => String(id));
+          const courses2 = Array.isArray(payload2?.data) ? payload2.data : [];
+          return courses2;
         }
       } catch (secondError: unknown) {
         const err = (secondError as any) || (firstError as any);
