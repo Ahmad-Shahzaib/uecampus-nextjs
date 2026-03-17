@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "@/redux/store";
 import { RootState } from "@/redux/rootReducer";
 import { fetchCoursesData } from "@/redux/thunk/courses";
 import { fetchProgramsData } from "@/redux/thunk/programsThunk";
+import { slugify } from "@/lib/utils";
 import Loader from "@/components/common/Loader";
 import CourseCard from "@/component/Courses/courses-card";
 import PaginationComponent from "@/component/Courses/pagination";
@@ -31,6 +32,20 @@ export default function AcademicYearPage() {
   const coursesPerPage = 6;
   const router = useRouter();
 
+  const resolveAcademicYearId = (idOrSlug?: string | string[]) => {
+    const raw = Array.isArray(idOrSlug) ? idOrSlug[0] : idOrSlug;
+    if (!raw) return undefined;
+
+    const asNumber = Number(raw);
+    if (!Number.isNaN(asNumber)) return String(asNumber);
+
+    const normalized = slugify(raw);
+    const found = programsData?.academicYears?.find((a) => slugify(a.name) === normalized);
+    if (found) return String(found.id);
+
+    return undefined;
+  };
+
   useEffect(() => {
     setCurrentPage(1);
     setYearName("");
@@ -38,8 +53,12 @@ export default function AcademicYearPage() {
 
   useEffect(() => {
     if (!ayId) return;
-    dispatch(fetchCoursesData({ academic_year_ids: [String(ayId)] }));
-  }, [dispatch, ayId]);
+
+    const resolvedId = resolveAcademicYearId(ayId);
+    if (!resolvedId) return;
+
+    dispatch(fetchCoursesData({ academic_year_ids: [resolvedId] }));
+  }, [dispatch, programsData, ayId]);
 
   useEffect(() => {
     if (!programsData) {
@@ -48,8 +67,11 @@ export default function AcademicYearPage() {
   }, [dispatch, programsData]);
 
   useEffect(() => {
-    if (!yearName && programsData?.academicYears && ayId) {
-      const found = programsData.academicYears.find((a) => String(a.id) === String(ayId));
+    if (!yearName && programsData && ayId) {
+      const resolvedId = resolveAcademicYearId(ayId);
+      if (!resolvedId) return;
+
+      const found = programsData.academicYears?.find((a) => String(a.id) === resolvedId);
       if (found) {
         setYearName(found.name);
       }

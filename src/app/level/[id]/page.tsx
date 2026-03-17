@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "@/redux/store";
 import { RootState } from "@/redux/rootReducer";
 import { fetchCoursesData } from "@/redux/thunk/courses";
 import { fetchProgramsData } from "@/redux/thunk/programsThunk";
+import { slugify } from "@/lib/utils";
 import Loader from "@/components/common/Loader";
 import CourseCard from "@/component/Courses/courses-card";
 import PaginationComponent from "@/component/Courses/pagination";
@@ -31,6 +32,20 @@ export default function LevelPage() {
   const coursesPerPage = 6;
   const router = useRouter();
 
+  const resolveLevelId = (idOrSlug?: string | string[]) => {
+    const raw = Array.isArray(idOrSlug) ? idOrSlug[0] : idOrSlug;
+    if (!raw) return undefined;
+
+    const asNumber = Number(raw);
+    if (!Number.isNaN(asNumber)) return String(asNumber);
+
+    const normalized = slugify(raw);
+    const found = programsData?.levels?.find((l) => slugify(l.name) === normalized);
+    if (found) return String(found.id);
+
+    return undefined;
+  };
+
   useEffect(() => {
     setCurrentPage(1);
     setLevelName("");
@@ -38,8 +53,12 @@ export default function LevelPage() {
 
   useEffect(() => {
     if (!levelId) return;
-    dispatch(fetchCoursesData({ level_ids: String(levelId) }));
-  }, [dispatch, levelId]);
+
+    const resolvedId = resolveLevelId(levelId);
+    if (!resolvedId) return;
+
+    dispatch(fetchCoursesData({ level_ids: resolvedId }));
+  }, [dispatch, programsData, levelId]);
 
   useEffect(() => {
     if (!programsData) {
@@ -48,8 +67,11 @@ export default function LevelPage() {
   }, [dispatch, programsData]);
 
   useEffect(() => {
-    if (!levelName && programsData?.levels && levelId) {
-      const found = programsData.levels.find((l) => String(l.id) === String(levelId));
+    if (!levelName && programsData && levelId) {
+      const resolvedId = resolveLevelId(levelId);
+      if (!resolvedId) return;
+
+      const found = programsData.levels?.find((l) => String(l.id) === resolvedId);
       if (found) {
         setLevelName(found.name);
       }

@@ -4,7 +4,10 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "@/redux/store";
 import { RootState } from "@/redux/rootReducer";
-import { fetchCoursesData } from "@/redux/thunk/courses";import { fetchProgramsData } from "@/redux/thunk/programsThunk";import Loader from "@/components/common/Loader";
+import { fetchCoursesData } from "@/redux/thunk/courses";
+import { fetchProgramsData } from "@/redux/thunk/programsThunk";
+import { slugify } from "@/lib/utils";
+import Loader from "@/components/common/Loader";
 import CourseCard from "@/component/Courses/courses-card";
 import PaginationComponent from "@/component/Courses/pagination";
 import Seo from "@/component/common/Seo";
@@ -31,6 +34,30 @@ export default function ProgramPage() {
   const coursesPerPage = 6;
   const router = useRouter();
 
+  const resolveProgramTypeId = (idOrSlug?: string | string[]) => {
+    // next/navigation params can be string or string[]
+    const raw = Array.isArray(idOrSlug) ? idOrSlug[0] : idOrSlug;
+    if (!raw) return undefined;
+
+    // if the value is a numeric id, use it directly
+    const asNumber = Number(raw);
+    if (!Number.isNaN(asNumber)) return String(asNumber);
+
+    // otherwise attempt to resolve a slugified name to a numeric id
+    const normalized = slugify(raw);
+    const fromPrograms = programsData?.programs?.find(
+      (p) => slugify(p.name) === normalized
+    );
+    if (fromPrograms) return String(fromPrograms.id);
+
+    const fromTypes = programsData?.programTypes?.find(
+      (p) => slugify(p.name) === normalized
+    );
+    if (fromTypes) return String(fromTypes.id);
+
+    return undefined;
+  };
+
   useEffect(() => {
     setCurrentPage(1);
     // clear derived names so they can be recomputed for the new program id
@@ -40,7 +67,11 @@ export default function ProgramPage() {
 
   useEffect(() => {
     if (!programId) return;
-    const params: Record<string, any> = { program_type_ids: String(programId) };
+
+    const resolvedId = resolveProgramTypeId(programId);
+    if (!resolvedId) return;
+
+    const params: Record<string, any> = { program_type_ids: resolvedId };
 
     const ayValues = searchParams?.getAll("academic_year_ids[]") || [];
     if (ayValues.length > 0) {
@@ -48,7 +79,7 @@ export default function ProgramPage() {
     }
 
     dispatch(fetchCoursesData(params as any));
-  }, [dispatch, programId, searchParams]);
+  }, [dispatch, programId, programsData, searchParams]);
 
   // ensure programs list is loaded so we can resolve program name
   useEffect(() => {
@@ -68,18 +99,21 @@ export default function ProgramPage() {
     }
 
     if (!programName && programsData) {
-      // try explicit programs list first (when available)
-      const foundProgram = programsData.programs?.find((p) => String(p.id) === String(programId));
-      if (foundProgram) {
-        setProgramName(foundProgram.name);
-        return;
-      }
+      const resolvedId = resolveProgramTypeId(programId);
+      if (resolvedId) {
+        // try explicit programs list first (when available)
+        const foundProgram = programsData.programs?.find((p) => String(p.id) === resolvedId);
+        if (foundProgram) {
+          setProgramName(foundProgram.name);
+          return;
+        }
 
-      // fallback to programTypes (filters) — these are used when user navigates by program type id
-      const foundType = programsData.programTypes?.find((p) => String(p.id) === String(programId));
-      if (foundType) {
-        setProgramName(foundType.name);
-        return;
+        // fallback to programTypes (filters)
+        const foundType = programsData.programTypes?.find((p) => String(p.id) === resolvedId);
+        if (foundType) {
+          setProgramName(foundType.name);
+          return;
+        }
       }
     }
   }, [courses, programsData, programId, programName]);

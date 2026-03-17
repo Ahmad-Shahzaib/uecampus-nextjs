@@ -6,6 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useDispatch, useSelector } from "@/redux/store";
 import { RootState } from "@/redux/rootReducer";
 import { fetchProgramsData } from "@/redux/thunk/programsThunk";
+import { slugify } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function FilterSidebar() {
@@ -21,7 +22,11 @@ export default function FilterSidebar() {
     }
   }, [data, dispatch]);
 
-  const handleFilterChange = (paramKey: string, filterId: number) => {
+  const handleFilterChange = (
+    paramKey: string,
+    filterId: number,
+    filterName?: string
+  ) => {
     // special-case several filters that have their own top-level route
     // so the user is taken to a dedicated page instead of staying on
     // /courses with query params. The uncheck behaviour always returns
@@ -35,12 +40,12 @@ export default function FilterSidebar() {
       const idStr = String(filterId);
       const target =
         paramKey === "program_type_ids"
-          ? `/program/${idStr}`
+          ? `/program/${slugify(filterName ?? idStr)}`
           : paramKey === "university_ids"
-          ? `/university/${idStr}`
+          ? `/university/${slugify(filterName ?? idStr)}`
           : paramKey === "level_ids"
-          ? `/level/${idStr}`
-          : `/academic-year/${idStr}`;
+          ? `/level/${slugify(filterName ?? idStr)}`
+          : `/academic-year/${slugify(filterName ?? idStr)}`;
 
       const params = new URLSearchParams(searchParams.toString());
       const existing = params
@@ -148,7 +153,7 @@ export default function FilterSidebar() {
                       id={`${paramKey}-${item.id}`}
                       checked={isFilterSelected(paramKey, item.id)}
                       onCheckedChange={() =>
-                        handleFilterChange(paramKey, item.id)
+                        handleFilterChange(paramKey, item.id, item.name)
                       }
                     />
                     <label

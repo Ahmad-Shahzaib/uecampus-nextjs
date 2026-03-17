@@ -18,3 +18,16 @@ export function getBlogImageUrl(img?: string | null) {
   if (/^images\/blogs\//i.test(cleaned)) return `https://new.uecampus.com/${cleaned}`
   return `https://new.uecampus.com/images/blogs/${cleaned}`
 }
+
+/**
+ * Convert arbitrary text into a URL-friendly "slug".
+ * Example: "Bachelor of Science" -> "bachelor-of-science"
+ */
+export function slugify(value: string) {
+  return value
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+}

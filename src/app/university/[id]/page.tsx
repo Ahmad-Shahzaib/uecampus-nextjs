@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "@/redux/store";
 import { RootState } from "@/redux/rootReducer";
 import { fetchCoursesData } from "@/redux/thunk/courses";
 import { fetchProgramsData } from "@/redux/thunk/programsThunk";
+import { slugify } from "@/lib/utils";
 import Loader from "@/components/common/Loader";
 import CourseCard from "@/component/Courses/courses-card";
 import PaginationComponent from "@/component/Courses/pagination";
@@ -30,6 +31,22 @@ export default function UniversityPage() {
   const coursesPerPage = 6;
   const router = useRouter();
 
+  const resolveUniversityId = (idOrSlug?: string | string[]) => {
+    const raw = Array.isArray(idOrSlug) ? idOrSlug[0] : idOrSlug;
+    if (!raw) return undefined;
+
+    const asNumber = Number(raw);
+    if (!Number.isNaN(asNumber)) return String(asNumber);
+
+    const normalized = slugify(raw);
+    const found = programsData?.universities?.find(
+      (u) => slugify(u.name) === normalized
+    );
+    if (found) return String(found.id);
+
+    return undefined;
+  };
+
   useEffect(() => {
     setCurrentPage(1);
     setUniversityName("");
@@ -37,8 +54,12 @@ export default function UniversityPage() {
 
   useEffect(() => {
     if (!uniId) return;
-    dispatch(fetchCoursesData({ university_ids: String(uniId) }));
-  }, [dispatch, uniId]);
+
+    const resolvedId = resolveUniversityId(uniId);
+    if (!resolvedId) return;
+
+    dispatch(fetchCoursesData({ university_ids: resolvedId }));
+  }, [dispatch, programsData, uniId]);
 
   useEffect(() => {
     if (!programsData) {
@@ -47,8 +68,11 @@ export default function UniversityPage() {
   }, [dispatch, programsData]);
 
   useEffect(() => {
-    if (!universityName && programsData?.universities && uniId) {
-      const found = programsData.universities.find((u) => String(u.id) === String(uniId));
+    if (!universityName && programsData && uniId) {
+      const resolvedId = resolveUniversityId(uniId);
+      if (!resolvedId) return;
+
+      const found = programsData.universities?.find((u) => String(u.id) === resolvedId);
       if (found) {
         setUniversityName(found.name);
       }
