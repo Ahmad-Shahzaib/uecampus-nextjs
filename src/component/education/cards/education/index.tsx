@@ -50,13 +50,13 @@ export function EducationCard({
             : "linear-gradient(transparent, transparent)",
         }}
       >
-        <h1
+        <h2
           className={`text-2xl lg:text-[40px]  leading-tight mb-3 ${
             isDarkMode ? "text-white" : "text-[#6A1B9A]"
           } ${bgStyles}`}
         >
           {secondCardTitle}
-        </h1>
+        </h2>
 
         <p
           className={`text-base ${

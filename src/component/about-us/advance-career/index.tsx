@@ -40,9 +40,9 @@ export default function AdvanceCareer({ mainClass = "min-h-screen", cardsData }:
   return (
     <main className={`${mainClass} bg-white px-6 py-8`}>
       <div className="mx-auto w-full">
-        <h1 className="mb-16 text-3xl font-semibold text-[#6A1B9A] sm:text-5xl lg:text-[70px] px-4">
+        <h2 className="mb-16 text-3xl font-semibold text-[#6A1B9A] sm:text-5xl lg:text-[70px] px-4">
           Advance your career with an online degree
-        </h1>
+        </h2>
 
         {/* Responsive grid using minmax */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">

@@ -28,9 +28,9 @@ const ContactUsSection = () => {
     <div>
       <div className="py-8 px-6 rounded-2xl mb-10 ">
         {/* Section heading and description */}
-        <h1 className="leading-[1.4] text-3xl font-semibold text-[#6A1B9A] sm:text-5xl lg:text-5xl">
+        <h2 className="leading-[1.4] text-3xl font-semibold text-[#6A1B9A] sm:text-5xl lg:text-5xl">
           How to Apply in Our <br /> Course?
-        </h1>
+        </h2>
         <p className="text-lg text-gray-600 mt-4">
           Getting started with UeCampus is quick and easy. Follow our simple
           three-step <br /> process to begin your journey toward globally recognized

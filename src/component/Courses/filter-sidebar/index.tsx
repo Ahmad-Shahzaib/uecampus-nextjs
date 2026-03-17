@@ -119,9 +119,9 @@ export default function FilterSidebar() {
   return (
     <aside className="sm:w-56 flex-full shrink-0">
       <Card className="p-6 bg-white">
-        <h1 className="text-lg font-bold mb-6 text-purple-800">
+        <h2 className="text-lg font-bold mb-6 text-purple-800">
           Filter Courses
-        </h1>
+        </h2>
 
         {isLoading && (
           <div className="text-sm text-gray-600">Loading programs...</div>
@@ -140,7 +140,7 @@ export default function FilterSidebar() {
         {!isLoading && !error && hasFilters &&
           filterConfigs.map(({ title, items, paramKey }) => (
             <div key={paramKey} className="mb-8 last:mb-0">
-              <h1 className="font-semibold text-purple-800 mb-3">{title}</h1>
+              <h2 className="font-semibold text-purple-800 mb-3">{title}</h2>
               <div className="space-y-3">
                 {items.map((item) => (
                   <div key={item.id} className="flex items-center gap-2">

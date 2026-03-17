@@ -85,9 +85,9 @@ export function HeroCard() {
 
       {/* Content */}
       <div className="relative z-10 flex flex-col gap-6">
-        <h1 className="text-4xl md:text-5xl lg:text-7xl font-medium leading-tight text-balance">
+        <h2 className="text-4xl md:text-5xl lg:text-7xl font-medium leading-tight text-balance">
           {data.section_title}
-        </h1>
+        </h2>
         <p className="text-base md:text-lg leading-relaxed text-purple-100 max-w-2xl text-pretty">
           {data.section_description}
         </p>

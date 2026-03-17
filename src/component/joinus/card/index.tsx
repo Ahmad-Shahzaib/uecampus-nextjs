@@ -36,9 +36,9 @@ const { data, isLoading, error } = useSelector((state: RootState) => state.howTo
     <div className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl max-w-md w-full">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-purple-900 text-center">
+        <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-purple-900 text-center">
           {data?.sectionTitle2}
-        </h1>
+        </h2>
       </div>
 
       {/* Description */}

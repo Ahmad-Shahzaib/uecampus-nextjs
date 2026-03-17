@@ -103,10 +103,10 @@ const BlogsPage = () => {
 
             {/* Title */}
             <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
-              <h1 className={`text-lg 0 font-bold leading-tight transition-all duration-300 ${darkMode ? 'text-white' : 'text-white'
+              <h2 className={`text-lg 0 font-bold leading-tight transition-all duration-300 ${darkMode ? 'text-white' : 'text-white'
                 }  `}>
                 {title}
-              </h1>
+              </h2>
             </div>
           </div>
         </div>
@@ -136,9 +136,9 @@ const BlogsPage = () => {
       <section className="bg-purple-900 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
               Explore Our Top<br />Blog Topics
-            </h1>
+            </h2>
             <p className="text-gray-300 max-w-3xl mx-auto leading-relaxed text-lg">
               At EBS, we make sure that our learners stay updated about the latest industry trends and market updates. We encourage our students to go beyond the traditional classroom experience and gain hands-on experience in various management methodologies. Explore our full-fledged blog library to find topics that interest you.
             </p>
@@ -182,9 +182,9 @@ const BlogsPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left side - Title */}
             <div>
-              <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
+              <h2 className="text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
                 Speak to our<br />Team
-              </h1>
+              </h2>
               <p className="text-lg text-gray-100 max-w-md leading-relaxed">
                 Have questions or need guidance? Our dedicated team is here to help you every step of the way. Reach out to us for personalized support!
               </p>

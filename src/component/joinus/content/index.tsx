@@ -17,9 +17,9 @@ export function HeroContent() {
     <div className="text-white space-y-6 text-center md:text-left px-4 w-full rounded-2xl">
 
       {/* Title (no splitting, no memo, render directly) */}
-      <h1 className="font-sans tracking-tight text-5xl md:text-[93px] leading-tight">
+      <h2 className="font-sans tracking-tight text-5xl md:text-[93px] leading-tight">
         {data.sectionTitle}
-      </h1>
+      </h2>
 
       {/* Description */}
       <p className="text-base sm:text-lg lg:text-[16px] text-white/90 leading-relaxed  mx-auto md:mx-0">

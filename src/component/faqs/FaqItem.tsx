@@ -32,9 +32,9 @@ const FaqItem = memo(({ item, index, isOpen, onToggle }: FaqItemProps) => {
           </span>
 
           {/* QUESTION */}
-          <h1 className="text-base sm:text-lg font-normal leading-snug text-white">
+          <h2 className="text-base sm:text-lg font-normal leading-snug text-white">
             {item.question}
-          </h1>
+          </h2>
         </div>
 
         {/* ICON */}

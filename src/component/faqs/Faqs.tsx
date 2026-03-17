@@ -85,9 +85,9 @@ export default function Faqs() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           {/* LEFT – Headline */}
           <div className="flex flex-col justify-center text-center lg:text-left lg:items-start lg:min-h-screen">
-            <h1 className="text-4xl sm:text-6xl lg:text-[80px]">
+            <h2 className="text-4xl sm:text-6xl lg:text-[80px]">
               {faqContent?.title || ""}
-            </h1>
+            </h2>
             {/* <p className="mt-6 text-lg text-gray-300 max-w-lg">
               {faqContent?.description || "Frequently Asked Questions"}
             </p> */}

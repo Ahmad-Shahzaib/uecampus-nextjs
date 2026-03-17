@@ -33,7 +33,7 @@ const BlogCard: React.FC<{
             ) : null}
           </div>
           <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
-            <h1 className="text-lg font-bold text-white">{title}</h1>
+            <h2 className="text-lg font-bold text-white">{title}</h2>
           </div>
         </div>
       </div>

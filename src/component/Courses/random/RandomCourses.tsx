@@ -40,7 +40,7 @@ const RandomCourses = () => {
           </div>
         )}
         <div>
-          <h1 className="text-2xl font-semibold">View Other Courses</h1>
+          <h2 className="text-2xl font-semibold">View Other Courses</h2>
           <p>
             Explore our wide range of online programs and advance your career
           </p>

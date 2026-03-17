@@ -28,6 +28,16 @@ export function ScholarshipForm(): JSX.Element {
   const dispatch = useDispatch();
   const programsData = useSelector((state: RootState) => state.programs.data);
 
+    // Modal state
+    const [showModal, setShowModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState("");
+    useEffect(() => {
+      if (showModal) {
+        const timer = setTimeout(() => setShowModal(false), 5000);
+        return () => clearTimeout(timer);
+      }
+    }, [showModal]);
+
   const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
   const [countrySearch, setCountrySearch] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -385,202 +395,221 @@ export function ScholarshipForm(): JSX.Element {
     try {
       await dispatch(sendEnquiry(payload));
       setFormData(initialFormData);
-      // alert("Enquiry sent successfully!");
+      setModalMessage("Enquiry sent successfully!");
+      setShowModal(true);
     } catch (err) {
       console.error("Failed to send enquiry", err);
-      alert("Failed to send enquiry. Please try again.");
+      setModalMessage("Failed to send enquiry. Please try again.");
+      setShowModal(true);
     }
   };
 
   return (
-    <main className="bg-gradient-to-br from-purple-50 to-indigo-100 flex p-4 md:p-8 min-h-screen">
-      <div className="w-full max-w-8xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden shadow-2xl bg-white">
-          {/* Left Side - Image */}
-          <div className="relative h-64 lg:h-full">
-            <Image
-              src={contactus}
-              alt="Student with books"
-              loading="lazy" 
-              className="w-full h-full object-cover"
-              fill
-            />
+    <>
+      {/* Modal Confirmation */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-40">
+          <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full text-center">
+            <h2 className="text-2xl font-bold mb-4 text-purple-700">Confirmation</h2>
+            <p className="text-lg mb-6 text-gray-700">{modalMessage}</p>
+            <Button
+              className="w-full bg-purple-700 text-white font-bold text-lg h-12 shadow-xl hover:bg-purple-800"
+              onClick={() => setShowModal(false)}
+            >
+              Close
+            </Button>
           </div>
-
-          {/* Right Side - Form */}
-          <div className="bg-gradient-to-b from-[#6A1B9A] to-purple-800 p-6 md:p-10 overflow-y-auto">
-            <div className="mb-8">
-              <h1 className="text-white text-2xl md:text-4xl font-bold leading-tight">
-                Enquire Today & Get a Scholarship Discount!
-              </h1>
+        </div>
+      )}
+      <main className="bg-gradient-to-br from-purple-50 to-indigo-100 flex p-4 md:p-8 min-h-screen">
+        <div className="w-full max-w-8xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden shadow-2xl bg-white">
+            {/* Left Side - Image */}
+            <div className="relative h-64 lg:h-full">
+              <Image
+                src={contactus}
+                alt="Student with books"
+                loading="lazy" 
+                className="w-full h-full object-cover"
+                fill
+              />
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
-              {/* Full Name */}
-              <div>
-                <label className="block text-white text-sm font-medium mb-1">Full Name</label>
-                <Input
-                  type="text"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleInputChange}
-                  placeholder="First name"
-                  className="w-full bg-white text-gray-900 border-0 h-11"
-                  required
-                />
+            {/* Right Side - Form */}
+            <div className="bg-gradient-to-b from-[#6A1B9A] to-purple-800 p-6 md:p-10 overflow-y-auto">
+              <div className="mb-8">
+                <h1 className="text-white text-2xl md:text-4xl font-bold leading-tight">
+                  Enquire Today & Get a Scholarship Discount!
+                </h1>
               </div>
 
-              {/* Last Name */}
-              <div>
-                <label className="block text-white text-sm font-medium mb-1">Last Name</label>
-                <Input
-                  type="text"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
-                  placeholder="Last name"
-                  className="w-full bg-white text-gray-900 border-0 h-11"
-                  required
-                />
-              </div>
-
-              {/* Email */}
-              <div>
-                <label className="block text-white text-sm font-medium mb-1">Email</label>
-                <Input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="your@email.com"
-                  className="w-full bg-white text-gray-900 border-0 h-11"
-                  required
-                />
-              </div>
-
-              {/* Phone Number with Searchable Country Code */}
-              <div>
-                <label className="block text-white text-sm font-medium mb-1">Phone Number</label>
-                <div className="flex gap-2">
-                  <div className="relative" ref={dropdownRef}>
-                    <button
-                      type="button"
-                      onClick={() => setIsCountryDropdownOpen(prev => !prev)}
-                      className="bg-white text-gray-900 h-11 px-3 rounded-md flex items-center gap-2 text-sm font-medium whitespace-nowrap"
-                    >
-                      <span>{selectedCountry.flag}</span>
-                      <span>{selectedCountry.code}</span>
-                      <span className="ml-1">▼</span>
-                    </button>
-
-                    {isCountryDropdownOpen && (
-                      <div className="absolute top-full mt-1 w-80 bg-white rounded-lg shadow-2xl z-50 max-h-96 overflow-hidden border">
-                        <div className="p-3 border-b sticky top-0 bg-white z-10">
-                          <Input
-                            ref={countrySearchRef}
-                            type="text"
-                            placeholder="Search country or code..."
-                            value={countrySearch}
-                            onChange={(e) => setCountrySearch(e.target.value)}
-                            className="w-full text-sm"
-                          />
-                        </div>
-                        <div className="max-h-80 overflow-y-auto">
-                          {filteredCountries.map(item => (
-                              <div
-                                key={`${item.code}-${item.country}`}
-                                onClick={() => handleCountryCodeChange(item.code)}
-                                className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer text-sm"
-                              >
-                                <span className="text-xl">{item.flag}</span>
-                                <span className="font-medium w-16">{item.code}</span>
-                                <span className="text-gray-700">{item.country}</span>
-                              </div>
-                            ))}
-                          {filteredCountries.length === 0 && (
-                            <div className="px-4 py-8 text-center text-gray-500 text-sm">
-                              No country found
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
+              <form onSubmit={handleSubmit} className="space-y-5">
+                {/* Full Name */}
+                <div>
+                  <label className="block text-white text-sm font-medium mb-1">Full Name</label>
                   <Input
-                    type="number"
-                    name="phone"
-                    value={formData.phone}
+                    type="text"
+                    name="fullName"
+                    value={formData.fullName}
                     onChange={handleInputChange}
-                    placeholder="1234567890"
-                    className="flex-1 bg-white text-gray-900 border-0 h-11"
+                    placeholder="First name"
+                    className="w-full bg-white text-gray-900 border-0 h-11"
                     required
                   />
                 </div>
-              </div>
 
-              {/* DOB */}
-              <div>
-                <label className="block text-white text-sm font-medium mb-1">Date of Birth</label>
-                <Input
-                  type="date"
-                  name="dob"
-                  value={formData.dob}
-                  onChange={handleInputChange}
-                  className="w-full bg-white text-gray-900 border-0 h-11"
-                  required
-                />
-              </div>
-
-              {/* Program, Specialization, University, Academic Year */}
-              {["program", "programType", "university", "academicYear"].map(field => (
-                <div key={field}>
-                  <label className="block text-white font-bold mb-2 capitalize">
-                    {field === "programType" ? "Specialization" :
-                     field === "academicYear" ? "Joining Academic Year" :
-                     field === "program" ? "Program Interested" : "University Interested In"}
-                  </label>
-                  <select
-                    name={field}
-                    value={formData[field as keyof FormData] ?? ""}
-                    onChange={handleSelectChange}
-                    className="w-full bg-white text-gray-900 rounded-md p-3 text-sm h-11"
-                  >
-                    <option value="">Select {field === "programType" ? "specialization" : field.replace(/([A-Z])/g, ' $1').toLowerCase()}</option>
-                    {(field === "program" ? programOptions :
-                      field === "programType" ? specializationOptions :
-                      field === "university" ? universityOptions :
-                      academicyearOptions).map((item: any) => (
-                      <option key={item.id} value={item.id}>
-                        {item.name}
-                      </option>
-                    ))}
-                  </select>
+                {/* Last Name */}
+                <div>
+                  <label className="block text-white text-sm font-medium mb-1">Last Name</label>
+                  <Input
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    placeholder="Last name"
+                    className="w-full bg-white text-gray-900 border-0 h-11"
+                    required
+                  />
                 </div>
-              ))}
 
-              {/* Additional Info */}
-              <div>
-                <label className="block text-white text-sm font-medium mb-1">Additional Information</label>
-                <textarea
-                  name="additionalInfo"
-                  value={formData.additionalInfo}
-                  onChange={handleInputChange}
-                  placeholder="Your message..."
-                  className="w-full bg-white text-gray-900 rounded-xl p-3 h-28 resize-none"
-                />
-              </div>
+                {/* Email */}
+                <div>
+                  <label className="block text-white text-sm font-medium mb-1">Email</label>
+                  <Input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="your@email.com"
+                    className="w-full bg-white text-gray-900 border-0 h-11"
+                    required
+                  />
+                </div>
 
-              <Button
-                type="submit"
-                className="w-full bg-white text-purple-700 hover:bg-gray-100 font-bold text-lg h-12 shadow-xl"
-              >
-                Submit Enquiry
-              </Button>
-            </form>
+                {/* Phone Number with Searchable Country Code */}
+                <div>
+                  <label className="block text-white text-sm font-medium mb-1">Phone Number</label>
+                  <div className="flex gap-2">
+                    <div className="relative" ref={dropdownRef}>
+                      <button
+                        type="button"
+                        onClick={() => setIsCountryDropdownOpen(prev => !prev)}
+                        className="bg-white text-gray-900 h-11 px-3 rounded-md flex items-center gap-2 text-sm font-medium whitespace-nowrap"
+                      >
+                        <span>{selectedCountry.flag}</span>
+                        <span>{selectedCountry.code}</span>
+                        <span className="ml-1">▼</span>
+                      </button>
+
+                      {isCountryDropdownOpen && (
+                        <div className="absolute top-full mt-1 w-80 bg-white rounded-lg shadow-2xl z-50 max-h-96 overflow-hidden border">
+                          <div className="p-3 border-b sticky top-0 bg-white z-10">
+                            <Input
+                              ref={countrySearchRef}
+                              type="text"
+                              placeholder="Search country or code..."
+                              value={countrySearch}
+                              onChange={(e) => setCountrySearch(e.target.value)}
+                              className="w-full text-sm"
+                            />
+                          </div>
+                          <div className="max-h-80 overflow-y-auto">
+                            {filteredCountries.map(item => (
+                                <div
+                                  key={`${item.code}-${item.country}`}
+                                  onClick={() => handleCountryCodeChange(item.code)}
+                                  className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer text-sm"
+                                >
+                                  <span className="text-xl">{item.flag}</span>
+                                  <span className="font-medium w-16">{item.code}</span>
+                                  <span className="text-gray-700">{item.country}</span>
+                                </div>
+                              ))}
+                            {filteredCountries.length === 0 && (
+                              <div className="px-4 py-8 text-center text-gray-500 text-sm">
+                                No country found
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    <Input
+                      type="number"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      placeholder="1234567890"
+                      className="flex-1 bg-white text-gray-900 border-0 h-11"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* DOB */}
+                <div>
+                  <label className="block text-white text-sm font-medium mb-1">Date of Birth</label>
+                  <Input
+                    type="date"
+                    name="dob"
+                    value={formData.dob}
+                    onChange={handleInputChange}
+                    className="w-full bg-white text-gray-900 border-0 h-11"
+                    required
+                  />
+                </div>
+
+                {/* Program, Specialization, University, Academic Year */}
+                {["program", "programType", "university", "academicYear"].map(field => (
+                  <div key={field}>
+                    <label className="block text-white font-bold mb-2 capitalize">
+                      {field === "programType" ? "Specialization" :
+                       field === "academicYear" ? "Joining Academic Year" :
+                       field === "program" ? "Program Interested" : "University Interested In"}
+                    </label>
+                    <select
+                      name={field}
+                      value={formData[field as keyof FormData] ?? ""}
+                      onChange={handleSelectChange}
+                      className="w-full bg-white text-gray-900 rounded-md p-3 text-sm h-11"
+                    >
+                      <option value="">Select {field === "programType" ? "specialization" : field.replace(/([A-Z])/g, ' $1').toLowerCase()}</option>
+                      {(field === "program" ? programOptions :
+                        field === "programType" ? specializationOptions :
+                        field === "university" ? universityOptions :
+                        academicyearOptions).map((item: any) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                ))}
+
+                {/* Additional Info */}
+                <div>
+                  <label className="block text-white text-sm font-medium mb-1">Additional Information</label>
+                  <textarea
+                    name="additionalInfo"
+                    value={formData.additionalInfo}
+                    onChange={handleInputChange}
+                    placeholder="Your message..."
+                    className="w-full bg-white text-gray-900 rounded-xl p-3 h-28 resize-none"
+                  />
+                </div>
+
+                <Button
+                  type="submit"
+                  className="w-full bg-white text-purple-700 hover:bg-gray-100 font-bold text-lg h-12 shadow-xl"
+                >
+                  Submit Enquiry
+                </Button>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }

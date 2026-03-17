@@ -89,13 +89,13 @@ export default function AboutUsStats() {
         </div>
         <section className="px-6 py-12">
           <div className="w-full mx-auto">
-            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[70px] leading-[1.4] font-semibold text-[#6A1B9A] mb-12 text-balance">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-[70px] leading-[1.4] font-semibold text-[#6A1B9A] mb-12 text-balance">
               Your Online Learning
               <br />
               Platform, For the
               <br />
               Community, For You.
-            </h1>
+            </h2>
             <StatsCards data={statsData} />
           </div>
         </section>

@@ -32,9 +32,9 @@ export const ProgramCard = React.memo<ProgramCardProps>(({ course }) => {
           </Badge>
         </div>
 
-        <h1 className="mb-3 sm:mb-4 text-lg sm:text-xl md:text-xl font-medium text-white leading-snug line-clamp-2">
+        <h2 className="mb-3 sm:mb-4 text-lg sm:text-xl md:text-xl font-medium text-white leading-snug line-clamp-2">
           {course.title || course.name}
-        </h1>
+        </h2>
 
         <p className="text-slate-300 text-sm sm:text-base leading-relaxed line-clamp-3">
           {course.detail ?? course.small_description ?? ""}

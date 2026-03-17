@@ -80,9 +80,9 @@ export function AboutSection({ about, isLoading, error }: any) {
         </div>
 
         {/* Main Title */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[96px] leading-tight tracking-normal text-white">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[96px] leading-tight tracking-normal text-white">
           {title2}
-        </h1>
+        </h2>
 
         {/* Description */}
         <p className="text-sm sm:text-base md:text-base lg:text-[16px] text-white/90 leading-relaxed max-w-lg">

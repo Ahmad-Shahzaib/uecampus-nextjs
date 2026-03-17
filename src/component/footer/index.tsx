@@ -114,9 +114,9 @@ export function Footer() {
 
           {/* Quick Links */}
           <div className="flex-1 min-w-[180px] text-center sm:text-left">
-            <h1 className="mb-4 sm:mb-6 text-lg font-semibold text-white">
+            <h2 className="mb-4 sm:mb-6 text-lg font-semibold text-white">
               Quick Links
-            </h1>
+            </h2>
             <ul className="space-y-2 sm:space-y-3">
               {FOOTER_LINKS.quickLinks.map((link) => (
                 <li key={link.name}>
@@ -133,9 +133,9 @@ export function Footer() {
 
           {/* Programs */}
           <div className="flex-1 min-w-[180px] text-center sm:text-left">
-            <h1 className="mb-4 sm:mb-6 text-lg font-semibold text-white">
+            <h2 className="mb-4 sm:mb-6 text-lg font-semibold text-white">
               Programs
-            </h1>
+            </h2>
             <ul className="space-y-2 sm:space-y-3">
               {FOOTER_LINKS.programs.map((link) => (
                 <li key={link.name}>
@@ -152,9 +152,9 @@ export function Footer() {
 
           {/* Newsletter */}
           <div className="flex-1 min-w-[230px] w-full sm:w-auto text-center sm:text-left">
-            <h1 className="mb-4 sm:mb-6 text-lg font-semibold text-white">
+            <h2 className="mb-4 sm:mb-6 text-lg font-semibold text-white">
               Stay Updated
-            </h1>
+            </h2>
             <form
               onSubmit={handleSubscribe}
               className="space-y-4 flex flex-col items-center sm:items-start w-full"

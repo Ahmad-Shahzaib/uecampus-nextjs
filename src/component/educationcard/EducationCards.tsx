@@ -45,9 +45,9 @@ const EducationCards = () => {
     <div className="px-4 sm:px-6 lg:px-8 py-12 ">
       <div className="w-full mx-auto">
         <div className="flex flex-col items-center justify-center space-y-4 px-4 py-8 text-center md:px-6 lg:px-8">
-          <h1 className="font-medium text-[#6a1b9a] text-2xl sm:text-3xl md:text-4xl lg:text-[90px] lg:font-normal">
+          <h2 className="font-medium text-[#6a1b9a] text-2xl sm:text-3xl md:text-4xl lg:text-[90px] lg:font-normal">
             Our Academic Partners
-          </h1>
+          </h2>
           <p className="text-sm sm:text-base md:text-base lg:text-base text-gray-700  mx-auto leading-relaxed">
             Our partners are at the heart of UeCampus's commitment to delivering
             quality education. We collaborate with reputable universities and <br />
@@ -82,7 +82,7 @@ const EducationCards = () => {
               {/* Content container */}
               <div className="flex text-left flex-col flex-grow px-6 pb-6 text-center">
                 {/* Title */}
-                <h1 className="text-xl font-semibold mb-3">{partner.title}</h1>
+                <h2 className="text-xl font-semibold mb-3">{partner.title}</h2>
 
                 {/* Description */}
                 <div
