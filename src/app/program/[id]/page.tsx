@@ -178,9 +178,9 @@ export default function ProgramPage() {
         >
           <div className="absolute inset-0 bg-black/60" />
           <div className="relative z-10 max-w-6xl mx-auto px-8 py-16">
-            <h1 className="text-4xl md:text-6xl font-extrabold text-white">
+            <h2 className="text-4xl md:text-6xl font-extrabold text-white">
               <span className="text-yellow-400">Program</span> Details
-            </h1>
+            </h2>
             <p className="mt-4 text-white max-w-2xl">
               Be inspired by the latest trends that shape the world. Be the next one!
             </p>
