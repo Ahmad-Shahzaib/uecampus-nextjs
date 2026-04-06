@@ -1,3 +1,3 @@
-import DataDeletionPage from "../delete-account/Datadeletionpage";
+import DataDeletionPage from "../data-deletion/Datadeletionpage";
 
 export default DataDeletionPage;
