@@ -94,7 +94,7 @@ export const FOOTER_LINKS = {
         { name: "Frequently Asked Questions", href: "/faqs" },
         { name: "Scholarships", href: "/scholarship" },
         { name: "Privacy Policy", href: "/privacy-policy" },
-        { name: "Data Deletion", href: "/delete-data" },
+        { name: "Data Deletion", href: "/data-deletion" },
     ],
     programs: [
         { name: "Walsh Programmes", href: "/courses" },
