@@ -93,6 +93,8 @@ export const FOOTER_LINKS = {
         { name: "Accreditation & Partners", href: "/accreditation-partners" },
         { name: "Frequently Asked Questions", href: "/faqs" },
         { name: "Scholarships", href: "/scholarship" },
+        { name: "Privacy Policy", href: "/privacy-policy" },
+        { name: "Data Deletion", href: "/delete-data" },
     ],
     programs: [
         { name: "Walsh Programmes", href: "/courses" },
