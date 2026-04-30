@@ -61,11 +61,14 @@ export function ScholarshipForm(): JSX.Element {
 
   const [formData, setFormData] = useState<FormData>(initialFormData);
 
-  // Fetch programs data if not loaded
+  // Fetch programs data if not loaded (or if any of the dropdowns we render is empty)
   useEffect(() => {
     const needsFetch =
       !programsData ||
-      !(Array.isArray(programsData.academicYears) && programsData.academicYears.length > 0);
+      !(Array.isArray(programsData.academicYears) && programsData.academicYears.length > 0) ||
+      !(Array.isArray(programsData.programs) && programsData.programs.length > 0) ||
+      !(Array.isArray(programsData.programTypes) && programsData.programTypes.length > 0) ||
+      !(Array.isArray(programsData.universities) && programsData.universities.length > 0);
     if (needsFetch) dispatch(fetchProgramsData());
   }, [dispatch, programsData]);
 
