@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, ChangeEvent, FormEvent, JSX, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 import type { RootState } from "@/redux/store";
 import { useDispatch } from "@/redux/store";
 import { fetchProgramsData, ProgramType, University, AcademicYear } from "@/redux/thunk/programsThunk";
@@ -26,6 +27,7 @@ interface FormData {
 
 export function ScholarshipForm(): JSX.Element {
   const dispatch = useDispatch();
+  const router = useRouter();
   const programsData = useSelector((state: RootState) => state.programs.data);
 
     // Modal state
@@ -393,10 +395,9 @@ export function ScholarshipForm(): JSX.Element {
     };
 
     try {
-      await dispatch(sendEnquiry(payload));
+      await dispatch(sendEnquiry(payload)).unwrap();
       setFormData(initialFormData);
-      setModalMessage("Enquiry sent successfully!");
-      setShowModal(true);
+      router.push("/thank-you");
     } catch (err) {
       console.error("Failed to send enquiry", err);
       setModalMessage("Failed to send enquiry. Please try again.");

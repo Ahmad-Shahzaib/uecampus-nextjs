@@ -77,15 +77,25 @@ export const fetchProgramsData = createAsyncThunk(
           (nested['academic_years'] as AcademicYear[] | undefined) ||
           (nested['academicYears'] as AcademicYear[] | undefined) || [];
 
-        // We'll also try to fetch `/programs` to obtain a list of actual programs
-        // (id + name). Some backends expose program names there rather than under
-        // the filters endpoint.
+        // The `/filters` endpoint returns program_types/universities/levels/academic_years
+        // but not the actual list of programs (id + name). Always fetch `/programs`
+        // to populate that list. Also use it as a fallback source for academicYears.
         let programs: ProgramType[] = [];
-        if (!Array.isArray(academicYears) || academicYears.length === 0) {
-          try {
-            const resp2 = await api.get<Record<string, unknown>>("/programs");
-            const p2 = resp2.data as unknown as Record<string, unknown>;
-            const nested2 = (p2['data'] as Record<string, unknown> | undefined) ?? {};
+        try {
+          const resp2 = await api.get<Record<string, unknown>>("/programs");
+          const p2 = resp2.data as unknown as Record<string, unknown>;
+          const nested2 = (p2['data'] as Record<string, unknown> | undefined) ?? {};
+
+          const maybePrograms =
+            (Array.isArray(p2['data']) ? (p2['data'] as ProgramType[]) : undefined) ||
+            (p2['programs'] as ProgramType[] | undefined) ||
+            (nested2['programs'] as ProgramType[] | undefined) || [];
+
+          if (Array.isArray(maybePrograms) && maybePrograms.length > 0) {
+            programs = maybePrograms;
+          }
+
+          if (!Array.isArray(academicYears) || academicYears.length === 0) {
             const altAcademicYears =
               (p2['academicYears'] as AcademicYear[] | undefined) ||
               (p2['academic_years'] as AcademicYear[] | undefined) ||
@@ -95,27 +105,9 @@ export const fetchProgramsData = createAsyncThunk(
             if (Array.isArray(altAcademicYears) && altAcademicYears.length > 0) {
               academicYears = altAcademicYears;
             }
-
-            // extract programs list if present under various keys
-            const maybePrograms =
-              (p2['data'] as ProgramType[] | undefined) ||
-              (p2['programs'] as ProgramType[] | undefined) ||
-              (nested2['programs'] as ProgramType[] | undefined) || [];
-
-            if (Array.isArray(maybePrograms) && maybePrograms.length > 0) {
-              programs = maybePrograms;
-            }
-          } catch {
-            // ignore errors from fallback fetch
           }
-        } else {
-          // even when academicYears came from /filters, try to read `data` for programs
-          const maybePrograms =
-            (payload['data'] as ProgramType[] | undefined) ||
-            (payload['programs'] as ProgramType[] | undefined) || [];
-          if (Array.isArray(maybePrograms) && maybePrograms.length > 0) {
-            programs = maybePrograms;
-          }
+        } catch {
+          // ignore errors from /programs fetch — programs list will simply be empty
         }
 
         if (
